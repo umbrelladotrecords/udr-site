@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Umbrella Dot Records</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --gap-top: 100px;   /* 上の余白 */
+      --gap-mid: 80px;    /* ロゴとロゴの間の余白 */
+      --gap-bottom: 60px; /* 下の余白 */
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:#000;
+      color:#fff;
+      font-family: Arial, sans-serif;
+      text-align:center;
+    }
+    .wrap{ 
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    /* タイトルロゴ（PNG） */
+    .main-logo{
+      margin-top: var(--gap-top);
+      margin-bottom: 32px;         /* 上下バランス調整用 */
+      max-width: 60%;              /* 60%で表示（後で好みで調整OK） */
+      height: auto;
+    }
+    /* 2枚目のロゴ（JPEG）との間隔 */
+    .sub-logo{
+      margin-top: var(--gap-mid);
+      max-width: 400px;
+      height: auto;
+    }
+    /* アイコン列 */
+    .sns-links{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:50px;
+      margin: var(--gap-bottom) 0 80px;
+      flex-wrap: wrap;
+    }
+    .sns-links img{
+      height: 80px;            /* アイコン高さを揃える */
+      width: auto;
+      cursor: pointer;
+      transition: transform .2s ease;
+    }
+    .sns-links a:hover img{ transform: scale(1.1); }
+    /* 小さめ画面での調整 */
+    @media (max-width: 600px){
+      .main-logo{ max-width: 80%; }
+      .sub-logo{ max-width: 300px; }
+      .sns-links img{ height: 64px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- タイトルロゴ（ファイル名にスペースがあるので正確に書く） -->
+    <img src="UDR HP logo main.PNG" alt="Umbrella Dot Records" class="main-logo" />
+
+    <!-- 2枚目のロゴ -->
+    <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo" />
+
+    <!-- リンクアイコン（YouTube / Music） -->
+    <div class="sns-links">
+      <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
+        <img src="youtube_logo.gif" alt="YouTube">
+      </a>
+      <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
+        <img src="music_logo.gif" alt="Music">
+      </a>
+    </div>
+  </div>
+</body>
+</html>
