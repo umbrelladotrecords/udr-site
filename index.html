@@ -1,67 +1,34 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <title>Umbrella Dot Records</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root { --space-top: 120px; --gap-sns: 48px; }
-    body {
-      margin: 0; background: #000; color: #fff;
-      font-family: Arial, sans-serif; text-align: center;
-    }
-
-    /* タイトルロゴ：80%縮小 */
-    .main-logo {
-      display: block;
-      margin: var(--space-top) auto 40px;
-      max-width: 48%;
-      height: auto;
-    }
-
-    /* 丸ロゴ */
-    .sub-logo {
-      display: block;
-      margin: 80px auto 80px;
-      max-width: 400px;
-      width: 80%;
-      height: auto;
-    }
-
-    /* SNSアイコン行（横並び固定） */
-    .sns-links {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: var(--gap-sns);
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      padding: 40px 16px 100px;
-    }
-    .sns-links img {
-      height: clamp(56px, 8vw, 100px);
-      width: auto;
-      cursor: pointer;
-      transition: transform .25s ease;
-      image-rendering: pixelated;
-    }
-    .sns-links img:hover { transform: scale(1.12); }
-
-    /* YouTubeアイコン 20%拡大 */
-    .youtube-icon { height: calc(clamp(56px, 8vw, 100px) * 1.2); }
-  </style>
-</head>
-<body>
-  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo" />
-  <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo" />
-
-  <div class="sns-links">
-    <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
-      <img src="youtube_logo.gif" alt="YouTube" class="youtube-icon" />
-    </a>
-    <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
-      <img src="music_logo.gif" alt="Music" />
-    </a>
-  </div>
-</body>
-</html>
+<style>
+  :root { --space-top: 120px; --gap-sns: 48px; }
+  body {
+    margin: 0; background: #000; color: #fff;
+    font-family: Arial, sans-serif; text-align: center;
+  }
+  /* タイトルロゴ：80%縮小（60% → 48%）を強制適用 */
+  .main-logo{
+    display:block !important;
+    margin: var(--space-top) auto 40px !important;
+    max-width: 48% !important;
+    height: auto !important;
+  }
+  /* 丸ロゴは縦並びを維持 */
+  .sub-logo{
+    display:block !important;
+    margin: 80px auto !important;
+    max-width:400px !important;
+    width:80% !important;
+    height:auto !important;
+  }
+  .sns-links{
+    display:flex; justify-content:center; align-items:center;
+    gap: var(--gap-sns); flex-wrap: nowrap; overflow-x:auto;
+    padding:40px 16px 100px; box-sizing:border-box;
+  }
+  .sns-links img{
+    height: clamp(56px, 8vw, 100px); width:auto; display:block;
+    cursor:pointer; transition: transform .25s ease; image-rendering: pixelated;
+  }
+  .sns-links img:hover{ transform: scale(1.12); }
+  /* YouTubeだけ20%拡大を強制適用 */
+  .youtube-icon{ height: calc(clamp(56px, 8vw, 100px) * 1.2) !important; }
+</style>
