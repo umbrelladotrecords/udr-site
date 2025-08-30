@@ -1,34 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>UDR - debug</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
-  :root { --space-top: 120px; --gap-sns: 48px; }
-  body {
-    margin: 0; background: #000; color: #fff;
-    font-family: Arial, sans-serif; text-align: center;
-  }
-  /* タイトルロゴ：80%縮小（60% → 48%）を強制適用 */
-  .main-logo{
-    display:block !important;
-    margin: var(--space-top) auto 40px !important;
-    max-width: 48% !important;
-    height: auto !important;
-  }
-  /* 丸ロゴは縦並びを維持 */
-  .sub-logo{
-    display:block !important;
-    margin: 80px auto !important;
-    max-width:400px !important;
-    width:80% !important;
-    height:auto !important;
-  }
-  .sns-links{
-    display:flex; justify-content:center; align-items:center;
-    gap: var(--gap-sns); flex-wrap: nowrap; overflow-x:auto;
-    padding:40px 16px 100px; box-sizing:border-box;
-  }
-  .sns-links img{
-    height: clamp(56px, 8vw, 100px); width:auto; display:block;
-    cursor:pointer; transition: transform .25s ease; image-rendering: pixelated;
-  }
-  .sns-links img:hover{ transform: scale(1.12); }
-  /* YouTubeだけ20%拡大を強制適用 */
-  .youtube-icon{ height: calc(clamp(56px, 8vw, 100px) * 1.2) !important; }
+  body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif;text-align:center}
+  .box{border:2px dashed #f33;padding:12px;margin:24px auto;max-width:90%}
+  .ok{border-color:#3f3}
+  .hint{color:#aaa;font-size:14px;margin-top:8px}
+  img{display:block;margin:12px auto;max-width:80%;height:auto;background:#111;outline:1px solid #555}
+  a{color:#6cf}
 </style>
+</head>
+<body>
+  <h1>🧪 UDR 画像デバッグ</h1>
+  <p class="hint">各画像の下にあるリンクをタップして、ファイルが開けるかチェックしよう。開けなければファイル名が違う（大文字小文字/スペース）か、場所が違う。</p>
+
+  <div class="box" id="b1">
+    <h2>1) UDR ロゴ（PNG）</h2>
+    <img src="./UDR_HP_logo_main.PNG" alt="UDR_HP_logo_main.PNG">
+    <div class="hint">ファイル直リンク → <a href="./UDR_HP_logo_main.PNG">UDR_HP_logo_main.PNG</a></div>
+  </div>
+
+  <div class="box" id="b2">
+    <h2>2) 丸ロゴ（JPEG）</h2>
+    <img src="./IMG_1705.jpeg" alt="IMG_1705.jpeg">
+    <div class="hint">ファイル直リンク → <a href="./IMG_1705.jpeg">IMG_1705.jpeg</a></div>
+  </div>
+
+  <div class="box" id="b3">
+    <h2>3) YouTube アイコン（GIF）</h2>
+    <img src="./youtube_logo.gif" alt="youtube_logo.gif">
+    <div class="hint">ファイル直リンク → <a href="./youtube_logo.gif">youtube_logo.gif</a></div>
+  </div>
+
+  <div class="box" id="b4">
+    <h2>4) Music アイコン（GIF）</h2>
+    <img src="./music_logo.gif" alt="music_logo.gif">
+    <div class="hint">ファイル直リンク → <a href="./music_logo.gif">music_logo.gif</a></div>
+  </div>
+
+  <p class="hint">※ どれかが開けなかったら、そのファイル名をリポジトリで確認して<strong>完全一致</strong>に直してね（大文字小文字・拡張子・スペース）。</p>
+</body>
+</html>
