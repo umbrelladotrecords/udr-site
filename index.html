@@ -5,83 +5,62 @@
   <title>Umbrella Dot Records</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root{
-      --space-top: 120px;  
-      --gap-sns: 48px;     
-    }
-    html, body{
-      margin:0; padding:0;
-      background:#000;
-      color:#fff;
-      font-family: Arial, sans-serif;
-      text-align:center;
+    :root { --space-top: 120px; --gap-sns: 48px; }
+    body {
+      margin: 0; background: #000; color: #fff;
+      font-family: Arial, sans-serif; text-align: center;
     }
 
-    /* タイトルロゴ（UDR_HP_logo_main） */
-    .main-logo{
-      display:block;
+    /* タイトルロゴ：80%縮小 */
+    .main-logo {
+      display: block;
       margin: var(--space-top) auto 40px;
-      max-width: 48%;   /* ← 元の60%から 80%縮小 → 48% */
-      height:auto;
+      max-width: 48%;
+      height: auto;
     }
 
-    /* サブロゴ（丸いロゴ） */
-    .sub-logo{
-      display:block;
-      margin: 80px auto;
-      max-width:400px;
-      width:80%;
-      height:auto;
+    /* 丸ロゴ */
+    .sub-logo {
+      display: block;
+      margin: 80px auto 80px;
+      max-width: 400px;
+      width: 80%;
+      height: auto;
     }
 
-    /* SNSリンク（横並び） */
-    .sns-links{
-      display:flex;
-      justify-content:center;
-      align-items:center;
+    /* SNSアイコン行（横並び固定） */
+    .sns-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       gap: var(--gap-sns);
       flex-wrap: nowrap;
       overflow-x: auto;
-      padding:40px 16px 100px;
-      box-sizing:border-box;
+      padding: 40px 16px 100px;
     }
-
-    /* デフォルトSNSアイコン */
-    .sns-links img{
+    .sns-links img {
       height: clamp(56px, 8vw, 100px);
-      width:auto;
-      display:block;
-      cursor:pointer;
+      width: auto;
+      cursor: pointer;
       transition: transform .25s ease;
       image-rendering: pixelated;
     }
+    .sns-links img:hover { transform: scale(1.12); }
 
-    /* YouTubeだけ20%拡大 */
-    .youtube-icon{
-      height: calc(clamp(56px, 8vw, 100px) * 1.2);
-    }
-
-    .sns-links img:hover{
-      transform: scale(1.12);
-    }
+    /* YouTubeアイコン 20%拡大 */
+    .youtube-icon { height: calc(clamp(56px, 8vw, 100px) * 1.2); }
   </style>
 </head>
-<body style="background:#000;">
-  <!-- メインロゴ -->
+<body>
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo" />
-
-  <!-- サブロゴ -->
   <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo" />
 
-  <!-- SNSリンク -->
   <div class="sns-links">
-    <!-- YouTube（20%拡大用クラス追加） -->
     <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
-      <img src="youtube_logo.gif" alt="YouTube" class="youtube-icon">
+      <img src="youtube_logo.gif" alt="YouTube" class="youtube-icon" />
     </a>
-    <!-- Music -->
     <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
-      <img src="music_logo.gif" alt="Music">
+      <img src="music_logo.gif" alt="Music" />
     </a>
   </div>
 </body>
