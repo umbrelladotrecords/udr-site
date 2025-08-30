@@ -17,17 +17,17 @@
       text-align:center;
     }
 
-    /* タイトルロゴ（縦に配置） */
+    /* タイトルロゴ（UDR_HP_logo_main） */
     .main-logo{
-      display:block;                /* ← 縦並び強制 */
+      display:block;
       margin: var(--space-top) auto 40px;
-      max-width: 60%;
+      max-width: 48%;   /* ← 元の60%から 80%縮小 → 48% */
       height:auto;
     }
 
-    /* サブロゴ（縦に配置） */
+    /* サブロゴ（丸いロゴ） */
     .sub-logo{
-      display:block;                /* ← 縦並び強制 */
+      display:block;
       margin: 80px auto;
       max-width:400px;
       width:80%;
@@ -46,6 +46,7 @@
       box-sizing:border-box;
     }
 
+    /* デフォルトSNSアイコン */
     .sns-links img{
       height: clamp(56px, 8vw, 100px);
       width:auto;
@@ -53,6 +54,11 @@
       cursor:pointer;
       transition: transform .25s ease;
       image-rendering: pixelated;
+    }
+
+    /* YouTubeだけ20%拡大 */
+    .youtube-icon{
+      height: calc(clamp(56px, 8vw, 100px) * 1.2);
     }
 
     .sns-links img:hover{
@@ -69,9 +75,9 @@
 
   <!-- SNSリンク -->
   <div class="sns-links">
-    <!-- YouTube -->
+    <!-- YouTube（20%拡大用クラス追加） -->
     <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
-      <img src="youtube_logo.gif" alt="YouTube">
+      <img src="youtube_logo.gif" alt="YouTube" class="youtube-icon">
     </a>
     <!-- Music -->
     <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
