@@ -1,86 +1,70 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Umbrella Dot Records</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    /* 全体 */
-    :root{
-      --space-top: 120px;   /* 一番上の余白（必要なら調整） */
-      --gap-sns: 48px;      /* SNSアイコンの間隔 */
-    }
-    html, body {
+    body {
+      background: url('background_texture.jpg') repeat; /* ← ロゴ画像から切り出したテクスチャを使う */
+      background-size: 300px; /* テクスチャの大きさ調整 */
+      color: white;
+      text-align: center;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
     }
 
-    /* タイトルロゴ（UDR_HP_logo_main.PNG） */
+    /* メインタイトルロゴ */
     .main-logo {
-      margin-top: var(--space-top);
-      max-width: 60%;
+      margin-top: 80px;   /* 上の余白（広め） */
+      margin-bottom: 80px;/* 下の余白（広め） */
+      max-width: 60%;     /* 60%縮小 */
       height: auto;
     }
 
-    /* サブロゴ（IMG_1705.jpeg） */
+    /* サブロゴ */
     .sub-logo {
-      margin-top: 80px;     /* 上下のバランスはここで調整 */
-      margin-bottom: 80px;
+      margin-top: 80px;
       max-width: 400px;
-      width: 80%;
       height: auto;
     }
 
-    /* SNSリンク行（必ず1行に保つ） */
+    /* SNSリンク */
     .sns-links {
       display: flex;
       justify-content: center;
-      align-items: center;
-      gap: var(--gap-sns);
-      flex-wrap: nowrap;           /* ← 折り返し禁止 */
-      padding: 40px 16px 100px;    /* 下に余白 */
-      box-sizing: border-box;
+      gap: 80px;  /* アイコン同士の間隔 */
+      margin-top: 100px;
+      margin-bottom: 100px;
     }
-
-    /* アイコン画像：画面幅に応じて自動縮小（でも大きすぎない） */
     .sns-links img {
-      height: clamp(56px, 8vw, 100px); /* 小さい画面→縮む / 大きい画面→最大100px */
+      height: 100px; /* アイコン共通サイズ */
       width: auto;
-      display: block;
-      transition: transform 0.25s ease;
+      transition: transform 0.3s;
       cursor: pointer;
-      image-rendering: pixelated;  /* 少しレトロな滲み感を維持 */
     }
-    .sns-links img:hover { transform: scale(1.12); }
-
-    /* さらにギチギチに狭い画面の保険：横スクロール可 */
-    @media (max-width: 360px){
-      .sns-links{
-        overflow-x: auto;
-      }
+    .sns-links img:hover {
+      transform: scale(1.2); /* ホバーで拡大 */
     }
   </style>
 </head>
 <body>
   <!-- メインタイトルロゴ -->
-  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo" />
+  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- サブロゴ（レコードロゴ） -->
-  <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo" />
+  <!-- サブロゴ -->
+  <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo">
 
-  <!-- SNSリンク（必ず横一列） -->
+  <!-- SNSリンク -->
   <div class="sns-links">
     <!-- YouTube -->
-    <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
-      <img src="youtube_logo.gif" alt="YouTube" />
+    <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank">
+      <img src="youtube_logo.gif" alt="YouTube">
     </a>
-    <!-- Music / Linkcore -->
-    <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
-      <img src="music_logo.gif" alt="Music" />
+
+    <!-- Music Link (Linkcore) -->
+    <a href="https://linkco.re/R9DNs8c9?lang=ja&fbclid=PAZnRzaAMfy75leHRuA2FlbQIxMQABp3fiFXpDSosFtXBn16IBXKvpT6af1zxN3dQ8dcgdIELJlOLrHvtM13dDSp_f_aem_ZmfDG_EusN5oIjbhvFRAZw" target="_blank">
+      <img src="music_logo.gif" alt="Music Link">
     </a>
   </div>
 </body>
