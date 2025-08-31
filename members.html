@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <title>UDR Members - arsvna</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- 角張ったフォントを読み込み（Orbitron） -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root{
       --rgb-offset: 1.2px; /* RGBズレ量 */
@@ -11,7 +13,7 @@
 
     body{
       margin:0; background:#000; color:#fff;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Orbitron', Arial, sans-serif; /* ←角張ったフォント */
       text-align:center;
     }
 
@@ -43,11 +45,11 @@
         0 0 4px rgba(0,0,0,.6);
     }
 
-    /* BANDラベル（枠線なし・下に移動） */
+    /* BANDラベル */
     .tag.n64{
       position:relative;
       display:inline-flex; align-items:center; justify-content:center;
-      margin:40px auto 10px;  /* ← 線からさらに離した */
+      margin:60px auto 10px; /* ← 線からさらに離した */
       padding:6px 14px;
       background:none;
       font-weight:900;
@@ -78,7 +80,7 @@
       transform:translate(calc(-50% + var(--rgb-offset)),-50%);
     }
 
-    /* arsvnaロゴ（BANDに近づけた） */
+    /* arsvnaロゴ */
     .brand-3d{ display:flex; justify-content:center; margin:6px 0 24px; }
     .brand-logo{
       display:block;
@@ -94,18 +96,18 @@
       max-width:80%; height:auto;
     }
 
-    /* Instagramリンク（透過・枠なし・緑文字） */
+    /* Instagramリンク（白文字） */
     .insta-link{
       display:inline-flex; align-items:center; gap:10px;
       text-decoration:none;
-      color:#a8ffb5;  /* ← ロゴ寄せの淡い緑 */
+      color:#fff;
       font-size:1.05rem;
       background:none;
       border:none;
       padding:0;
     }
     .insta-link img{ height:40px; width:auto; }
-    .insta-link span{ color:#a8ffb5; }
+    .insta-link span{ color:#fff; }
     .insta-link:hover span{ text-decoration:underline; }
   </style>
 </head>
