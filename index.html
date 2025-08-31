@@ -1,76 +1,30 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <title>Umbrella Dot Records</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root { --space-top: 120px; --gap-sns: 48px; }
-    body {
-      margin: 0; background: #000; color: #fff;
-      font-family: Arial, sans-serif; text-align: center;
-    }
+<!-- ページ最下部 HOMEリンク -->
+<footer>
+  <a href="https://umbrelladotrecords.github.io/udr-site/" class="home-link">←HOME</a>
+</footer>
 
-    /* タイトルロゴ */
-    .main-logo {
-      display: block;
-      margin: var(--space-top) auto 40px;
-      max-width: 48%;
-      height: auto;
-    }
+<style>
+  footer {
+    margin: 60px 0 40px;   /* 上下の余白 */
+    text-align: center;    /* 中央配置 */
+  }
 
-    /* 丸ロゴ */
-    .sub-logo {
-      display: block;
-      margin: 80px auto 80px;
-      max-width: 400px;
-      width: 80%;
-      height: auto;
-    }
+  .home-link {
+    display: inline-block;
+    font-family: monospace;      /* 無機質な等幅フォント */
+    font-size: 16px;
+    color: #ccc;
+    text-decoration: none;
+    background: #000;            /* サイト背景と一体化 */
+    border: 1px solid #555;      /* 四角の枠線（ガラケーっぽい） */
+    padding: 6px 14px;
+    letter-spacing: 1px;
+    transition: all 0.25s ease;
+  }
 
-    /* SNSアイコン行 */
-    .sns-links {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: var(--gap-sns);
-      flex-wrap: nowrap;
-      padding: 40px 16px 100px;
-    }
-    .sns-links img {
-      height: clamp(56px, 8vw, 100px);
-      width: auto;
-      cursor: pointer;
-      transition: transform .25s ease;
-      image-rendering: pixelated;
-    }
-    .sns-links img:hover { transform: scale(1.12); }
-
-    /* YouTube アイコンを20%拡大 */
-    .youtube-icon { height: calc(clamp(56px, 8vw, 100px) * 1.2); }
-  </style>
-</head>
-<body>
-  <!-- メインロゴ -->
-  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo" />
-
-  <!-- 丸ロゴ -->
-  <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo" />
-
-  <!-- SNSリンク -->
-  <div class="sns-links">
-    <!-- YouTube -->
-    <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
-      <img src="youtube_logo.gif" alt="YouTube" class="youtube-icon" />
-    </a>
-    <!-- Music -->
-    <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
-      <img src="music_logo.gif" alt="Music" />
-    </a>
-    <!-- Instagram → members.html -->
-    <a href="members.html">
-      <img src="instagram_logo.gif" alt="Instagram" />
-    </a>
-  </div>
-</body>
-</html>
+  .home-link:hover {
+    background: #111;  /* カーソル時にわずかに反応 */
+    color: #fff;
+    border-color: #888;
+  }
+</style>
