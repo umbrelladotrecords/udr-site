@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>UDR Members - arsvna / artwork</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- 角張り系フォント -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -11,100 +12,126 @@
       --hdr-bar-h: 4px;
       --hdr-gap: 18px;
       --hdr-base: #dff2e9;
+      --hdr-deep: #97c6b1;
       --hdr-dark: #0d0f0d;
       --hdr-grad1: #223;
       --hdr-grad2: #7fb59c;
       --rgb-off: 1.8px;
       --txt-size: clamp(20px, 5.2vw, 34px);
       --txt-spacing: .14em;
-
-      /* ★“等間隔”にするための基準距離（必要ならここだけ変えればOK） */
-      --band-gap: 28px;
     }
 
     *{ box-sizing:border-box }
     body{
       margin:0; background:#000; color:#fff;
       font-family:'Orbitron', Arial, sans-serif; text-align:center;
+      position:relative;
     }
 
-    /* UDRロゴ */
-    .main-logo{ display:block; margin:60px auto 0; max-width:60%; height:auto; }
+    /* 左右ライン */
+    body::before,
+    body::after{
+      content:"";
+      position:fixed;
+      top:0; bottom:0;
+      width:4px;
+      background:linear-gradient(180deg, var(--hdr-grad1) 0%, var(--hdr-grad2) 50%, var(--hdr-grad1) 100%);
+      box-shadow:0 0 8px rgba(0,0,0,.4);
+      z-index:999;
+    }
+    body::before{ left:0; }
+    body::after { right:0; }
 
-    /* 見出し（BAND / ART WORK 共通） */
-    .hdr{ position:relative; width:var(--hdr-width); margin:48px auto 26px; padding:var(--hdr-gap) 0; isolation:isolate; }
-    .hdr::before,.hdr::after{
-      content:""; position:absolute; left:50%; width:100%; height:var(--hdr-bar-h); transform:translateX(-50%);
+    /* UDRロゴ */
+    .main-logo{
+      display:block; margin:60px auto 0; max-width:60%; height:auto;
+    }
+
+    /* 見出し（BAND / ART WORK） */
+    .hdr{
+      position:relative; width:var(--hdr-width);
+      margin:48px auto 26px;
+      padding:var(--hdr-gap) 0;
+      isolation:isolate;
+    }
+    .hdr::before,
+    .hdr::after{
+      content:""; position:absolute; left:50%;
+      width:100%; height:var(--hdr-bar-h); transform:translateX(-50%);
       background:linear-gradient(90deg, var(--hdr-grad1) 0%, var(--hdr-grad2) 50%, var(--hdr-grad1) 100%);
       box-shadow:0 1px 0 rgba(0,0,0,.45), 0 0 8px rgba(0,0,0,.35);
       z-index:0;
     }
-    .hdr::before{ top:0 } .hdr::after{ bottom:0 }
+    .hdr::before{ top:0 } 
+    .hdr::after { bottom:0 }
+
     .hdr .txt{
-      position:relative; display:inline-block; font-weight:800; font-size:var(--txt-size); letter-spacing:var(--txt-spacing);
+      position:relative; display:inline-block;
+      font-weight:800; font-size:var(--txt-size); letter-spacing:var(--txt-spacing);
       color:var(--hdr-base); line-height:1; z-index:1;
-      text-shadow: 0 2px 0 var(--hdr-dark), 0 4px 0 var(--hdr-dark), 0 6px 0 var(--hdr-dark),
-                   1px 1px 0 #2a3a33, 2px 2px 0 #1a2722, 0 6px 8px rgba(0,0,0,.35);
+      text-shadow:
+        0 2px 0 var(--hdr-dark),
+        0 4px 0 var(--hdr-dark),
+        0 6px 0 var(--hdr-dark),
+        1px 1px 0 #2a3a33,
+        2px 2px 0 #1a2722,
+        0 6px 8px rgba(0,0,0,.35);
       filter: drop-shadow(0 8px 8px rgba(0,0,0,.22));
     }
-    .hdr .txt::before,.hdr .txt::after{ content:attr(data-text); position:absolute; inset:0; pointer-events:none; }
+    .hdr .txt::before,
+    .hdr .txt::after{
+      content:attr(data-text); position:absolute; inset:0; pointer-events:none;
+    }
     .hdr .txt::before{ transform:translate(calc(-1 * var(--rgb-off)),0); color:rgba(140,255,200,.5); mix-blend-mode:screen }
     .hdr .txt::after { transform:translate(var(--rgb-off),0); color:rgba(210,255,230,.4);  mix-blend-mode:screen }
 
-    /* Band専用：等間隔に最適化 */
-    .band-section .hdr        { margin: 36px auto 18px; }
-    .band-section .brand-3d   { margin: 6px 0 var(--band-gap); }      /* ★写真の“上側”は据え置き、下側を基準距離に */
-    .band-section .band-image { margin: 0 auto var(--band-gap); }     /* ★写真の下を基準距離に */
-    .band-section .insta-link { margin: var(--band-gap) 0 var(--band-gap); } /* ★Instagramブロックの上下も同じ距離に */
-
-    /* 画像 */
-    .brand-3d{ display:flex; justify-content:center; margin:6px 0 24px }
+    /* バンドロゴ・写真 */
+    .brand-3d{ display:flex; justify-content:center; margin:6px 0 16px }
     .brand-logo{ display:block; width:28%; max-width:260px; height:auto }
-    .band-image, .designer-image{ display:block; margin:0 auto 40px; max-width:80%; height:auto }
+    .band-image, .designer-image{ display:block; margin:0 auto 24px; max-width:80%; height:auto }
 
-    /* Instagram（縦並び）＋アイコン20%拡大 */
+    /* Instagramリンク */
     .insta-link{
       display:inline-flex; flex-direction:column; align-items:center;
-      text-decoration:none; color:#fff; background:none; border:none; padding:0; margin-bottom:40px;
+      text-decoration:none; color:#fff; background:none; border:none;
+      padding:0; margin:12px 0 32px;
     }
-    .insta-link img{ height:48px; width:auto; margin-bottom:6px }  /* 20%アップ */
+    .insta-link img{ height:48px; width:auto; margin-bottom:6px }
     .insta-link span{ color:#fff; text-decoration:underline }
 
-    /* Band→ART WORK のダミー余白は 0（上下マージンで均等化するため） */
-    .gap-between { height: 0; }  /* ★ゼロに */
-
-    /* ART WORK 下は広め */
-    .gap-bottom  { height: 80px; }
     .designer-name{
       margin:10px 0 14px;
       font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif;
       font-weight:700; font-size:18px; letter-spacing:.06em; color:#dfe;
     }
+    .section-gap{ height:64px }
   </style>
 </head>
 <body>
+  <!-- UDRロゴ -->
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
   <!-- ===== Band ===== -->
-  <div class="band-section">
-    <div class="hdr"><span class="txt" data-text="BAND">BAND</span></div>
-
-    <div class="brand-3d">
-      <img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo">
-    </div>
-    <img src="arsvna2.JPG" alt="arsvna" class="band-image">
-
-    <a class="insta-link" href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" target="_blank" rel="noopener">
-      <img src="instagram_logo.gif" alt="Instagram">
-      <span>@arsvna_udr</span>
-    </a>
+  <div class="hdr">
+    <span class="txt" data-text="BAND">BAND</span>
   </div>
 
-  <!-- Band → ART WORK の間（ゼロにして上下マージンで等間隔） -->
-  <div class="gap-between"></div>
+  <div class="brand-3d">
+    <img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo">
+  </div>
+  <img src="arsvna2.JPG" alt="arsvna" class="band-image">
+
+  <a class="insta-link" href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" target="_blank" rel="noopener">
+    <img src="instagram_logo.gif" alt="Instagram">
+    <span>@arsvna_udr</span>
+  </a>
+
+  <div class="section-gap"></div>
 
   <!-- ===== ART WORK ===== -->
-  <div class="hdr"><span class="txt" data-text="ART WORK">ART WORK</span></div>
+  <div class="hdr">
+    <span class="txt" data-text="ART WORK">ART WORK</span>
+  </div>
 
   <div class="designer-name">荒山悠太</div>
   <img src="arayama1.JPG" alt="荒山悠太" class="designer-image">
@@ -113,7 +140,5 @@
     <img src="instagram_logo.gif" alt="Instagram">
     <span>@ARYM_WORKS</span>
   </a>
-
-  <div class="gap-bottom"></div>
 </body>
 </html>
