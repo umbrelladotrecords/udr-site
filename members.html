@@ -16,17 +16,26 @@
     /* UDR ロゴ */
     .main-logo {
       display: block;
-      margin: 40px auto;
+      margin: 40px auto 20px;
       max-width: 60%;
       height: auto;
     }
 
-    /* arsvna ロゴ画像 → 60%縮小 */
+    /* 区切り線 */
+    .divider {
+      width: 60%;
+      max-width: 600px;
+      height: 2px;
+      margin: 0 auto 30px;
+      background: #555;  /* ロゴに似た色味で */
+    }
+
+    /* arsvna ロゴ画像 → さらに70%縮小 */
     .brand-logo {
       display: block;
       margin: 20px auto 24px;
-      width: 40%;     /* ←ここで縮小（元の70% → 40%で約60%縮小） */
-      max-width: 320px;
+      width: 28%;     /* 前回40% → 70%縮小で28%に */
+      max-width: 260px;
       height: auto;
     }
 
@@ -36,7 +45,6 @@
       margin: 0 auto 40px;
       max-width: 80%;
       height: auto;
-      /* border: 2px solid #444; ←削除 */
     }
 
     .insta-link {
@@ -62,6 +70,9 @@
 <body>
   <!-- UDRロゴ -->
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
+
+  <!-- 区切り線 -->
+  <div class="divider"></div>
 
   <!-- arsvna ロゴ（縮小済み） -->
   <img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo">
