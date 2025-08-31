@@ -18,15 +18,15 @@
     /* UDRロゴ */
     .main-logo{
       display:block;
-      margin:60px auto 50px;  /* ロゴ下の余白を広げた */
+      margin:60px auto 0;  /* ← 下の余白をゼロにした */
       max-width:60%;
       height:auto;
     }
 
-    /* 区切り線：グレー＋緑のグラデーション */
+    /* 区切り線：UDRロゴの真下に配置 */
     .divider-wrap{
       display:flex; justify-content:center; align-items:center;
-      margin:20px 0 16px;
+      margin:0 auto;  /* ← 余白をゼロ */
     }
     .divider.n64-line{
       width:min(60%,600px);
@@ -47,7 +47,7 @@
     .tag.n64{
       position:relative;
       display:inline-flex; align-items:center; justify-content:center;
-      margin:20px auto 40px; /* 線との間隔を広げた */
+      margin:20px auto 10px;  /* ← 線から離す / ロゴに近づける */
       padding:8px 18px;
       background:#111;
       border-radius:6px;
@@ -55,7 +55,7 @@
       font-size:14px;
       letter-spacing:.14em;
       text-transform:uppercase;
-      color:#dfe;  /* ←少し緑寄りの白 */
+      color:#dfe;
       text-shadow:
         1px 1px 0 #222,
         2px 2px 0 #111,
@@ -71,16 +71,16 @@
       opacity:.5; pointer-events:none;
     }
     .tag.n64::before{
-      color:rgba(120,255,180,.6); /* シアン寄りの緑ズレ */
+      color:rgba(120,255,180,.6);
       transform:translate(calc(-50% - var(--rgb-offset)),-50%);
     }
     .tag.n64::after{
-      color:rgba(200,255,200,.5); /* 薄い黄緑ズレ */
+      color:rgba(200,255,200,.5);
       transform:translate(calc(-50% + var(--rgb-offset)),-50%);
     }
 
-    /* arsvnaロゴ */
-    .brand-3d{ display:flex; justify-content:center; margin:8px 0 24px; }
+    /* arsvnaロゴ（BANDの直下に近づけた） */
+    .brand-3d{ display:flex; justify-content:center; margin:6px 0 24px; }
     .brand-logo{
       display:block;
       width:28%;
@@ -110,13 +110,13 @@
   <!-- UDRロゴ -->
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- 区切り線 -->
+  <!-- 区切り線（真下） -->
   <div class="divider-wrap"><div class="divider n64-line"></div></div>
 
-  <!-- BANDラベル -->
+  <!-- BANDラベル（線から少し下に） -->
   <div class="tag n64" data-text="BAND">BAND</div>
 
-  <!-- arsvnaロゴ -->
+  <!-- arsvnaロゴ（BANDに近づける） -->
   <div class="brand-3d">
     <img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo">
   </div>
