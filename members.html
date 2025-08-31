@@ -37,7 +37,7 @@
       box-shadow: 0 1px 0 #111, 0 2px 0 #000, 0 0 4px rgba(0,0,0,.6);
     }
 
-    /* セクション見出し */
+    /* セクション見出し（BAND, ART WORK 共通） */
     .tag.n64{
       position:relative;
       display:inline-flex; align-items:center; justify-content:center;
@@ -67,13 +67,20 @@
     .brand-logo{ display:block; width:28%; max-width:260px; height:auto; }
     .band-image, .designer-image{ display:block; margin:0 auto 40px; max-width:80%; height:auto; }
 
-    /* Instagramリンク */
+    /* Instagramリンクを縦並びに修正 */
     .insta-link{
-      display:inline-flex; align-items:center; gap:10px;
-      text-decoration:none; color:#fff; font-size:1.05rem;
-      background:none; border:none; padding:0;
+      display:inline-flex;
+      flex-direction:column;  /* ←縦並び */
+      align-items:center;
+      text-decoration:none; 
+      color:#fff; 
+      font-size:1.05rem;
+      background:none; 
+      border:none; 
+      padding:0;
+      margin-bottom:40px;
     }
-    .insta-link img{ height:40px; width:auto; }
+    .insta-link img{ height:40px; width:auto; margin-bottom:6px; }
     .insta-link span{
       color:#fff;
       text-decoration: underline; /* 常時下線 */
