@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --rgb-offset: 1.2px; /* RGBズレ量 */
+      --rgb-offset: 1.2px;
     }
 
     body{
@@ -25,7 +25,7 @@
       height:auto;
     }
 
-    /* 区切り線（共通） */
+    /* 区切り線 */
     .divider-wrap{
       display:flex; justify-content:center; align-items:center;
       margin:0 auto;
@@ -37,11 +37,11 @@
       box-shadow: 0 1px 0 #111, 0 2px 0 #000, 0 0 4px rgba(0,0,0,.6);
     }
 
-    /* セクション見出しタグ（ーTEXTー） */
+    /* セクション見出し */
     .tag.n64{
       position:relative;
       display:inline-flex; align-items:center; justify-content:center;
-      margin:60px auto 10px; /* 線から離す量 */
+      margin:60px auto 10px;
       padding:6px 14px;
       background:none;
       font-weight:900;
@@ -62,26 +62,24 @@
     .tag.n64::before{ color:rgba(120,255,180,.6); transform:translate(calc(-50% - var(--rgb-offset)),-50%); }
     .tag.n64::after { color:rgba(200,255,200,.5); transform:translate(calc(-50% + var(--rgb-offset)),-50%); }
 
-    /* arsvna ロゴ */
+    /* ロゴと画像 */
     .brand-3d{ display:flex; justify-content:center; margin:6px 0 24px; }
     .brand-logo{ display:block; width:28%; max-width:260px; height:auto; }
+    .band-image, .designer-image{ display:block; margin:0 auto 40px; max-width:80%; height:auto; }
 
-    /* 画像（共通） */
-    .band-image, .designer-image{
-      display:block; margin:0 auto 40px; max-width:80%; height:auto;
-    }
-
-    /* Instagramリンク（共通） */
+    /* Instagramリンク */
     .insta-link{
       display:inline-flex; align-items:center; gap:10px;
       text-decoration:none; color:#fff; font-size:1.05rem;
       background:none; border:none; padding:0;
     }
     .insta-link img{ height:40px; width:auto; }
-    .insta-link span{ color:#fff; }
-    .insta-link:hover span{ text-decoration:underline; }
+    .insta-link span{
+      color:#fff;
+      text-decoration: underline; /* 常時下線 */
+    }
 
-    /* デザイナー名（日本語表示用に別フォント落ち） */
+    /* デザイナー名 */
     .designer-name{
       margin:10px 0 14px;
       font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", system-ui, sans-serif;
@@ -91,7 +89,6 @@
       color:#dfe;
     }
 
-    /* セクション間の余白 */
     .section-gap{ height:72px; }
   </style>
 </head>
@@ -99,14 +96,13 @@
   <!-- UDRロゴ -->
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- ===== Band セクション ===== -->
+  <!-- ===== Band ===== -->
   <div class="divider-wrap"><div class="divider n64-line"></div></div>
   <div class="tag n64" data-text="ーBANDー">ーBANDー</div>
 
   <div class="brand-3d">
     <img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo">
   </div>
-
   <img src="arsvna2.JPG" alt="arsvna" class="band-image">
 
   <a href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" target="_blank" rel="noopener" class="insta-link">
@@ -116,18 +112,16 @@
 
   <div class="section-gap"></div>
 
-  <!-- ===== Designer セクション ===== -->
+  <!-- ===== Artwork ===== -->
   <div class="divider-wrap"><div class="divider n64-line"></div></div>
-  <div class="tag n64" data-text="ーart workー">ーart workー</div>
+  <div class="tag n64" data-text="ーART WORKー">ーART WORKー</div>
 
   <div class="designer-name">荒山悠太</div>
-
   <img src="arayama1.JPG" alt="荒山悠太" class="designer-image">
 
   <a href="https://www.instagram.com/arym_works?igsh=dzJnZjUyZjRjYjh6" target="_blank" rel="noopener" class="insta-link">
     <img src="instagram_logo.gif" alt="Instagram">
-    <span>ARYM_WORKS</span>
+    <span>@ARYM_WORKS</span>
   </a>
-
 </body>
 </html>
