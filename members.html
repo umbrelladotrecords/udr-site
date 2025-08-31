@@ -23,7 +23,7 @@
       height:auto;
     }
 
-    /* 区切り線（暗めのグレー＋うっすら緑） */
+    /* 区切り線 */
     .divider-wrap{
       display:flex; justify-content:center; align-items:center;
       margin:0 auto;
@@ -33,23 +33,23 @@
       height:4px;
       background: linear-gradient(
         90deg,
-        #444 0%,
-        #557755 50%,
-        #444 100%
+        #333 0%,
+        #446644 50%,
+        #333 100%
       );
       box-shadow:
-        0 1px 0 #222,
-        0 2px 0 #111,
+        0 1px 0 #111,
+        0 2px 0 #000,
         0 0 4px rgba(0,0,0,.6);
     }
 
-    /* BANDラベル（枠線なし） */
+    /* BANDラベル（枠線なし・下に移動） */
     .tag.n64{
       position:relative;
       display:inline-flex; align-items:center; justify-content:center;
-      margin:22px auto 10px;
+      margin:40px auto 10px;  /* ← 線からさらに離した */
       padding:6px 14px;
-      background:none; /* ←背景もなし */
+      background:none;
       font-weight:900;
       font-size:14px;
       letter-spacing:.14em;
@@ -78,7 +78,7 @@
       transform:translate(calc(-50% + var(--rgb-offset)),-50%);
     }
 
-    /* arsvnaロゴ */
+    /* arsvnaロゴ（BANDに近づけた） */
     .brand-3d{ display:flex; justify-content:center; margin:6px 0 24px; }
     .brand-logo{
       display:block;
@@ -94,18 +94,18 @@
       max-width:80%; height:auto;
     }
 
-    /* Instagramリンク（透過・枠なし） */
+    /* Instagramリンク（透過・枠なし・緑文字） */
     .insta-link{
       display:inline-flex; align-items:center; gap:10px;
       text-decoration:none;
-      color:#fff;
+      color:#a8ffb5;  /* ← ロゴ寄せの淡い緑 */
       font-size:1.05rem;
       background:none;
       border:none;
       padding:0;
     }
     .insta-link img{ height:40px; width:auto; }
-    .insta-link span{ color:#fff; }
+    .insta-link span{ color:#a8ffb5; }
     .insta-link:hover span{ text-decoration:underline; }
   </style>
 </head>
@@ -113,7 +113,7 @@
   <!-- UDRロゴ -->
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- 区切り線（真下） -->
+  <!-- 区切り線 -->
   <div class="divider-wrap"><div class="divider n64-line"></div></div>
 
   <!-- BANDラベル -->
