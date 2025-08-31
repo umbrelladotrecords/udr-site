@@ -18,46 +18,49 @@
     /* UDRロゴ */
     .main-logo{
       display:block;
-      margin:40px auto 20px;
+      margin:60px auto 50px;  /* ロゴ下の余白を広げた */
       max-width:60%;
       height:auto;
     }
 
-    /* 区切り線：N64風にちょい立体 */
+    /* 区切り線：グレー＋緑のグラデーション */
     .divider-wrap{
       display:flex; justify-content:center; align-items:center;
-      margin:10px 0 10px;
+      margin:20px 0 16px;
     }
     .divider.n64-line{
       width:min(60%,600px);
       height:4px;
-      background:#666;
+      background: linear-gradient(
+        90deg,
+        #bbb 0%,
+        #a8ffb5 50%,
+        #bbb 100%
+      );
       box-shadow:
-        0 2px 0 #444,
-        0 4px 0 #222,
-        0 0 6px rgba(0,0,0,.6);
+        0 2px 0 #777,
+        0 4px 0 #444,
+        0 0 6px rgba(0,0,0,.4);
     }
 
     /* BANDラベル */
     .tag.n64{
       position:relative;
       display:inline-flex; align-items:center; justify-content:center;
-      margin:-8px auto 20px;
-      padding:8px 16px;
+      margin:20px auto 40px; /* 線との間隔を広げた */
+      padding:8px 18px;
       background:#111;
       border-radius:6px;
       font-weight:900;
       font-size:14px;
       letter-spacing:.14em;
       text-transform:uppercase;
-      color:#eee;
-      /* 疑似的な押し出し */
+      color:#dfe;  /* ←少し緑寄りの白 */
       text-shadow:
         1px 1px 0 #222,
         2px 2px 0 #111,
-        3px 3px 2px rgba(0,0,0,.8);
+        3px 3px 2px rgba(0,0,0,.7);
     }
-    /* RGBズレ効果 */
     .tag.n64::before,
     .tag.n64::after{
       content: attr(data-text);
@@ -65,14 +68,14 @@
       transform:translate(-50%,-50%);
       font-weight:900; font-size:14px; letter-spacing:.14em;
       text-transform:uppercase;
-      opacity:.6; pointer-events:none;
+      opacity:.5; pointer-events:none;
     }
     .tag.n64::before{
-      color:cyan;
+      color:rgba(120,255,180,.6); /* シアン寄りの緑ズレ */
       transform:translate(calc(-50% - var(--rgb-offset)),-50%);
     }
     .tag.n64::after{
-      color:magenta;
+      color:rgba(200,255,200,.5); /* 薄い黄緑ズレ */
       transform:translate(calc(-50% + var(--rgb-offset)),-50%);
     }
 
