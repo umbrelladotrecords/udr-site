@@ -18,39 +18,38 @@
     /* UDRロゴ */
     .main-logo{
       display:block;
-      margin:60px auto 0;  /* ← 下の余白をゼロにした */
+      margin:60px auto 0;
       max-width:60%;
       height:auto;
     }
 
-    /* 区切り線：UDRロゴの真下に配置 */
+    /* 区切り線（暗めのグレー＋うっすら緑） */
     .divider-wrap{
       display:flex; justify-content:center; align-items:center;
-      margin:0 auto;  /* ← 余白をゼロ */
+      margin:0 auto;
     }
     .divider.n64-line{
       width:min(60%,600px);
       height:4px;
       background: linear-gradient(
         90deg,
-        #bbb 0%,
-        #a8ffb5 50%,
-        #bbb 100%
+        #444 0%,
+        #557755 50%,
+        #444 100%
       );
       box-shadow:
-        0 2px 0 #777,
-        0 4px 0 #444,
-        0 0 6px rgba(0,0,0,.4);
+        0 1px 0 #222,
+        0 2px 0 #111,
+        0 0 4px rgba(0,0,0,.6);
     }
 
-    /* BANDラベル */
+    /* BANDラベル（枠線なし） */
     .tag.n64{
       position:relative;
       display:inline-flex; align-items:center; justify-content:center;
-      margin:20px auto 10px;  /* ← 線から離す / ロゴに近づける */
-      padding:8px 18px;
-      background:#111;
-      border-radius:6px;
+      margin:22px auto 10px;
+      padding:6px 14px;
+      background:none; /* ←背景もなし */
       font-weight:900;
       font-size:14px;
       letter-spacing:.14em;
@@ -79,7 +78,7 @@
       transform:translate(calc(-50% + var(--rgb-offset)),-50%);
     }
 
-    /* arsvnaロゴ（BANDの直下に近づけた） */
+    /* arsvnaロゴ */
     .brand-3d{ display:flex; justify-content:center; margin:6px 0 24px; }
     .brand-logo{
       display:block;
@@ -95,15 +94,19 @@
       max-width:80%; height:auto;
     }
 
-    /* Instagramボタン */
+    /* Instagramリンク（透過・枠なし） */
     .insta-link{
-      display:inline-flex; align-items:center; gap:12px;
-      background:#111; padding:12px 20px; border-radius:8px;
-      text-decoration:none; color:#fff;
-      font-size:1.05rem; border:1px solid #333;
+      display:inline-flex; align-items:center; gap:10px;
+      text-decoration:none;
+      color:#fff;
+      font-size:1.05rem;
+      background:none;
+      border:none;
+      padding:0;
     }
-    .insta-link:hover{ background:#242424; }
     .insta-link img{ height:40px; width:auto; }
+    .insta-link span{ color:#fff; }
+    .insta-link:hover span{ text-decoration:underline; }
   </style>
 </head>
 <body>
@@ -113,10 +116,10 @@
   <!-- 区切り線（真下） -->
   <div class="divider-wrap"><div class="divider n64-line"></div></div>
 
-  <!-- BANDラベル（線から少し下に） -->
+  <!-- BANDラベル -->
   <div class="tag n64" data-text="BAND">BAND</div>
 
-  <!-- arsvnaロゴ（BANDに近づける） -->
+  <!-- arsvnaロゴ -->
   <div class="brand-3d">
     <img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo">
   </div>
@@ -125,7 +128,8 @@
   <img src="arsvna2.JPG" alt="arsvna" class="band-image">
 
   <!-- Instagram -->
-  <a href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" target="_blank" rel="noopener" class="insta-link">
+  <a href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" 
+     target="_blank" rel="noopener" class="insta-link">
     <img src="instagram_logo.gif" alt="Instagram">
     <span>@arsvna_udr</span>
   </a>
