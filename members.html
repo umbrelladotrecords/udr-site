@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>arsvna - Instagram</title>
+  <title>UDR Members - arsvna</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
@@ -12,38 +12,65 @@
       font-family: Arial, sans-serif;
       text-align: center;
     }
+
+    /* UDR ロゴ */
     .main-logo {
-      margin-top: 60px;
+      display: block;
+      margin: 40px auto;
       max-width: 60%;
       height: auto;
     }
+
+    /* arsvna ロゴ画像（←追加） */
+    .brand-logo {
+      display: block;
+      margin: 20px auto 24px;  /* 上少し空けて、下も余白 */
+      width: 70%;              /* 画面幅の 70% に収める */
+      max-width: 520px;        /* PCで大きすぎないように上限 */
+      height: auto;
+    }
+
+    .band-image {
+      display: block;
+      margin: 0 auto 40px;
+      max-width: 80%;
+      height: auto;
+      border: 2px solid #444;
+    }
+
     .insta-link {
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      margin-top: 40px;
-      font-size: 20px;
-      color: #fff;
+      background: #111;
+      padding: 12px 20px;
+      border-radius: 8px;
       text-decoration: none;
+      color: #fff;
+      font-size: 1.2rem;
+      transition: background 0.3s;
     }
+    .insta-link:hover { background: #333; }
+
     .insta-link img {
       height: 40px;
       width: auto;
     }
-    .insta-link:hover {
-      opacity: 0.8;
-    }
   </style>
 </head>
 <body>
-  <!-- arsvna ロゴ -->
-  <img src="arsvna_logo.jpeg" alt="arsvna ロゴ" class="main-logo" />
+  <!-- UDRロゴ -->
+  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- Instagram アイコン＋ユーザー名 -->
+  <!-- arsvna ロゴ（画像に変更） -->
+  <img src="arsvna_logo.jpeg" alt="arsvna logo" class="brand-logo">
+
+  <!-- バンド画像（拡張子は .JPG で合ってる想定） -->
+  <img src="arsvna2.JPG" alt="arsvna" class="band-image">
+
+  <!-- Instagramリンク -->
   <a href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" 
-     target="_blank" 
-     rel="noopener" 
-     class="insta-link">
+     target="_blank" rel="noopener" class="insta-link">
     <img src="instagram_logo.gif" alt="Instagram">
     <span>@arsvna_udr</span>
   </a>
