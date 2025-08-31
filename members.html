@@ -21,21 +21,22 @@
       height: auto;
     }
 
-    /* arsvna ロゴ画像 */
+    /* arsvna ロゴ画像 → 60%縮小 */
     .brand-logo {
       display: block;
       margin: 20px auto 24px;
-      width: 70%;
-      max-width: 520px;
+      width: 40%;     /* ←ここで縮小（元の70% → 40%で約60%縮小） */
+      max-width: 320px;
       height: auto;
     }
 
+    /* バンド画像（枠線なし） */
     .band-image {
       display: block;
       margin: 0 auto 40px;
       max-width: 80%;
       height: auto;
-      border: 2px solid #444;
+      /* border: 2px solid #444; ←削除 */
     }
 
     .insta-link {
@@ -62,10 +63,10 @@
   <!-- UDRロゴ -->
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- arsvna ロゴ（画像に変更） -->
+  <!-- arsvna ロゴ（縮小済み） -->
   <img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo">
 
-  <!-- バンド画像 -->
+  <!-- バンド画像（枠線なし） -->
   <img src="arsvna2.JPG" alt="arsvna" class="band-image">
 
   <!-- Instagramリンク -->
