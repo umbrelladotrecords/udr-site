@@ -4,127 +4,91 @@
   <meta charset="UTF-8" />
   <title>UDR Members - arsvna / artwork</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- 角張りレトロ寄り -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <!-- 角張り系フォント -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --rgb-offset: 1.2px;      /* 文字のRGBズレ量 */
-      --line-c1:#2b2f2c;        /* 区切り線の暗色 */
-      --line-c2:#4a6b59;        /* 区切り線の中間 */
-      --line-c3:#6f9c86;        /* 区切り線の淡緑 */
-      --txt-core:#dfe;          /* 文字のメインカラー（淡い緑） */
+      /* ↓ 見出しを控えめに（前よりひと回りコンパクト） */
+      --hdr-width: min(60vw, 520px);
+      --hdr-bar-h: 4px;
+      --hdr-gap: 18px;           /* 文字と上下バーの距離 */
+      --hdr-base: #dff2e9;
+      --hdr-deep: #97c6b1;
+      --hdr-dark: #0d0f0d;
+      --hdr-grad1: #223;
+      --hdr-grad2: #7fb59c;
+      --rgb-off: 1.8px;
+      --txt-size: clamp(20px, 5.2vw, 34px);  /* 前: clamp(26px,6.8vw,44px) */
+      --txt-spacing: .14em;
     }
 
-    /* ===== base ===== */
-    html,body{height:100%}
+    *{ box-sizing:border-box }
     body{
       margin:0; background:#000; color:#fff;
       font-family:'Orbitron', Arial, sans-serif; text-align:center;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    img{max-width:100%; height:auto; display:block}
 
-    /* ===== UDRロゴ ===== */
+    /* UDRロゴ */
     .main-logo{
-      display:block;
-      margin:60px auto 0;
-      max-width:60%;
-      height:auto;
+      display:block; margin:60px auto 0; max-width:60%; height:auto;
     }
 
-    /* ===== 見出しブロック（BAND / ART WORK 共通） ===== */
+    /* ─ 見出しコンポーネント（BAND / ART WORK 共通） ─ */
     .hdr{
-      position: relative;
-      display:grid; justify-items:center; align-items:center;
-      gap:22px;                 /* 上ライン – 文字 – 下ラインの間隔 */
-      margin:72px auto 18px;    /* 見出し全体の外側余白 */
+      position:relative; width:var(--hdr-width);
+      margin:48px auto 26px;           /* 外側余白も控えめに */
+      padding:var(--hdr-gap) 0;
+      isolation:isolate;
     }
-
-    /* 区切り線 */
-    .rule{
-      width:min(62%, 620px);
-      height:4px;
-      background:linear-gradient(90deg, var(--line-c1) 0%, var(--line-c2) 40%, var(--line-c3) 50%, var(--line-c2) 60%, var(--line-c1) 100%);
-      box-shadow:0 1px 0 #111, 0 0 6px rgba(0,0,0,.45);
+    .hdr::before,
+    .hdr::after{
+      content:""; position:absolute; left:50%;
+      width:100%; height:var(--hdr-bar-h); transform:translateX(-50%);
+      background:linear-gradient(90deg, var(--hdr-grad1) 0%, var(--hdr-grad2) 50%, var(--hdr-grad1) 100%);
+      box-shadow:0 1px 0 rgba(0,0,0,.45), 0 0 8px rgba(0,0,0,.35);
+      z-index:0;
     }
+    .hdr::before{ top:0 } .hdr::after{ bottom:0 }
 
-    /* 文字（レトロ3D＋RGBズレ） */
-    .txt{
-      position:relative;
-      z-index:2;
-      font-weight:900;
-      font-size:clamp(18px, 4.5vw, 32px);
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:var(--txt-core);
-      /* 厚み＋影 */
+    .hdr .txt{
+      position:relative; display:inline-block;
+      font-weight:800; font-size:var(--txt-size); letter-spacing:var(--txt-spacing);
+      color:var(--hdr-base); line-height:1; z-index:1;
       text-shadow:
-        0 1px 0 #20342c,
-        0 2px 0 #1a2a24,
-        0 3px 0 #13201b,
-        0 4px 0 rgba(0,0,0,.55),
-        3px 3px 6px rgba(0,0,0,.7);
+        0 2px 0 var(--hdr-dark),
+        0 4px 0 var(--hdr-dark),
+        0 6px 0 var(--hdr-dark),
+        1px 1px 0 #2a3a33,
+        2px 2px 0 #1a2722,
+        0 6px 8px rgba(0,0,0,.35);
+      filter: drop-shadow(0 8px 8px rgba(0,0,0,.22));
     }
-    /* 軽い色収差でアナログ感 */
-    .txt::before,
-    .txt::after{
-      content: attr(data-text);
-      position:absolute; left:50%; top:50%;
-      transform:translate(-50%,-50%);
-      font:inherit; letter-spacing:inherit; text-transform:inherit;
-      pointer-events:none; opacity:.55;
+    .hdr .txt::before,
+    .hdr .txt::after{
+      content:attr(data-text); position:absolute; inset:0; pointer-events:none;
     }
-    .txt::before{ color:rgba(120,255,180,.6); transform:translate(calc(-50% - var(--rgb-offset)),-50%); }
-    .txt::after { color:rgba(200,255,200,.5); transform:translate(calc(-50% + var(--rgb-offset)),-50%); }
+    .hdr .txt::before{ transform:translate(calc(-1 * var(--rgb-off)),0); color:rgba(140,255,200,.5); mix-blend-mode:screen }
+    .hdr .txt::after { transform:translate(var(--rgb-off),0); color:rgba(210,255,230,.4);  mix-blend-mode:screen }
 
-    /* ★ 奥から手前へ広がる“軌跡（トレイル）” */
-    .trail{
-      --depth: 180px;  /* 大きいほど“さらに奥から” */
-      --trail-c1: rgba(180,230,210,0.00);  /* 遠点：透明寄り */
-      --trail-c2: rgba(120,190,165,0.26);  /* 中間：淡緑 */
-      --trail-c3: rgba( 70,120,100,0.48);  /* 手前：暗緑 */
-      position:absolute; inset:auto 0;
-      top: calc(-1 * var(--depth) + -18px);   /* 遠点の縦位置（少し上から） */
-      height: calc(var(--depth) + 60px);      /* トレイルの縦の長さ */
-      pointer-events:none; z-index:1;
-      background: linear-gradient(to bottom, var(--trail-c1) 0%, var(--trail-c2) 58%, var(--trail-c3) 100%);
-      /* 先細り→手前広がりの台形（遠点=上の細い方） */
-      clip-path: polygon(50% 0%, 58% 7%, 100% 100%, 0% 100%, 42% 7%);
-      filter: blur(2px) saturate(110%);
-      mix-blend-mode: screen;
-    }
-    .trail::after{
-      content:""; position:absolute; left:50%; top:-10px; translate:-50% 0;
-      width:10px; height:10px; border-radius:50%;
-      background: radial-gradient(circle, #cfe 0 45%, rgba(207,238,230,0) 60%);
-      opacity:.85; filter: blur(.6px);
-    }
+    /* バンドロゴ・写真など（そのまま） */
+    .brand-3d{ display:flex; justify-content:center; margin:6px 0 24px }
+    .brand-logo{ display:block; width:28%; max-width:260px; height:auto }
+    .band-image, .designer-image{ display:block; margin:0 auto 40px; max-width:80%; height:auto }
 
-    /* ===== コンテンツ ===== */
-    .brand-3d{ display:flex; justify-content:center; margin:6px 0 24px; }
-    .brand-logo{ width:28%; max-width:260px; height:auto; }
-
-    .band-image, .designer-image{
-      display:block; margin:0 auto 40px; max-width:80%; height:auto;
-    }
-
-    /* Instagramリンク（縦並び・文字は常時下線） */
+    /* Instagramリンク：縦並び */
     .insta-link{
       display:inline-flex; flex-direction:column; align-items:center;
-      text-decoration:none; color:#fff; background:none; border:none; padding:0;
-      margin-bottom:40px;
+      text-decoration:none; color:#fff; background:none; border:none; padding:0; margin-bottom:40px;
     }
-    .insta-link img{ height:40px; width:auto; margin-bottom:8px; }
-    .insta-link span{ color:#fff; text-decoration:underline; font-size:1.05rem; }
+    .insta-link img{ height:40px; width:auto; margin-bottom:6px }
+    .insta-link span{ color:#fff; text-decoration:underline }
 
-    /* デザイナー名（日本語は角ゴで） */
     .designer-name{
       margin:10px 0 14px;
       font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif;
       font-weight:700; font-size:18px; letter-spacing:.06em; color:#dfe;
     }
-
-    .section-gap{ height:72px; }
+    .section-gap{ height:64px }
   </style>
 </head>
 <body>
@@ -133,10 +97,7 @@
 
   <!-- ===== Band ===== -->
   <div class="hdr">
-    <span class="trail" aria-hidden="true"></span>   <!-- 奥行きトレイル -->
-    <div class="rule"></div>
-    <div class="txt" data-text="ーBANDー">ーBANDー</div>
-    <div class="rule"></div>
+    <span class="txt" data-text="ーBANDー">ーBANDー</span>
   </div>
 
   <div class="brand-3d">
@@ -151,12 +112,9 @@
 
   <div class="section-gap"></div>
 
-  <!-- ===== Art Work ===== -->
+  <!-- ===== ART WORK ===== -->
   <div class="hdr">
-    <span class="trail" aria-hidden="true"></span>   <!-- 奥行きトレイル -->
-    <div class="rule"></div>
-    <div class="txt" data-text="ーART WORKー">ーART WORKー</div>
-    <div class="rule"></div>
+    <span class="txt" data-text="ーART WORKー">ーART WORKー</span>
   </div>
 
   <div class="designer-name">荒山悠太</div>
