@@ -17,6 +17,9 @@
       --rgb-off: 1.8px;
       --txt-size: clamp(20px, 5.2vw, 34px);
       --txt-spacing: .14em;
+
+      /* ★“等間隔”にするための基準距離（必要ならここだけ変えればOK） */
+      --band-gap: 28px;
     }
 
     *{ box-sizing:border-box }
@@ -48,28 +51,30 @@
     .hdr .txt::before{ transform:translate(calc(-1 * var(--rgb-off)),0); color:rgba(140,255,200,.5); mix-blend-mode:screen }
     .hdr .txt::after { transform:translate(var(--rgb-off),0); color:rgba(210,255,230,.4);  mix-blend-mode:screen }
 
-    /* Bandセクション専用：余白調整 */
-    .band-section .hdr         { margin: 36px auto 18px; }
-    .band-section .brand-3d    { margin: 6px 0 8px; }
-    .band-section .band-image  { margin: 0 auto 16px; }
-    .band-section .insta-link  { margin-bottom: 12px; }
+    /* Band専用：等間隔に最適化 */
+    .band-section .hdr        { margin: 36px auto 18px; }
+    .band-section .brand-3d   { margin: 6px 0 var(--band-gap); }      /* ★写真の“上側”は据え置き、下側を基準距離に */
+    .band-section .band-image { margin: 0 auto var(--band-gap); }     /* ★写真の下を基準距離に */
+    .band-section .insta-link { margin: var(--band-gap) 0 var(--band-gap); } /* ★Instagramブロックの上下も同じ距離に */
 
-    /* 画像類 */
+    /* 画像 */
     .brand-3d{ display:flex; justify-content:center; margin:6px 0 24px }
     .brand-logo{ display:block; width:28%; max-width:260px; height:auto }
     .band-image, .designer-image{ display:block; margin:0 auto 40px; max-width:80%; height:auto }
 
-    /* Instagramリンク（縦並び）＋アイコン20%拡大 */
+    /* Instagram（縦並び）＋アイコン20%拡大 */
     .insta-link{
       display:inline-flex; flex-direction:column; align-items:center;
       text-decoration:none; color:#fff; background:none; border:none; padding:0; margin-bottom:40px;
     }
-    .insta-link img{ height:48px; width:auto; margin-bottom:6px } /* ← 20%アップ */
+    .insta-link img{ height:48px; width:auto; margin-bottom:6px }  /* 20%アップ */
     .insta-link span{ color:#fff; text-decoration:underline }
 
-    /* ART WORK 下は広めに */
-    .gap-between { height: 14px; }   /* Band → ART WORK の間 */
-    .gap-bottom  { height: 80px; }   /* ページ最後 */
+    /* Band→ART WORK のダミー余白は 0（上下マージンで均等化するため） */
+    .gap-between { height: 0; }  /* ★ゼロに */
+
+    /* ART WORK 下は広め */
+    .gap-bottom  { height: 80px; }
     .designer-name{
       margin:10px 0 14px;
       font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif;
@@ -78,7 +83,6 @@
   </style>
 </head>
 <body>
-  <!-- UDRロゴ -->
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
   <!-- ===== Band ===== -->
@@ -96,7 +100,7 @@
     </a>
   </div>
 
-  <!-- Band → ART WORK の間を狭く -->
+  <!-- Band → ART WORK の間（ゼロにして上下マージンで等間隔） -->
   <div class="gap-between"></div>
 
   <!-- ===== ART WORK ===== -->
@@ -110,7 +114,6 @@
     <span>@ARYM_WORKS</span>
   </a>
 
-  <!-- ページ最後は広め -->
   <div class="gap-bottom"></div>
 </body>
 </html>
