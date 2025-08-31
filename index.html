@@ -11,7 +11,7 @@
       font-family: Arial, sans-serif; text-align: center;
     }
 
-    /* タイトルロゴ（80%縮小のまま） */
+    /* タイトルロゴ */
     .main-logo {
       display: block;
       margin: var(--space-top) auto 40px;
@@ -28,18 +28,16 @@
       height: auto;
     }
 
-    /* SNSアイコン行（横並び固定） */
+    /* SNSアイコン行 */
     .sns-links {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: var(--gap-sns);
       flex-wrap: nowrap;
-      overflow-x: auto;
       padding: 40px 16px 100px;
     }
     .sns-links img {
-      /* 共通サイズ */
       height: clamp(56px, 8vw, 100px);
       width: auto;
       cursor: pointer;
@@ -48,27 +46,30 @@
     }
     .sns-links img:hover { transform: scale(1.12); }
 
-    /* YouTubeアイコンをさらに20%大きく（= 1.4倍） */
-    .youtube-icon {
-      height: calc(clamp(56px, 8vw, 100px) * 1.4) !important; /* 優先度で確実に上書き */
-    }
+    /* YouTube アイコンを20%拡大 */
+    .youtube-icon { height: calc(clamp(56px, 8vw, 100px) * 1.2); }
   </style>
 </head>
 <body>
-  <!-- タイトルロゴ -->
+  <!-- メインロゴ -->
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo" />
 
   <!-- 丸ロゴ -->
   <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo" />
 
-  <!-- SNSアイコン（横並び） -->
+  <!-- SNSリンク -->
   <div class="sns-links">
-    <!-- ▼ キャッシュ破り用に ?v=2 を付与 -->
+    <!-- YouTube -->
     <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
-      <img src="youtube_logo.gif?v=2" alt="YouTube" class="youtube-icon" />
+      <img src="youtube_logo.gif" alt="YouTube" class="youtube-icon" />
     </a>
+    <!-- Music -->
     <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
       <img src="music_logo.gif" alt="Music" />
+    </a>
+    <!-- Instagram → members.html -->
+    <a href="members.html">
+      <img src="instagram_logo.gif" alt="Instagram" />
     </a>
   </div>
 </body>
