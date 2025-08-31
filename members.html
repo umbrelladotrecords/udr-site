@@ -1,110 +1,166 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Umbrella Dot Records Members</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    /* ===== scoped only to this page ===== */
+    .udr-members {
+      --text: #111;
+      --line: #111;
+      --maxw: 720px;
+      --gap: 28px;
+      --title-size: 22px;
+      --name-size: 20px;
+      --handle-size: 14px;
+      font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
       background: #fff;
-      color: #000;
-      margin: 0;
-      padding: 0;
+      line-height: 1.6;
+      padding: 24px 16px 56px;
+      box-sizing: border-box;
     }
 
-    .member-section {
-      margin: 40px auto;
+    .udr-members * { box-sizing: border-box; }
+
+    .udr-members .section {
+      max-width: var(--maxw);
+      margin: 0 auto 56px;
       text-align: center;
-      max-width: 600px;
     }
 
-    .member-title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #000;
+    .udr-members .title {
       display: inline-block;
-      padding: 5px 20px;
+      font-size: var(--title-size);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      border-bottom: 2px solid var(--line);
+      padding: 6px 18px;
+      margin: 0 0 22px;
     }
 
-    .member {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    /* 「線とBANDを少し離して」対策で余白を明確に */
+    .udr-members .title + .card { margin-top: 18px; }
+
+    .udr-members .card {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: var(--gap);
     }
 
-    .member-photo {
-      width: 250px;
-      height: auto;
+    @media (min-width: 600px) {
+      .udr-members .card {
+        grid-template-columns: 260px 1fr;
+        align-items: center;
+        justify-items: start;
+      }
+    }
+
+    .udr-members .photo {
+      width: 100%;
+      max-width: 260px;
       border-radius: 8px;
-      margin-bottom: 15px;
+      display: block;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      background: #f3f3f3;
     }
 
-    .member-info {
+    .udr-members .info {
       text-align: center;
     }
-
-    .member-name {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
+    @media (min-width: 600px) {
+      .udr-members .info { text-align: left; }
     }
 
-    .member-instagram {
-      display: flex;
+    .udr-members .name {
+      font-size: var(--name-size);
+      font-weight: 800;
+      margin: 0 0 10px;
+      letter-spacing: .02em;
+    }
+
+    /* インスタ：アイコンの下にユーザー名（下線つき） */
+    .udr-members .instagram {
+      display: inline-flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 5px;
+      gap: 8px;
+      margin-top: 4px;
     }
-
-    .member-instagram .icon {
-      width: 24px;
-      height: 24px;
+    .udr-members .instagram .icon {
+      width: 26px;
+      height: 26px;
+      display: block;
     }
-
-    .insta-handle {
-      font-size: 14px;
-      margin-top: 5px;
+    .udr-members .handle {
+      font-size: var(--handle-size);
       text-decoration: underline;
+      margin: 0;
     }
+
+    /* 画像が無い人（テキスト名のみ）用のダミーフレーム */
+    .udr-members .text-avatar {
+      width: 100%;
+      max-width: 260px;
+      aspect-ratio: 4/5;
+      border-radius: 8px;
+      border: 1.5px dashed #bbb;
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      color: #666;
+      background: #fafafa;
+      font-weight: 700;
+    }
+
+    /* 余白調整（セクション間） */
+    .udr-members .section + .section { margin-top: 8px; }
   </style>
 </head>
 <body>
+  <main class="udr-members">
 
-  <!-- BAND -->
-  <div class="member-section">
-    <h2 class="member-title">ーBANDー</h2>
-    <div class="member">
-      <img src="band.jpg" alt="band photo" class="member-photo">
-      <div class="member-info">
-        <p class="member-name">arsvna</p>
-        <div class="member-instagram">
-          <a href="https://www.instagram.com/arsvna_band" target="_blank">
-            <img src="instagram-icon.png" alt="Instagram" class="icon">
-          </a>
-          <p class="insta-handle">@arsvna_band</p>
+    <!-- ===== BAND ===== -->
+    <section class="section" aria-labelledby="band-title">
+      <h2 id="band-title" class="title">ーBANDー</h2>
+      <div class="card">
+        <!-- band photo -->
+        <img src="./band.jpg" alt="arsvna band photo" class="photo" />
+        <div class="info">
+          <p class="name">arsvna</p>
+          <div class="instagram">
+            <a href="https://www.instagram.com/arsvna_band" target="_blank" rel="noopener">
+              <img src="./instagram-icon.png" alt="Instagram" class="icon" />
+            </a>
+            <p class="handle">@arsvna_band</p>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- ARTWORK -->
-  <div class="member-section">
-    <h2 class="member-title">ーartworkー</h2>
-    <div class="member">
-      <img src="arayama1.JPG" alt="Artwork photo" class="member-photo">
-      <div class="member-info">
-        <p class="member-name">荒山悠太</p>
-        <div class="member-instagram">
-          <a href="https://www.instagram.com/arym_works" target="_blank">
-            <img src="instagram-icon.png" alt="Instagram" class="icon">
-          </a>
-          <p class="insta-handle">@ARYM_WORKS</p>
+    <!-- ===== artwork ===== -->
+    <section class="section" aria-labelledby="artwork-title">
+      <h2 id="artwork-title" class="title">ーartworkー</h2>
+      <div class="card">
+        <!-- artwork photo（指定画像） -->
+        <img src="./arayama1.JPG" alt="Artwork by 荒山悠太" class="photo" />
+
+        <!-- 画像ではなく“名前はテキスト表示”を主に扱う -->
+        <div class="info">
+          <p class="name">荒山悠太</p>
+          <div class="instagram">
+            <a href="https://www.instagram.com/arym_works" target="_blank" rel="noopener">
+              <img src="./instagram-icon.png" alt="Instagram" class="icon" />
+            </a>
+            <p class="handle">@ARYM_WORKS</p>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
+  </main>
 </body>
 </html>
