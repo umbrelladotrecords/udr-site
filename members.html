@@ -5,180 +5,164 @@
   <title>UDR Members - arsvna</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    /* ===== 調整しやすい変数 ===== */
+    /* 調整用 */
     :root{
-      --neon: #79ffc8;        /* ネオン線の色 */
-      --neon-soft: #39e6b3;
-      --scanline-alpha: .055; /* 走査線の濃さ（0〜0.12くらい推奨） */
-      --grain-alpha: .05;     /* ノイズの濃さ（0〜0.12くらい） */
-      --n64-tilt-x: 2deg;     /* ロゴの3D傾き（X） */
-      --n64-tilt-y: -4deg;    /* ロゴの3D傾き（Y） */
-      --n64-pop: 1.08;        /* コントラスト/彩度の強さ感 */
-      --logo-scale: .28;      /* arsvnaロゴの幅（画面幅比） */
+      --neon: #79ffc8;       /* 線＆タグのネオン色 */
+      --neon-soft: #39e6b3;  /* ネオンの中間色 */
+      --rgb-offset: 1px;     /* 文字のRGBズレ量 */
+      --logo-scale: .28;     /* arsvnaロゴの幅（画面幅比） */
     }
 
-    /* ===== ベース ===== */
-    html,body{margin:0}
     body{
-      background:#000;
-      color:#fff;
+      margin:0; background:#000; color:#fff;
       font-family: Arial, Helvetica, sans-serif;
       text-align:center;
-      overflow-x:hidden;
     }
 
-    /* 画面全体にCRT風オーバーレイ（走査線＋粒状ノイズ） */
-    .crt{
-      position:relative;
-      isolation:isolate; /* 子のオーバーレイを閉じ込める */
-    }
-    .crt::before, .crt::after{
-      content:"";
-      position:fixed; inset:0; pointer-events:none;
-      z-index: 1;
-    }
-    /* 走査線 */
-    .crt::before{
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255, var(--scanline-alpha)) 0px,
-          rgba(255,255,255, var(--scanline-alpha)) 1px,
-          transparent 2px,
-          transparent 3px
-        );
-      mix-blend-mode: overlay;
-    }
-    /* ランダム風グレイン（簡易） */
-    .crt::after{
-      background:
-        repeating-linear-gradient(45deg, rgba(255,255,255,var(--grain-alpha)) 0 2px, transparent 2px 4px),
-        repeating-linear-gradient(-45deg, rgba(255,255,255,var(--grain-alpha)) 0 2px, transparent 2px 4px);
-      animation: grain 1.6s steps(6,end) infinite;
-      opacity:.6;
-    }
-    @keyframes grain{
-      0%{ transform: translate3d(0,0,0) }
-      100%{ transform: translate3d(4px,-3px,0) }
-    }
-
-    /* ===== UDRロゴ（上部） ===== */
+    /* UDRロゴ（そのまま） */
     .main-logo{
       display:block;
-      margin: 40px auto 20px;
-      max-width: 60%;
+      margin:40px auto 20px;
+      max-width:60%;
       height:auto;
-      filter: contrast(var(--n64-pop)) saturate(var(--n64-pop));
-      /* わずかなRGBズレ（クロマ収差風） */
-      box-shadow:
-        0 0 0 0 rgba(0,0,0,0);
     }
 
-    /* ===== ネオン区切り線 ＋ Bandタグ ===== */
+    /* ===== N64風の区切り線（線だけ演出） ===== */
     .divider-wrap{
       display:flex; justify-content:center; align-items:center;
-      margin: 6px 0 8px;
+      margin:6px 0 8px;
     }
-    .divider{
-      width: min(60%, 600px);
-      height: 2px;
-      background: linear-gradient(90deg, transparent 0%, var(--neon) 15%, var(--neon-soft) 50%, var(--neon) 85%, transparent 100%);
+    .divider.n64-line{
+      position:relative;
+      width:min(60%, 600px);
+      height:3px;
+      border-radius:2px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--neon) 18%,
+        var(--neon-soft) 50%,
+        var(--neon) 82%,
+        transparent 100%
+      );
+      /* ネオングロー */
       box-shadow:
-        0 0 10px var(--neon),
+        0 0 8px var(--neon),
         0 0 18px var(--neon),
         0 0 28px var(--neon-soft);
-      border-radius:2px;
+      overflow:visible;
     }
-    .tag{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap: 8px;
-      margin: -10px auto 16px; /* 線に少し被せる */
-      padding: 6px 14px;
-      border: 1px solid var(--neon);
-      background: linear-gradient(180deg, rgba(121,255,200,0.10), rgba(121,255,200,0.03));
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: .14em;
-      font-weight: 800;
-      font-size: 12px;
-      color: var(--neon);
-      box-shadow: inset 0 0 12px rgba(121,255,200,.10), 0 0 10px rgba(121,255,200,.25);
-      width: fit-content;
+    /* 線の上に“走査線”っぽい薄いストライプ（線の周囲だけ） */
+    .divider.n64-line::after{
+      content:"";
+      position:absolute; left:-6px; right:-6px; top:-6px; bottom:-6px;
+      pointer-events:none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.06) 0 1px,
+        transparent 1px 3px
+      );
+      mix-blend-mode: screen;
+      border-radius:6px;
     }
 
-    /* ===== arsvnaロゴ（画像）にN64的“軽い3D感”＋色ズレ影 ===== */
-    .brand-3d{
-      perspective: 800px;
-      width:100%;
-      display:flex; justify-content:center;
-      margin: 8px 0 24px;
+    /* ===== N64風の「BAND」タグ（文字だけ演出） ===== */
+    .tag.n64{
+      position:relative;
+      display:inline-flex; align-items:center; justify-content:center;
+      margin:-10px auto 16px;   /* 線にちょい被せる */
+      padding:8px 16px;
+      border:1px solid var(--neon);
+      background: linear-gradient(180deg, rgba(121,255,200,.10), rgba(121,255,200,.04));
+      border-radius:999px;
+      box-shadow:
+        inset 0 0 10px rgba(121,255,200,.10),
+        0 0 10px rgba(121,255,200,.25);
+      width:fit-content;
+      transform: perspective(700px) rotateX(2deg) rotateY(-3deg);
     }
+    /* 中の本体文字 */
+    .tag.n64 span{
+      position:relative; z-index:1;
+      color:#eafff8;
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      /* ちょいエクストルード風 */
+      text-shadow:
+        0 1px 0 #0a3,
+        0 2px 0 #0a3,
+        0 3px 4px rgba(0,0,0,.45);
+    }
+    /* RGBズレの擬似影（文字だけ） */
+    .tag.n64::before,
+    .tag.n64::after{
+      content: attr(data-text);
+      position:absolute; left:50%; top:50%;
+      transform: translate(-50%,-50%);
+      pointer-events:none;
+      font-weight:900; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    }
+    .tag.n64::before{
+      color: rgba(0,255,255,.55);
+      transform: translate(calc(-50% - var(--rgb-offset)), -50%);
+      filter: blur(.2px);
+    }
+    .tag.n64::after{
+      color: rgba(255,0,128,.45);
+      transform: translate(calc(-50% + var(--rgb-offset)), -50%);
+      filter: blur(.2px);
+    }
+
+    /* arsvnaロゴ（前のまま） */
+    .brand-3d{ display:flex; justify-content:center; margin:8px 0 24px; }
     .brand-logo{
       display:block;
       width: calc(var(--logo-scale) * 100%); /* 例: 28% */
-      max-width: 260px;
-      height:auto;
-      transform: rotateX(var(--n64-tilt-x)) rotateY(var(--n64-tilt-y));
-      filter: contrast(var(--n64-pop)) saturate(var(--n64-pop));
-      /* カラードロップシャドウでRGBズレを擬似再現 */
-      filter: contrast(var(--n64-pop)) saturate(var(--n64-pop)) drop-shadow(-2px 1px 0 rgba(0,255,255,0.25)) drop-shadow(2px -1px 0 rgba(255,0,128,0.22)) drop-shadow(0 2px 6px rgba(0,0,0,.6));
-      transition: transform .18s ease, filter .18s ease;
-      image-rendering: pixelated; /* ちょい粗さ */
-    }
-    .brand-logo:hover{
-      transform: rotateX(calc(var(--n64-tilt-x) + 1deg)) rotateY(calc(var(--n64-tilt-y) + 2deg)) scale(1.02);
+      max-width:260px; height:auto;
+      image-rendering: auto; /* ロゴはクッキリのまま */
     }
 
-    /* ===== バンド写真 ===== */
+    /* バンド画像（枠線なし） */
     .band-image{
       display:block;
-      margin: 0 auto 40px;
-      max-width: 80%;
-      height:auto;
-      filter: contrast(1.03) saturate(1.02);
-      image-rendering: auto; /* 写真はなめらかに */
-      /* 微妙なアナログ感の縁に色ズレシャドウを追加（控えめ） */
-      box-shadow:
-        -1px 1px 0 rgba(0,255,255,0.15),
-         1px -1px 0 rgba(255,0,128,0.12),
-         0 2px 12px rgba(0,0,0,.5);
+      margin:0 auto 40px;
+      max-width:80%; height:auto;
     }
 
-    /* ===== Instagramリンク（ボタン） ===== */
+    /* Instagramボタン */
     .insta-link{
       display:inline-flex; align-items:center; gap:12px;
-      background: #111;
-      padding: 12px 20px;
-      border-radius: 10px;
-      text-decoration:none; color:#fff; font-size:1.05rem;
-      border:1px solid #222;
+      background:#111; padding:12px 20px; border-radius:10px;
+      text-decoration:none; color:#fff; font-size:1.05rem; border:1px solid #222;
       transition: background .2s ease, transform .15s ease, box-shadow .2s ease;
-      box-shadow: 0 0 0 rgba(0,0,0,0);
     }
-    .insta-link:hover{
-      background:#242424; transform: translateY(-2px);
-      box-shadow: 0 6px 22px rgba(0,0,0,.45);
-    }
-    .insta-link img{ height:40px; width:auto; image-rendering: pixelated; }
+    .insta-link:hover{ background:#242424; transform: translateY(-2px); box-shadow:0 6px 22px rgba(0,0,0,.45); }
+    .insta-link img{ height:40px; width:auto; }
   </style>
 </head>
-<body class="crt">
+<body>
   <!-- UDRロゴ -->
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- ネオン区切り線＋Bandタグ -->
-  <div class="divider-wrap"><div class="divider"></div></div>
-  <div class="tag">BAND</div>
+  <!-- 線だけN64風 -->
+  <div class="divider-wrap">
+    <div class="divider n64-line"></div>
+  </div>
 
-  <!-- arsvnaロゴ（N64風3D/色ズレ影） -->
+  <!-- BANDだけN64風（data-textに同じ文字を入れてね） -->
+  <div class="tag n64" data-text="BAND"><span>BAND</span></div>
+
+  <!-- arsvnaロゴ -->
   <div class="brand-3d">
     <img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo">
   </div>
 
-  <!-- バンド画像 -->
+  <!-- 写真 -->
   <img src="arsvna2.JPG" alt="arsvna" class="band-image">
 
-  <!-- Instagramリンク -->
+  <!-- Instagram -->
   <a href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" target="_blank" rel="noopener" class="insta-link">
     <img src="instagram_logo.gif" alt="Instagram">
     <span>@arsvna_udr</span>
