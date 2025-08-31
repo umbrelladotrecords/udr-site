@@ -6,70 +6,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root { --space-top: 120px; --gap-sns: 48px; }
-
-    /* ベース */
-    body{
-      margin:0; background:#000; color:#fff;
-      font-family: Arial, Helvetica, sans-serif;
-      text-align:center;
+    body {
+      margin: 0; background: #000; color: #fff;
+      font-family: Arial, sans-serif; text-align: center;
     }
-    img{ display:block; margin:0 auto; height:auto; }
 
-    /* ① UDR タイトルロゴ（80%相当） */
-    .main-logo{
-      margin-top: var(--space-top);
-      margin-bottom: 40px;
-      max-width: 48%;   /* 画面幅の48%に収める（実質小さめ表示） */
+    /* タイトルロゴ：80%縮小 */
+    .main-logo {
+      display: block;
+      margin: var(--space-top) auto 40px;
+      max-width: 48%;
       height: auto;
     }
 
-    /* ② 丸ロゴ（縦に並べる） */
-    .sub-logo{
+    /* 丸ロゴ */
+    .sub-logo {
+      display: block;
       margin: 80px auto 80px;
-      max-width: 400px; /* PCは最大400px、スマホは幅にフィット */
+      max-width: 400px;
       width: 80%;
-      height:auto;
+      height: auto;
     }
 
-    /* ③ SNS（横並び） */
-    .sns-links{
-      display:flex; justify-content:center; align-items:center;
+    /* SNSアイコン行（横並び固定） */
+    .sns-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       gap: var(--gap-sns);
       flex-wrap: nowrap;
+      overflow-x: auto;
       padding: 40px 16px 100px;
     }
-    .sns-links img{
+    .sns-links img {
       height: clamp(56px, 8vw, 100px);
       width: auto;
       cursor: pointer;
       transition: transform .25s ease;
       image-rendering: pixelated;
     }
-    .sns-links img:hover{ transform: scale(1.12); }
+    .sns-links img:hover { transform: scale(1.12); }
 
-    /* YouTube だけ20%大きく */
-    .youtube-icon{
-      height: calc(clamp(56px, 8vw, 100px) * 1.2);
-    }
-
-    /* アクセシビリティ（キーボード操作時の見やすさ） */
-    a:focus-visible img{ outline:2px solid #5cf; outline-offset:6px; border-radius:6px; }
+    /* YouTubeアイコン 40%拡大 */
+    .youtube-icon { height: calc(clamp(56px, 8vw, 100px) * 1.4); }
   </style>
 </head>
 <body>
-  <!-- 上：UDR タイトルロゴ -->
-  <img src="./UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo" />
+  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo" />
+  <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo" />
 
-  <!-- 下：丸ロゴ（縦並び） -->
-  <img src="./IMG_1705.jpeg" alt="Umbrella ロゴ" class="sub-logo" />
-
-  <!-- 一番下：SNSアイコン（横並び） -->
   <div class="sns-links">
     <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
-      <img src="./youtube_logo.gif" alt="YouTube" class="youtube-icon" />
+      <img src="youtube_logo.gif" alt="YouTube" class="youtube-icon" />
     </a>
     <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
-      <img src="./music_logo.gif" alt="Music (Linkcore)" />
+      <img src="music_logo.gif" alt="Music" />
     </a>
   </div>
 </body>
