@@ -5,6 +5,11 @@
   <title>UDR Members - arsvna</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    :root{
+      --neon: #79ffc8;     /* 蛍光グリーン（ミント寄り） */
+      --neon-soft: #39e6b3;
+    }
+
     body {
       margin: 0;
       background: #000;
@@ -21,20 +26,49 @@
       height: auto;
     }
 
-    /* 区切り線 */
+    /* 区切り（ネオンライン） */
+    .divider-wrap{
+      display:flex; justify-content:center; align-items:center;
+      margin: 6px 0 22px;
+    }
     .divider {
-      width: 60%;
-      max-width: 600px;
+      width: min(60%, 600px);
       height: 2px;
-      margin: 0 auto 30px;
-      background: #555;  /* ロゴに似た色味で */
+      background: linear-gradient(90deg, transparent 0%, var(--neon) 15%, var(--neon-soft) 50%, var(--neon) 85%, transparent 100%);
+      box-shadow:
+        0 0 10px var(--neon),
+        0 0 18px var(--neon),
+        0 0 28px var(--neon-soft);
+      border-radius: 2px;
+      position: relative;
     }
 
-    /* arsvna ロゴ画像 → さらに70%縮小 */
+    /* Band バッジ（タグ） */
+    .tag {
+      display:inline-flex; align-items:center; justify-content:center;
+      gap: 8px;
+      margin: -14px auto 16px;  /* 線に少し被せる */
+      padding: 6px 14px;
+      border: 1px solid var(--neon);
+      background: rgba(121,255,200,0.08);
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--neon);
+      box-shadow:
+        0 0 10px rgba(121,255,200,.45),
+        inset 0 0 12px rgba(121,255,200,.10);
+      backdrop-filter: blur(2px);
+      width: fit-content;
+    }
+
+    /* arsvna ロゴ画像 → さらに70%縮小（前回40%→28%） */
     .brand-logo {
       display: block;
-      margin: 20px auto 24px;
-      width: 28%;     /* 前回40% → 70%縮小で28%に */
+      margin: 12px auto 24px;
+      width: 28%;
       max-width: 260px;
       height: auto;
     }
@@ -47,6 +81,7 @@
       height: auto;
     }
 
+    /* Instagram リンク（アイコン＋ID を一塊でクリック） */
     .insta-link {
       display: inline-flex;
       align-items: center;
@@ -57,22 +92,22 @@
       text-decoration: none;
       color: #fff;
       font-size: 1.2rem;
-      transition: background 0.3s;
+      transition: background 0.3s, transform .15s ease;
+      border: 1px solid #222;
     }
-    .insta-link:hover { background: #333; }
-
-    .insta-link img {
-      height: 40px;
-      width: auto;
-    }
+    .insta-link:hover { background: #242424; transform: translateY(-2px); }
+    .insta-link img { height: 40px; width: auto; }
   </style>
 </head>
 <body>
   <!-- UDRロゴ -->
   <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- 区切り線 -->
-  <div class="divider"></div>
+  <!-- 蛍光グリーンの区切り線 ＋ Bandタグ -->
+  <div class="divider-wrap">
+    <div class="divider"></div>
+  </div>
+  <div class="tag">Band</div>
 
   <!-- arsvna ロゴ（縮小済み） -->
   <img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo">
