@@ -29,8 +29,8 @@
       --seg-glow: rgba(255,59,59,.35);
 
       /* タイプ速度（ゆっくり） */
-      --type-speed: 120ms;   /* 文章1文字あたり */
-      --digit-pop: 200ms;    /* 桁を出す間隔 */
+      --type-speed: 120ms;
+      --digit-pop: 200ms;
       --cursor-color: #dfe;
 
       /* 浮かび上がり（4秒） */
@@ -136,13 +136,13 @@
       .counter{ font-size:12px; }
     }
 
-    /* PC版（画像を上に詰める） */
+    /* PC版（美術館の余白感） */
     @media (min-width:1200px){
       :root{ --logo-w:520px; --page-max:980px; --counter-gap-top:72px; --counter-gap-bottom:72px; }
       .hero{
-        width:500px;
-        margin-top:2px;   /* ← ここを 80px → 20px にして上に寄せた */
-        margin-bottom:40px;
+        width:480px;       /* 少し小さめで上品に */
+        margin-top:120px;  /* 上に余白を贅沢に */
+        margin-bottom:160px;/* 下も余白を広めに */
       }
     }
     @media (min-width:1400px){
@@ -238,10 +238,8 @@
       const s = String(count).padStart(DIGITS,'0');
 
       (async ()=>{
-        // 前半タイプ
         await typeText(prefix, prefixText);
 
-        // 数字を1桁ずつ
         sevenseg.textContent = '';
         for(let i=0;i<s.length;i++){
           const d = makeDigit(Number(s[i]));
@@ -250,15 +248,12 @@
           await new Promise(r=> setTimeout(r, DIGIT_MS));
         }
 
-        // 後半タイプ
         await typeText(suffix, suffixText);
 
-        // カーソル消す＆読み上げ用テキスト
         cursor.style.display = 'none';
         document.getElementById('counterBox')
           .setAttribute('aria-label', `あなたは ${count} 番目のお客様です。`);
 
-        // 完了後 → 4秒でふわっと出現
         requestAnimationFrame(()=>{
           hero.classList.add('reveal');
           sns.classList.add('reveal');
