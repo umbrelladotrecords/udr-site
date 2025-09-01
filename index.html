@@ -14,26 +14,21 @@
       --logo-w: clamp(260px, 60vw, 640px);
       --logo-mt: clamp(40px, 6vh, 60px);
       --rail-w: 6px;
-      --rail-grad1:#223;
-      --rail-grad2:#7fb59c;
+      --rail-grad1:#223; --rail-grad2:#7fb59c;
       --sns-gap: clamp(28px, 3vw, 48px);
       --icon-h: clamp(52px, 6vw, 82px);
       --page-max: 980px;
 
-      --counter-gap-top: 60px;
+      --counter-gap-top: 60px;   /* モバイル〜タブレット用のデフォ */
       --counter-gap-bottom: 60px;
 
       /* 7セグ（赤LED・控えめ発光） */
-      --seg-on: #ff3b3b;
-      --seg-off:#0b1412;
-      --seg-glow: rgba(255,59,59,.35);
+      --seg-on: #ff3b3b; --seg-off:#0b1412; --seg-glow: rgba(255,59,59,.35);
 
-      /* タイプ速度（ゆっくり） */
-      --type-speed: 120ms;
-      --digit-pop: 200ms;
-      --cursor-color: #dfe;
+      /* タイプ演出（ゆっくり） */
+      --type-speed: 120ms; --digit-pop: 200ms; --cursor-color: #dfe;
 
-      /* 浮かび上がり（4秒） */
+      /* 浮かび上がり */
       --reveal-duration: 4s;
       --reveal-ease: cubic-bezier(.17,.84,.44,1);
     }
@@ -59,37 +54,23 @@
 
     .main-logo{ display:block; width:var(--logo-w); height:auto; margin:var(--logo-mt) auto 0; }
 
-    /* ───────── カウンター（ガラケーフォント＋タイプ演出） ───────── */
+    /* ───────── カウンター（ドットフォント＋タイプ演出） ───────── */
     .counter{
       margin: var(--counter-gap-top) auto var(--counter-gap-bottom);
       font-family: 'DotGothic16', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN','Yu Gothic','Meiryo',sans-serif;
-      font-size: 14px;
-      color: #dfe;
-      line-height: 1.4;
-      letter-spacing: .02em;
+      font-size: 14px; color: #dfe; line-height: 1.4; letter-spacing: .02em;
       display:inline-flex; align-items:baseline;
     }
-
     .type span{ opacity:0; transition: opacity .15s ease; }
     .type span.show{ opacity:1; }
-
-    .cursor{
-      width:8px; height:1.05em; margin-left:2px; display:inline-block;
-      background: var(--cursor-color); opacity:.65;
-      animation: blink 1s step-end infinite;
-    }
+    .cursor{ width:8px; height:1.05em; margin-left:2px; display:inline-block; background: var(--cursor-color); opacity:.65; animation: blink 1s step-end infinite; }
     @keyframes blink{ 50%{ opacity: .15 } }
 
     .sevenseg{ display:inline-flex; gap:4px; vertical-align:middle; margin:0 6px; }
-    .digit{
-      position:relative; width:18px; height:26px; display:inline-block;
-      opacity:0; transform: translateY(4px) scale(.96);
-      transition: opacity .15s ease, transform .2s ease;
-    }
+    .digit{ position:relative; width:18px; height:26px; display:inline-block; opacity:0; transform: translateY(4px) scale(.96); transition: opacity .15s ease, transform .2s ease; }
     .digit.show{ opacity:1; transform: translateY(0) scale(1); }
     .seg{ position:absolute; background: var(--seg-off); border-radius:1px; }
     .on{ background:var(--seg-on); box-shadow:0 0 2px var(--seg-glow), 0 0 6px var(--seg-glow); }
-
     .digit{ --t:3px; --pad:3px; }
     .a,.d,.g{ height: var(--t); left: var(--pad); right: var(--pad); }
     .a{ top: var(--pad); } .g{ top: calc(50% - var(--t)/2); } .d{ bottom: var(--pad); }
@@ -101,19 +82,13 @@
 
     /* ▼ 浮かび上がり（初期は隠す） */
     .reveal-target{
-      opacity: 0;
-      transform: translateY(16px) scale(.98);
-      filter: blur(4px);
+      opacity: 0; transform: translateY(16px) scale(.98); filter: blur(4px);
       transition:
         opacity var(--reveal-duration) var(--reveal-ease),
         transform var(--reveal-duration) var(--reveal-ease),
         filter var(--reveal-duration) var(--reveal-ease);
     }
-    .reveal{
-      opacity: 1 !important;
-      transform: translateY(0) scale(1) !important;
-      filter: blur(0) !important;
-    }
+    .reveal{ opacity: 1 !important; transform: translateY(0) scale(1) !important; filter: blur(0) !important; }
 
     .hero{ display:block; margin:40px auto; width:min(90vw, 720px); height:auto; }
 
@@ -136,15 +111,33 @@
       .counter{ font-size:12px; }
     }
 
-    /* PC版（美術館の余白感） */
+    /* ── PC版：画面内に“必ず収まる”美術館レイアウト ── */
     @media (min-width:1200px){
-      :root{ --logo-w:520px; --page-max:980px; --counter-gap-top:72px; --counter-gap-bottom:72px; }
+      :root{
+        --logo-w:520px; --page-max:980px;
+        /* カウンターの上下はvhで、画面高に比例して気持ちよく */
+        --counter-gap-top: 4vh;     /* ロゴ下〜カウンター */
+        --counter-gap-bottom: 4vh;  /* カウンター〜画像上 */
+      }
+      .wrap{
+        min-height: 100vh;
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: flex-start;        /* 上から配置 */
+        padding-bottom: 2vh;                /* ちょい余白 */
+      }
+      /* 画像サイズは少し小さめ。必要ならここを± */
       .hero{
-        width:480px;       /* 少し小さめで上品に */
-        margin-top:120px;  /* 上に余白を贅沢に */
-        margin-bottom:160px;/* 下も余白を広めに */
+        width: 420px;
+        /* 余白はvhベース：画面が低いPCでもはみ出さない */
+        margin-top: 5vh;     /* カウンターとの間 */
+        margin-bottom: 6vh;  /* SNSとの間（大きめの“間”） */
+      }
+      /* SNSは下に固定しないけど、vh余白で必ず見える */
+      .sns{
+        margin: 0 0 4vh;   /* 画面下に少し呼吸分の余白 */
       }
     }
+
     @media (min-width:1400px){
       :root{ --icon-h:68px; --sns-gap:44px; }
     }
@@ -155,7 +148,7 @@
     <!-- ロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-    <!-- カウンター（ロゴ直下） -->
+    <!-- カウンター -->
     <div class="counter" id="counterBox" role="status" aria-live="polite">
       <span class="type" id="prefix"></span>
       <span class="sevenseg" id="sevenseg" aria-label="訪問者カウンター"></span>
@@ -163,10 +156,10 @@
       <span class="cursor" id="cursor" aria-hidden="true"></span>
     </div>
 
-    <!-- メイン画像：カウンター完了後に4秒で出現 -->
+    <!-- メイン画像（カウンター完了後に出現） -->
     <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="hero reveal-target" id="heroImg">
 
-    <!-- SNS：カウンター完了後に4秒で出現 -->
+    <!-- SNS（カウンター完了後に出現） -->
     <div class="sns reveal-target" id="snsBlock">
       <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
         <img src="youtube_logo.gif" class="youtube" alt="YouTube">
@@ -183,8 +176,8 @@
   <script>
     (()=>{
       const DIGITS = 6;
-      const TYPE_MS = 120;
-      const DIGIT_MS = 200;
+      const TYPE_MS = 120;   // 文字の間隔
+      const DIGIT_MS = 200;  // 数字1桁の間隔
       const key = "udr_demo_counter";
 
       let count = parseInt(localStorage.getItem(key) || "0", 10) + 1;
@@ -210,11 +203,7 @@
         });
       }
 
-      const onMap = {
-        0: "abcfed", 1: "bc", 2: "abged", 3: "abgcd",
-        4: "fgbc", 5: "afgcd", 6: "afgecd", 7: "abc",
-        8: "abcdefg", 9: "abfgcd"
-      };
+      const onMap = {0:"abcfed",1:"bc",2:"abged",3:"abgcd",4:"fgbc",5:"afgcd",6:"afgecd",7:"abc",8:"abcdefg",9:"abfgcd"};
       const makeDigit = (n)=>{
         const d = document.createElement('span');
         d.className = 'digit';
@@ -251,9 +240,9 @@
         await typeText(suffix, suffixText);
 
         cursor.style.display = 'none';
-        document.getElementById('counterBox')
-          .setAttribute('aria-label', `あなたは ${count} 番目のお客様です。`);
+        document.getElementById('counterBox').setAttribute('aria-label', `あなたは ${count} 番目のお客様です。`);
 
+        // すべて表示完了 → 4秒でふわっと出現
         requestAnimationFrame(()=>{
           hero.classList.add('reveal');
           sns.classList.add('reveal');
