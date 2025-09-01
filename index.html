@@ -206,10 +206,10 @@
       const DIGIT_MS = 200;
       const AFTER_TYPE_DELAY = 1000;
 
-      // ▼ CountAPI の設定（世界でほぼユニークな組み合わせにしてある）
-      const NAMESPACE = 'umbrelladotrecords';
-      const KEY       = 'udr-site-home';
-      const BASE = 'https://api.countapi.xyz';
+      /* ▼▼▼ ここだけGASに変更 ▼▼▼ */
+      const API_URL = 'https://script.google.com/macros/s/AKfycbwLnksSQgtjqAD6MJl95T1ZJafEre0rGzBL9P_hCXL400T6tAoPl1L3YhuJ8sgJCA0NCg/exec';
+      const API_KEY = 'udr-site-home'; // スクリプト側のデフォと一致
+      /* ▲▲▲ ここだけGASに変更 ▲▲▲ */
 
       function typeText(node, text){
         return new Promise(resolve=>{
@@ -256,23 +256,19 @@
       (async ()=>{
         await typeText(prefix, prefixText);
 
-        let count = 0;
+        // ▼ ここでサーバ側で+1して値を取得（共通カウント）
+        let count = 1;
         try{
-          // 1) まず update で +1
-          let res = await fetch(`${BASE}/update/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}/?amount=1`, { cache: 'no-store' });
-          let data = await res.json();
-          if (data && typeof data.value === 'number') {
+          const res = await fetch(`${API_URL}?key=${encodeURIComponent(API_KEY)}`, { cache: 'no-store' });
+          const data = await res.json();
+          if (data && data.ok && typeof data.value === 'number') {
             count = data.value;
           } else {
-            // 2) キーが無い等で失敗したら create→get で初期化
-            await fetch(`${BASE}/create?namespace=${encodeURIComponent(NAMESPACE)}&key=${encodeURIComponent(KEY)}&value=1`, { cache: 'no-store' });
-            res = await fetch(`${BASE}/get/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`, { cache: 'no-store' });
-            data = await res.json();
-            count = Number(data.value) || 1;
+            count = Number(data?.value) || 1;
           }
         }catch(e){
-          console.warn('CountAPI error', e);
-          count = 1; // 最低限1からスタート
+          console.warn('GAS counter error', e);
+          count = 1;
         }
 
         const s = String(count).padStart(DIGITS,'0');
