@@ -12,7 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 
   <style>
-    /* ★ここから下はしゅうちゃんが作ってたCSS全部そのまま */
     :root{
       --logo-w: clamp(260px, 60vw, 640px);
       --logo-mt: clamp(40px, 6vh, 60px);
@@ -83,9 +82,10 @@
 
     .reveal-target{
       opacity: 0; transform: translateY(16px) scale(.98); filter: blur(4px);
-      transition: opacity var(--reveal-duration) var(--reveal-ease),
-                  transform var(--reveal-duration) var(--reveal-ease),
-                  filter var(--reveal-duration) var(--reveal-ease);
+      transition:
+        opacity var(--reveal-duration) var(--reveal-ease),
+        transform var(--reveal-duration) var(--reveal-ease),
+        filter var(--reveal-duration) var(--reveal-ease);
     }
     .reveal{ opacity: 1 !important; transform: translateY(0) scale(1) !important; filter: blur(0) !important; }
 
@@ -192,10 +192,11 @@
       const TYPE_MS = 120;
       const DIGIT_MS = 200;
       const AFTER_TYPE_DELAY = 1000;
-      const key = "udr_demo_counter";
 
-      let count = parseInt(localStorage.getItem(key) || "0", 10) + 1;
-      localStorage.setItem(key, String(count));
+      // ▼ CountAPI の設定
+      const NAMESPACE = 'umbrelladotrecords';
+      const KEY       = 'udr-site-home';
+      const API = `https://api.countapi.xyz/hit/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`;
 
       function typeText(node, text){
         return new Promise(resolve=>{
@@ -238,10 +239,21 @@
 
       const prefixText = 'あなたは ';
       const suffixText = ' 番目のお客様です。';
-      const s = String(count).padStart(DIGITS,'0');
 
       (async ()=>{
         await typeText(prefix, prefixText);
+
+        let count = 0;
+        try{
+          const res = await fetch(API, { cache: 'no-store' });
+          const data = await res.json();
+          count = Number(data.value) || 0;
+        }catch(e){
+          console.warn('CountAPI error', e);
+          count = 0;
+        }
+
+        const s = String(count).padStart(DIGITS,'0');
 
         sevenseg.textContent = '';
         for(let i=0;i<s.length;i++){
