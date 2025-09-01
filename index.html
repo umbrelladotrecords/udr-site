@@ -5,78 +5,87 @@
   <title>Umbrella Dot Records</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root{
-      /* ← members.html に合わせる数値（ここが超重要） */
-      --main-logo-top: 60px;          /* ロゴ上余白 */
-      --main-logo-maxw: 60%;          /* ロゴ最大幅 */
-      --gap-after-logo: 48px;         /* ロゴの下の余白（下コンテンツとの距離） */
-
-      --gap-sns: 48px;
-      --icon-h: clamp(64px, 10vw, 120px);
-      --bottom-space: 80px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; background:#000; color:#fff;
-      font-family:Arial, Helvetica, sans-serif; text-align:center;
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      font-family: Arial, sans-serif;
     }
 
-    /* ★ UDR ロゴ：members.html と完全一致 */
-    .main-logo{
-      display:block;
-      margin: var(--main-logo-top) auto 0; /* 上だけ 60px・下ゼロ */
-      max-width: var(--main-logo-maxw);    /* 60% */
-      height:auto;
+    /* 背景両サイドの縦線 */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 6px; /* ← 修正後 */
+      background: linear-gradient(180deg, #222 0%, #7fb59c 50%, #222 100%);
+      z-index: 1;
     }
-    /* ロゴの“見かけの静止”を強めるため、下側のスペーサーで配置を固定 */
-    .logo-spacer{ height: var(--gap-after-logo); }
+    body::before { left: 0; }
+    body::after  { right: 0; }
 
-    /* 丸ロゴ */
-    .sub-logo{
-      display:block; margin: 0 auto var(--bottom-space);
-      width:min(80%, 400px); height:auto;
+    /* UDRロゴ */
+    .main-logo {
+      margin-top: 60px;
+      margin-bottom: 40px;
+      width: clamp(200px, 40%, 480px); /* ← PCでアップにならないよう調整 */
+      height: auto;
+      z-index: 2;
+      position: relative;
     }
 
-    /* SNS 横並び */
-    .sns-links{
-      display:flex; justify-content:center; align-items:center;
-      gap: var(--gap-sns); padding: 0 16px var(--bottom-space);
-      flex-wrap:wrap;
+    /* サブロゴ */
+    .sub-logo {
+      margin: 40px auto;
+      max-width: 320px;
+      width: 80%;
+      height: auto;
+      z-index: 2;
+      position: relative;
     }
-    .sns-links a{ display:inline-flex; align-items:center; justify-content:center; text-decoration:none; }
-    .sns-links img{
-      display:block; height: var(--icon-h); width:auto;
+
+    /* SNSリンク（横並び） */
+    .sns-links {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin: 60px 0;
+      z-index: 2;
+      position: relative;
+    }
+    .sns-links img {
+      height: 100px;
+      width: auto;
+      transition: transform 0.3s;
+      cursor: pointer;
       image-rendering: pixelated;
-      transition: transform .22s ease, filter .22s ease;
-      filter: drop-shadow(0 8px 10px rgba(0,0,0,.35));
     }
-    .sns-links img:hover{ transform: scale(1.12); filter: drop-shadow(0 12px 14px rgba(0,0,0,.5)); }
-
-    footer{ color:#aaa; font-size:12px; margin:16px 0 32px; }
+    .sns-links img:hover {
+      transform: scale(1.15);
+    }
   </style>
 </head>
 <body>
-  <!-- UDRロゴ（members.html と同じ margin / max-width） -->
-  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo" />
-  <div class="logo-spacer"></div> <!-- ← ロゴ真下の空間を固定して“動かない”印象を強化 -->
+  <!-- UDRロゴ -->
+  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- 丸ロゴ -->
-  <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo" />
+  <!-- サブロゴ -->
+  <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo">
 
-  <!-- SNS -->
+  <!-- SNSリンク -->
   <div class="sns-links">
     <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
-      <img src="youtube_logo.gif" alt="YouTube" />
+      <img src="youtube_logo.gif" alt="YouTube">
     </a>
     <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
-      <img src="music_logo.gif" alt="Music Link" />
+      <img src="music_logo.gif" alt="Music">
     </a>
-    <!-- Instagram はクッションページへ（同一タブで遷移） -->
-    <a href="members.html">
-      <img src="instagram_logo.gif" alt="Instagram (Members)" />
+    <a href="members.html" target="_self">
+      <img src="Instagram_logo.PNG" alt="Instagram">
     </a>
   </div>
-
-  <footer>© Umbrella Dot Records</footer>
 </body>
 </html>
