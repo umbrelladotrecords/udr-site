@@ -112,7 +112,7 @@
       :root{
         --sns-gap: 18px;
         --icon-h: 42px;
-        --counter-gap-top: 2.5svh;
+        --counter-gap-top: 8svh;   /* ← ここを8に変更 */
         --counter-gap-bottom: 2.5svh;
       }
       .wrap{
@@ -122,12 +122,11 @@
         padding-bottom: 2svh;
       }
       .counter{ font-size: 12px; } /* 文章側のサイズ */
-      /* ← 数字を文章と同じくらいに小さくする */
       .sevenseg{ gap: 2px; margin: 0 4px; }
       .digit{
-        width: 10px; height: 14px;   /* 数字自体の大きさ */
-        --t: 2px; --pad: 2px;        /* セグの太さ＆余白を縮小 */
-        transform: translateY(2px) scale(.98); /* ベースライン微調整 */
+        width: 10px; height: 14px;
+        --t: 2px; --pad: 2px;
+        transform: translateY(2px) scale(.98);
       }
       .hero{
         width: 82vw;
@@ -194,9 +193,9 @@
   <script>
     (()=>{
       const DIGITS = 6;
-      const TYPE_MS = 120;     // 文字間隔
-      const DIGIT_MS = 200;    // 数字1桁の間隔
-      const AFTER_TYPE_DELAY = 1000; // タイプ完了から1秒待って開始
+      const TYPE_MS = 120;
+      const DIGIT_MS = 200;
+      const AFTER_TYPE_DELAY = 1000;
       const key = "udr_demo_counter";
 
       let count = parseInt(localStorage.getItem(key) || "0", 10) + 1;
@@ -262,7 +261,6 @@
         document.getElementById('counterBox')
           .setAttribute('aria-label', `あなたは ${count} 番目のお客様です。`);
 
-        // タイプ完了から1秒後に、5秒アニメでふわっと出現
         setTimeout(()=>{
           hero.classList.add('reveal');
           sns.classList.add('reveal');
