@@ -2,39 +2,53 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>UDR Members - arsvna / artwork</title>
+  <title>Umbrella Dot Records</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- ロゴ用 -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+  <!-- ガラケー風ドット -->
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      /* ★ トップと完全共通（ここを揃える） */
       --logo-w: clamp(260px, 60vw, 640px);
       --logo-mt: clamp(40px, 6vh, 60px);
 
-      /* サイド縦ライン（幅6px） */
       --rail-w: 6px;
-      --rail-grad1:#223;
-      --rail-grad2:#7fb59c;
+      --rail-grad1:#223; --rail-grad2:#7fb59c;
 
-      /* 見出し・他は今まで通り（省略） */
-      --hdr-width: min(60vw, 520px);
-      --hdr-bar-h: 4px;
-      --hdr-gap: 18px;
-      --hdr-base: #dff2e9;
-      --hdr-dark: #0d0f0d;
-      --hdr-grad1: #223;
-      --hdr-grad2: #7fb59c;
-      --rgb-off: 1.8px;
-      --txt-size: clamp(20px, 5.2vw, 34px);
-      --txt-spacing: .14em;
+      --sns-gap: clamp(28px, 3vw, 48px);
+      --icon-h: clamp(52px, 6vw, 82px);
+      --page-max: 980px;
+
+      --counter-gap-top: 60px;
+      --counter-gap-bottom: 60px;
+
+      /* 7セグ（赤LED・控えめ発光） */
+      --seg-on: #ff3b3b; --seg-off:#0b1412; --seg-glow: rgba(255,59,59,.35);
+
+      /* タイプ演出 */
+      --type-speed: 120ms; --digit-pop: 200ms; --cursor-color: #dfe;
+
+      /* 浮かび上がり */
+      --reveal-duration: 5s;               /* ← 前回より長い */
+      --reveal-ease: cubic-bezier(.17,.84,.44,1);
+
+      /* ギャラリー（線の色と間隔） */
+      --divider-color-1: #f6d74a;          /* 黄色 */
+      --divider-color-2: #c8a500;          /* 濃い黄（グラデ） */
+      --gallery-gap: 3.2svh;               /* 上ライン〜画像、画像〜下ラインの等間隔（SP） */
     }
 
     *{ box-sizing:border-box }
+    html,body{ height:100%; margin:0; }
     body{
-      margin:0; background:#000; color:#fff; text-align:center;
+      background:#000; color:#fff; text-align:center;
       font-family:'Orbitron', Arial, sans-serif;
-      position:relative; overflow-x:hidden;
+      overflow-x:hidden;
     }
+
+    /* サイド縦レール */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
       width:var(--rail-w);
@@ -43,55 +57,242 @@
     }
     body::before{ left:0 } body::after{ right:0 }
 
-    /* ★ ロゴ：トップと完全一致 */
-    .main-logo{
-      display:block;
-      width: var(--logo-w);
-      height:auto;
-      margin: var(--logo-mt) auto 0;
+    .wrap{ position:relative; z-index:1; width:min(92vw, var(--page-max)); margin:0 auto; }
+
+    .main-logo{ display:block; width:var(--logo-w); height:auto; margin:var(--logo-mt) auto 0; }
+
+    /* ───────── カウンター（ドットフォント＋タイプ演出） ───────── */
+    .counter{
+      margin: var(--counter-gap-top) auto var(--counter-gap-bottom);
+      font-family: 'DotGothic16', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN','Yu Gothic','Meiryo',sans-serif;
+      font-size: 14px; color: #dfe; line-height: 1.4; letter-spacing: .02em;
+      display:inline-flex; align-items:baseline;
+    }
+    .type span{ opacity:0; transition: opacity .15s ease; }
+    .type span.show{ opacity:1; }
+    .cursor{ width:8px; height:1.05em; margin-left:2px; display:inline-block; background: var(--cursor-color); opacity:.65; animation: blink 1s step-end infinite; }
+    @keyframes blink{ 50%{ opacity: .15 } }
+
+    .sevenseg{ display:inline-flex; gap:4px; vertical-align:middle; margin:0 6px; }
+    .digit{
+      position:relative; width:18px; height:26px; display:inline-block;
+      opacity:0; transform: translateY(4px) scale(.96);
+      transition: opacity .15s ease, transform .2s ease;
+      --t:3px; --pad:3px;
+    }
+    .digit.show{ opacity:1; transform: translateY(0) scale(1); }
+    .seg{ position:absolute; background: var(--seg-off); border-radius:1px; }
+    .on{ background:var(--seg-on); box-shadow:0 0 2px var(--seg-glow), 0 0 6px var(--seg-glow); }
+    .a,.d,.g{ height: var(--t); left: var(--pad); right: var(--pad); }
+    .a{ top: var(--pad); } .g{ top: calc(50% - var(--t)/2); } .d{ bottom: var(--pad); }
+    .b,.c,.e,.f{ width: var(--t); top: calc(var(--pad) + var(--t)); bottom: calc(var(--pad) + var(--t)); }
+    .b{ right: var(--pad); clip-path: inset(0 0 50% 0); }
+    .c{ right: var(--pad); clip-path: inset(50% 0 0 0); }
+    .f{ left: var(--pad);  clip-path: inset(0 0 50% 0); }
+    .e{ left: var(--pad);  clip-path: inset(50% 0 0 0); }
+
+    /* ▼ 浮かび上がり（初期は隠す） */
+    .reveal-target{
+      opacity: 0; transform: translateY(16px) scale(.98); filter: blur(4px);
+      transition:
+        opacity var(--reveal-duration) var(--reveal-ease),
+        transform var(--reveal-duration) var(--reveal-ease),
+        filter var(--reveal-duration) var(--reveal-ease);
+    }
+    .reveal{ opacity: 1 !important; transform: translateY(0) scale(1) !important; filter: blur(0) !important; }
+
+    /* ───────── ギャラリー枠（黄色ラインでサンド） ───────── */
+    .gallery{
+      display:flex; flex-direction:column; align-items:center;
+      /* スマホでは1画面に収めるため、余白は svh を基準に */
+      margin: 0 auto;
+    }
+    .divider{
+      height: 4px; width: 94%;
+      background: linear-gradient(90deg, transparent 0%, var(--divider-color-1) 10%, var(--divider-color-2) 50%, var(--divider-color-1) 90%, transparent 100%);
+      filter: drop-shadow(0 0 2px rgba(255,230,120,.3));
+      border-radius: 2px;
+    }
+    .gallery .spacer{ height: var(--gallery-gap); }
+
+    .hero{
+      display:block; width:min(90vw, 720px); height:auto;
     }
 
-    /* ─ 以降は今までの members のスタイル ─ */
-    .hdr{ position:relative; width:var(--hdr-width); margin:48px auto 26px; padding:var(--hdr-gap) 0; isolation:isolate; }
-    .hdr::before,.hdr::after{ content:""; position:absolute; left:50%; width:100%; height:var(--hdr-bar-h); transform:translateX(-50%); background:linear-gradient(90deg,var(--hdr-grad1) 0%, var(--hdr-grad2) 50%, var(--hdr-grad1) 100%); box-shadow:0 1px 0 rgba(0,0,0,.45), 0 0 8px rgba(0,0,0,.35); z-index:0; }
-    .hdr::before{ top:0 } .hdr::after{ bottom:0 }
-    .hdr .txt{ position:relative; display:inline-block; font-weight:800; font-size:var(--txt-size); letter-spacing:var(--txt-spacing); color:var(--hdr-base); line-height:1; z-index:1; text-shadow:0 2px 0 var(--hdr-dark),0 4px 0 var(--hdr-dark),0 6px 0 var(--hdr-dark),1px 1px 0 #2a3a33,2px 2px 0 #1a2722,0 6px 8px rgba(0,0,0,.35); filter: drop-shadow(0 8px 8px rgba(0,0,0,.22)); }
-    .hdr .txt::before,.hdr .txt::after{ content:attr(data-text); position:absolute; inset:0; pointer-events:none; }
-    .hdr .txt::before{ transform:translate(calc(-1 * var(--rgb-off)),0); color:rgba(140,255,200,.5); mix-blend-mode:screen }
-    .hdr .txt::after { transform:translate(var(--rgb-off),0); color:rgba(210,255,230,.4);  mix-blend-mode:screen }
+    .sns{
+      margin: 40px auto 100px;
+      display:flex; justify-content:center; align-items:center;
+      gap: var(--sns-gap); flex-wrap: nowrap; max-width: min(92vw, 960px);
+    }
+    .sns a{ display:inline-flex; align-items:center; justify-content:center; }
+    .sns img{ height: var(--icon-h); width:auto; display:block; transition: transform .25s ease; image-rendering: pixelated; }
+    .sns img:hover{ transform: scale(1.5); }
+    .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
+    .sns img.instagram { height: calc(var(--icon-h) * 1.2); }
 
-    .brand-3d{ display:flex; justify-content:center; margin:6px 0 24px }
-    .brand-logo{ display:block; width:28%; max-width:260px; height:auto }
-    .band-image, .designer-image{ display:block; margin:0 auto 40px; max-width:80%; height:auto }
+    /* ===== スマホ：1画面収まり＋カウンターを文章サイズに合わせる ===== */
+    @media (max-width: 480px){
+      :root{
+        --sns-gap: 18px;
+        --icon-h: 42px;
+        --counter-gap-top: 2.5svh;
+        --counter-gap-bottom: 2.5svh;
+        --gallery-gap: 3.2svh;  /* ← 黄色の線を“青の位置”相当まで下げつつ、等間隔で中央に配置 */
+      }
+      .wrap{
+        min-height: 100svh;
+        display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+        padding-bottom: 2svh;
+      }
+      .counter{ font-size: 12px; }
+      .sevenseg{ gap: 2px; margin: 0 4px; }
+      .digit{ width: 10px; height: 14px; --t: 2px; --pad: 2px; transform: translateY(2px) scale(.98); }
 
-    .insta-link{ display:inline-flex; flex-direction:column; align-items:center; text-decoration:none; color:#fff; background:none; border:none; padding:0; margin:10px 0 36px; }
-    .insta-link img{ height:48px; width:auto; margin-bottom:8px }
-    .insta-link span{ color:#fff; text-decoration:underline }
+      /* ギャラリー：等間隔で“中央に展示” */
+      .gallery{ width: 100%; }
+      .hero{ width: 82vw; }           /* 画像は幅8割で展示感 */
+      .sns{ margin: 3svh 0 3svh; }
+    }
 
-    .designer-name{ margin:10px 0 14px; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif; font-weight:700; font-size:18px; letter-spacing:.06em; color:#dfe; }
-    .section-gap{ height:64px }
+    /* ===== PC：美術館レイアウト＋1画面収まり ===== */
+    @media (min-width:1200px){
+      :root{
+        --logo-w:520px; --page-max:980px;
+        --counter-gap-top: 4vh; --counter-gap-bottom: 4vh;
+        --gallery-gap: 5vh;      /* PCは余白をゆったりと */
+      }
+      .wrap{
+        min-height: 100vh;
+        display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+        padding-bottom: 2vh;
+      }
+      .hero{ width: 420px; }       /* 主役感を残す大きさ */
+      .sns{ margin: 4vh 0 4vh; }
+      .divider{ width: 88%; }      /* PCは少し短めで上品に */
+    }
+
+    @media (min-width:1400px){
+      :root{ --icon-h:68px; --sns-gap:44px; }
+    }
   </style>
 </head>
 <body>
-  <!-- ★ ロゴ（トップとピッタリ同じ場所・サイズ） -->
-  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
+  <div class="wrap">
+    <!-- ロゴ -->
+    <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- ===== Band ===== -->
-  <div class="hdr"><span class="txt" data-text="BAND">BAND</span></div>
-  <div class="brand-3d"><img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo"></div>
-  <img src="arsvna2.JPG" alt="arsvna" class="band-image">
-  <a class="insta-link" href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" target="_blank" rel="noopener">
-    <img src="instagram_logo.gif" alt="Instagram"><span>@arsvna_udr</span>
-  </a>
+    <!-- カウンター -->
+    <div class="counter" id="counterBox" role="status" aria-live="polite">
+      <span class="type" id="prefix"></span>
+      <span class="sevenseg" id="sevenseg" aria-label="訪問者カウンター"></span>
+      <span class="type" id="suffix"></span>
+      <span class="cursor" id="cursor" aria-hidden="true"></span>
+    </div>
 
-  <div class="section-gap"></div>
+    <!-- ▼ ギャラリー：黄色ラインに挟まれた“展示室” -->
+    <div class="gallery">
+      <div class="divider"></div>
+      <div class="spacer"></div>
 
-  <!-- ===== ART WORK ===== -->
-  <div class="hdr"><span class="txt" data-text="ART WORK">ART WORK</span></div>
-  <div class="designer-name">荒山悠太</div>
-  <img src="arayama1.JPG" alt="荒山悠太" class="designer-image">
-  <a class="insta-link" href="https://www.instagram.com/arym_works?igsh=dzJnZjUyZjRjYjh6" target="_blank" rel="noopener">
-    <img src="instagram_logo.gif" alt="Instagram"><span>@ARYM_WORKS</span>
-  </a>
+      <!-- メイン画像（後から出現） -->
+      <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="hero reveal-target" id="heroImg">
+
+      <div class="spacer"></div>
+      <div class="divider"></div>
+    </div>
+
+    <!-- SNS（後から出現） -->
+    <div class="sns reveal-target" id="snsBlock">
+      <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
+        <img src="youtube_logo.gif" class="youtube" alt="YouTube">
+      </a>
+      <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
+        <img src="music_logo2.gif" alt="Music">
+      </a>
+      <a href="members.html">
+        <img src="instagram_logo.gif" class="instagram" alt="Instagram">
+      </a>
+    </div>
+  </div>
+
+  <script>
+    (()=>{
+      const DIGITS = 6;
+      const TYPE_MS = 120;
+      const DIGIT_MS = 200;
+      const AFTER_TYPE_DELAY = 1000; // タイプ完了から1秒待って開始
+      const key = "udr_demo_counter";
+
+      let count = parseInt(localStorage.getItem(key) || "0", 10) + 1;
+      localStorage.setItem(key, String(count));
+
+      function typeText(node, text){
+        return new Promise(resolve=>{
+          node.innerHTML = '';
+          const chars = Array.from(text);
+          let i = 0;
+          const tick = () => {
+            if(i < chars.length){
+              const span = document.createElement('span');
+              span.textContent = chars[i++];
+              node.appendChild(span);
+              requestAnimationFrame(()=> span.classList.add('show'));
+              setTimeout(tick, TYPE_MS);
+            }else{
+              resolve();
+            }
+          };
+          tick();
+        });
+      }
+
+      const onMap = {0:"abcfed",1:"bc",2:"abged",3:"abgcd",4:"fgbc",5:"afgcd",6:"afgecd",7:"abc",8:"abcdefg",9:"abfgcd"};
+      const makeDigit = (n)=>{
+        const d = document.createElement('span');
+        d.className = 'digit';
+        for(const id of ['a','b','c','d','e','f','g']){
+          const seg = document.createElement('span');
+          seg.className = 'seg '+id + (onMap[n].includes(id) ? ' on' : '');
+          d.appendChild(seg);
+        }
+        return d;
+      };
+
+      const prefix = document.getElementById('prefix');
+      const sevenseg = document.getElementById('sevenseg');
+      const suffix = document.getElementById('suffix');
+      const cursor = document.getElementById('cursor');
+      const hero = document.getElementById('heroImg');
+      const sns  = document.getElementById('snsBlock');
+
+      const prefixText = 'あなたは ';
+      const suffixText = ' 番目のお客様です。';
+      const s = String(count).padStart(DIGITS,'0');
+
+      (async ()=>{
+        await typeText(prefix, prefixText);
+
+        sevenseg.textContent = '';
+        for(let i=0;i<s.length;i++){
+          const d = makeDigit(Number(s[i]));
+          sevenseg.appendChild(d);
+          requestAnimationFrame(()=> d.classList.add('show'));
+          await new Promise(r=> setTimeout(r, DIGIT_MS));
+        }
+
+        await typeText(suffix, suffixText);
+
+        cursor.style.display = 'none';
+        document.getElementById('counterBox')
+          .setAttribute('aria-label', `あなたは ${count} 番目のお客様です。`);
+
+        // タイプ完了から1秒後に、5秒アニメでふわっと出現
+        setTimeout(()=>{
+          hero.classList.add('reveal');
+          sns.classList.add('reveal');
+        }, AFTER_TYPE_DELAY);
+      })();
+    })();
+  </script>
 </body>
 </html>
