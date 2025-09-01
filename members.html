@@ -7,16 +7,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      /* ★ トップと完全共通（ここを揃える） */
+      /* ★ トップと完全共通（ロゴとページ幅の“引き”） */
       --logo-w: clamp(260px, 60vw, 640px);
       --logo-mt: clamp(40px, 6vh, 60px);
+      --page-max: 980px;
 
       /* サイド縦ライン（幅6px） */
       --rail-w: 6px;
       --rail-grad1:#223;
       --rail-grad2:#7fb59c;
 
-      /* 見出し・他は今まで通り（省略） */
+      /* 既存の見出しなど */
       --hdr-width: min(60vw, 520px);
       --hdr-bar-h: 4px;
       --hdr-gap: 18px;
@@ -30,11 +31,14 @@
     }
 
     *{ box-sizing:border-box }
+    html,body{ height:100% }
     body{
       margin:0; background:#000; color:#fff; text-align:center;
       font-family:'Orbitron', Arial, sans-serif;
       position:relative; overflow-x:hidden;
     }
+
+    /* 両サイドの縦ライン（indexと同仕様：body疑似要素） */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
       width:var(--rail-w);
@@ -43,12 +47,20 @@
     }
     body::before{ left:0 } body::after{ right:0 }
 
+    /* ★ 中央の箱：indexと同じ“引き”にする */
+    .wrap{
+      position:relative; z-index:1;
+      width: min(92vw, var(--page-max));
+      margin: 0 auto;
+    }
+
     /* ★ ロゴ：トップと完全一致 */
     .main-logo{
       display:block;
       width: var(--logo-w);
       height:auto;
       margin: var(--logo-mt) auto 0;
+      transform:none;
     }
 
     /* ─ 以降は今までの members のスタイル ─ */
@@ -70,28 +82,38 @@
 
     .designer-name{ margin:10px 0 14px; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif; font-weight:700; font-size:18px; letter-spacing:.06em; color:#dfe; }
     .section-gap{ height:64px }
+
+    /* ★ PCでアップを抑える：ロゴ520px固定（indexと同じ） */
+    @media (min-width:1200px){
+      :root{
+        --logo-w: 520px;
+        --page-max: 980px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- ★ ロゴ（トップとピッタリ同じ場所・サイズ） -->
-  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
+  <div class="wrap">
+    <!-- ★ ロゴ（トップとピッタリ同じ場所・サイズ） -->
+    <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- ===== Band ===== -->
-  <div class="hdr"><span class="txt" data-text="BAND">BAND</span></div>
-  <div class="brand-3d"><img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo"></div>
-  <img src="arsvna2.JPG" alt="arsvna" class="band-image">
-  <a class="insta-link" href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" target="_blank" rel="noopener">
-    <img src="instagram_logo.gif" alt="Instagram"><span>@arsvna_udr</span>
-  </a>
+    <!-- ===== Band ===== -->
+    <div class="hdr"><span class="txt" data-text="BAND">BAND</span></div>
+    <div class="brand-3d"><img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo"></div>
+    <img src="arsvna2.JPG" alt="arsvna" class="band-image">
+    <a class="insta-link" href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" target="_blank" rel="noopener">
+      <img src="instagram_logo.gif" alt="Instagram"><span>@arsvna_udr</span>
+    </a>
 
-  <div class="section-gap"></div>
+    <div class="section-gap"></div>
 
-  <!-- ===== ART WORK ===== -->
-  <div class="hdr"><span class="txt" data-text="ART WORK">ART WORK</span></div>
-  <div class="designer-name">荒山悠太</div>
-  <img src="arayama1.JPG" alt="荒山悠太" class="designer-image">
-  <a class="insta-link" href="https://www.instagram.com/arym_works?igsh=dzJnZjUyZjRjYjh6" target="_blank" rel="noopener">
-    <img src="instagram_logo.gif" alt="Instagram"><span>@ARYM_WORKS</span>
-  </a>
+    <!-- ===== ART WORK ===== -->
+    <div class="hdr"><span class="txt" data-text="ART WORK">ART WORK</span></div>
+    <div class="designer-name">荒山悠太</div>
+    <img src="arayama1.JPG" alt="荒山悠太" class="designer-image">
+    <a class="insta-link" href="https://www.instagram.com/arym_works?igsh=dzJnZjUyZjRjYjh6" target="_blank" rel="noopener">
+      <img src="instagram_logo.gif" alt="Instagram"><span>@ARYM_WORKS</span>
+    </a>
+  </div>
 </body>
 </html>
