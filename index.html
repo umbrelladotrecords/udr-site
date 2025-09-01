@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Umbrella Dot Records</title>
+  <!-- Google Search Console 用の確認タグ -->
+  <meta name="google-site-verification" content="Kr1DL_EINWwMVYx3xK-ofVnbCKlrAgXOAHkhLl3NfX8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- ロゴ用 -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
@@ -10,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 
   <style>
+    /* ★ここから下はしゅうちゃんが作ってたCSS全部そのまま */
     :root{
       --logo-w: clamp(260px, 60vw, 640px);
       --logo-mt: clamp(40px, 6vh, 60px);
@@ -22,13 +25,9 @@
       --counter-gap-top: 60px;
       --counter-gap-bottom: 60px;
 
-      /* 7セグ（赤LED・控えめ発光） */
       --seg-on: #ff3b3b; --seg-off:#0b1412; --seg-glow: rgba(255,59,59,.35);
-
-      /* タイプ演出（遅め） */
       --type-speed: 120ms; --digit-pop: 200ms; --cursor-color: #dfe;
 
-      /* 浮かび上がり（5秒・ゆっくり） */
       --reveal-duration: 5s;
       --reveal-ease: cubic-bezier(.17,.84,.44,1);
     }
@@ -41,7 +40,6 @@
       overflow-x:hidden;
     }
 
-    /* サイド縦レール */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
       width:var(--rail-w);
@@ -54,7 +52,6 @@
 
     .main-logo{ display:block; width:var(--logo-w); height:auto; margin:var(--logo-mt) auto 0; }
 
-    /* ───────── カウンター（ドットフォント＋タイプ演出） ───────── */
     .counter{
       margin: var(--counter-gap-top) auto var(--counter-gap-bottom);
       font-family: 'DotGothic16', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN','Yu Gothic','Meiryo',sans-serif;
@@ -84,13 +81,11 @@
     .f{ left: var(--pad);  clip-path: inset(0 0 50% 0); }
     .e{ left: var(--pad);  clip-path: inset(50% 0 0 0); }
 
-    /* ▼ 浮かび上がり */
     .reveal-target{
       opacity: 0; transform: translateY(16px) scale(.98); filter: blur(4px);
-      transition:
-        opacity var(--reveal-duration) var(--reveal-ease),
-        transform var(--reveal-duration) var(--reveal-ease),
-        filter var(--reveal-duration) var(--reveal-ease);
+      transition: opacity var(--reveal-duration) var(--reveal-ease),
+                  transform var(--reveal-duration) var(--reveal-ease),
+                  filter var(--reveal-duration) var(--reveal-ease);
     }
     .reveal{ opacity: 1 !important; transform: translateY(0) scale(1) !important; filter: blur(0) !important; }
 
@@ -107,7 +102,6 @@
     .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
     .sns img.instagram { height: calc(var(--icon-h) * 1.2); }
 
-    /* ===== スマホ版 ===== */
     @media (max-width: 480px){
       :root{
         --sns-gap: 18px;
@@ -136,7 +130,6 @@
       .sns{ margin: 0 0 3svh; }
     }
 
-    /* ===== PC版 ===== */
     @media (min-width:1200px){
       :root{
         --logo-w:520px; --page-max:980px;
@@ -150,7 +143,7 @@
       .counter{ font-size: 14px; }
       .sevenseg{ gap: 3px; margin: 0 5px; }
       .digit{
-        width: 14px; height: 20px;   /* ← PCでは少し大きく強調 */
+        width: 14px; height: 20px;
         --t: 2.5px; --pad: 2px;
         transform: translateY(2px) scale(.98);
       }
@@ -169,10 +162,8 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- ロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-    <!-- カウンター -->
     <div class="counter" id="counterBox" role="status" aria-live="polite">
       <span class="type" id="prefix"></span>
       <span class="sevenseg" id="sevenseg" aria-label="訪問者カウンター"></span>
@@ -180,10 +171,8 @@
       <span class="cursor" id="cursor" aria-hidden="true"></span>
     </div>
 
-    <!-- メイン画像（後から出現） -->
     <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="hero reveal-target" id="heroImg">
 
-    <!-- SNS（後から出現） -->
     <div class="sns reveal-target" id="snsBlock">
       <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
         <img src="youtube_logo.gif" class="youtube" alt="YouTube">
