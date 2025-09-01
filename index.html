@@ -28,9 +28,9 @@
       --seg-off:#0b1412;
       --seg-glow: rgba(255,59,59,.35);
 
-      /* タイプ速度（お好みで調整） */
-      --type-speed: 55ms;     /* 文章1文字あたり */
-      --digit-pop: 90ms;      /* 桁を出す間隔 */
+      /* タイプ速度（ゆっくり版） */
+      --type-speed: 120ms;   /* 文章1文字あたり */
+      --digit-pop: 200ms;    /* 桁を出す間隔 */
       --cursor-color: #dfe;
     }
 
@@ -59,18 +59,16 @@
     .counter{
       margin: var(--counter-gap-top) auto var(--counter-gap-bottom);
       font-family: 'DotGothic16', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN','Yu Gothic','Meiryo',sans-serif;
-      font-size: 14px;   /* 小さめ */
+      font-size: 14px;
       color: #dfe;
       line-height: 1.4;
       letter-spacing: .02em;
       display:inline-flex; align-items:baseline;
     }
 
-    /* 文章のタイプ表示用：1文字ずつフェードイン */
     .type span{ opacity:0; transition: opacity .15s ease; }
     .type span.show{ opacity:1; }
 
-    /* 点滅カーソル（タイプ中だけ表示） */
     .cursor{
       width:8px; height:1.05em; margin-left:2px; display:inline-block;
       background: var(--cursor-color); opacity:.65;
@@ -78,14 +76,12 @@
     }
     @keyframes blink{ 50%{ opacity: .15 } }
 
-    /* 7セグ数字 */
     .sevenseg{ display:inline-flex; gap:4px; vertical-align:middle; margin:0 6px; }
     .digit{ position:relative; width:18px; height:26px; display:inline-block; opacity:0; transform: translateY(4px) scale(.96); transition: opacity .15s ease, transform .2s ease; }
     .digit.show{ opacity:1; transform: translateY(0) scale(1); }
     .seg{ position:absolute; background: var(--seg-off); border-radius:1px; }
     .on{ background:var(--seg-on); box-shadow:0 0 2px var(--seg-glow), 0 0 6px var(--seg-glow); }
 
-    /* セグ配置 */
     .digit{ --t:3px; --pad:3px; }
     .a,.d,.g{ height: var(--t); left: var(--pad); right: var(--pad); }
     .a{ top: var(--pad); } .g{ top: calc(50% - var(--t)/2); } .d{ bottom: var(--pad); }
@@ -94,7 +90,6 @@
     .c{ right: var(--pad); clip-path: inset(50% 0 0 0); }
     .f{ left: var(--pad);  clip-path: inset(0 0 50% 0); }
     .e{ left: var(--pad);  clip-path: inset(50% 0 0 0); }
-    /* ───────── ここまで ───────── */
 
     .hero{ display:block; margin:40px auto; width:min(90vw, 720px); height:auto; }
 
@@ -109,7 +104,6 @@
     .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
     .sns img.instagram { height: calc(var(--icon-h) * 1.2); }
 
-    /* スマホ微調整 */
     @media (max-width:420px){
       :root{ --sns-gap:22px; --icon-h:50px; }
       .hero{ width:92vw; }
@@ -117,7 +111,6 @@
       .counter{ font-size:12px; }
     }
 
-    /* PCの引き */
     @media (min-width:1200px){
       :root{ --logo-w:520px; --page-max:980px; --counter-gap-top:72px; --counter-gap-bottom:72px; }
       .hero{ width:500px; margin-top:80px; margin-bottom:40px; }
@@ -129,25 +122,17 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- ロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-    <!-- カウンター（ロゴ直下） -->
     <div class="counter" id="counterBox" role="status" aria-live="polite">
-      <!-- 前半テキスト（タイプ表示） -->
       <span class="type" id="prefix"></span>
-      <!-- 7セグ表示 -->
       <span class="sevenseg" id="sevenseg" aria-label="訪問者カウンター"></span>
-      <!-- 後半テキスト（タイプ表示） -->
       <span class="type" id="suffix"></span>
-      <!-- タイプ中カーソル -->
       <span class="cursor" id="cursor" aria-hidden="true"></span>
     </div>
 
-    <!-- メイン画像 -->
     <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="hero">
 
-    <!-- SNS -->
     <div class="sns">
       <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
         <img src="youtube_logo.gif" class="youtube" alt="YouTube">
@@ -161,19 +146,16 @@
     </div>
   </div>
 
-  <!-- タイプ演出＋7セグ生成 -->
   <script>
     (()=>{
-      const DIGITS = 6;                         // 桁数（5にしたけりゃ 5）
-      const TYPE_MS = 55;                       // 1文字の表示間隔（--type-speed と同じにしてOK）
-      const DIGIT_MS = 90;                      // 桁を出す間隔
-      const key = "udr_demo_counter";          // ローカルデモ用
+      const DIGITS = 6;
+      const TYPE_MS = 120;  // 遅め
+      const DIGIT_MS = 200; // 遅め
+      const key = "udr_demo_counter";
 
-      // カウントアップ
       let count = parseInt(localStorage.getItem(key) || "0", 10) + 1;
       localStorage.setItem(key, String(count));
 
-      // テキストを1文字ずつ出す
       function typeText(node, text){
         return new Promise(resolve=>{
           node.innerHTML = '';
@@ -184,7 +166,6 @@
               const span = document.createElement('span');
               span.textContent = chars[i++];
               node.appendChild(span);
-              // 次フレームでshow付与→ふわっと出る
               requestAnimationFrame(()=> span.classList.add('show'));
               setTimeout(tick, TYPE_MS);
             }else{
@@ -195,11 +176,10 @@
         });
       }
 
-      // 7セグ用マップ
       const onMap = {
         0: "abcfed", 1: "bc", 2: "abged", 3: "abgcd",
-        4: "fgbc",   5: "afgcd", 6: "afgecd", 7: "abc",
-        8: "abcdefg",9: "abfgcd"
+        4: "fgbc", 5: "afgcd", 6: "afgecd", 7: "abc",
+        8: "abcdefg", 9: "abfgcd"
       };
       const makeDigit = (n)=>{
         const d = document.createElement('span');
@@ -212,7 +192,6 @@
         return d;
       };
 
-      // 実行：前半→数字→後半の順にタイプ
       const prefix = document.getElementById('prefix');
       const sevenseg = document.getElementById('sevenseg');
       const suffix = document.getElementById('suffix');
@@ -229,14 +208,12 @@
         for(let i=0;i<s.length;i++){
           const d = makeDigit(Number(s[i]));
           sevenseg.appendChild(d);
-          // 次フレームで表示
           requestAnimationFrame(()=> d.classList.add('show'));
           await new Promise(r=> setTimeout(r, DIGIT_MS));
         }
 
         await typeText(suffix, suffixText);
 
-        // すべて完了→カーソル非表示、読み上げ用テキスト設定
         cursor.style.display = 'none';
         document.getElementById('counterBox')
           .setAttribute('aria-label', `あなたは ${count} 番目のお客様です。`);
