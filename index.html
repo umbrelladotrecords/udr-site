@@ -8,11 +8,11 @@
 
   <style>
     :root{
-      /* ★ ロゴ共通サイズ（スマホ～タブレット基準） */
+      /* ロゴ共通サイズ（スマホ～タブレット基準） */
       --logo-w: clamp(260px, 60vw, 640px);
       --logo-mt: clamp(40px, 6vh, 60px);
 
-      /* サイド縦ライン（幅6px） */
+      /* サイド縦ライン */
       --rail-w: 6px;
       --rail-grad1:#223;
       --rail-grad2:#7fb59c;
@@ -21,19 +21,23 @@
       --sns-gap: clamp(28px, 3vw, 48px);
       --icon-h: clamp(52px, 6vw, 82px);
 
-      /* ページの最大幅（PCで“アップ”を防ぐ） */
+      /* ページ最大幅 */
       --page-max: 980px;
     }
 
     *{ box-sizing:border-box }
-    html,body{ height:100% }
+    html,body{ height:100%; margin:0; }
     body{
-      margin:0; background:#000; color:#fff; text-align:center;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+      background:#000; 
+      color:#fff; 
       font-family:'Orbitron', Arial, sans-serif;
-      position:relative; overflow-x:hidden;
+      overflow-x:hidden;
     }
 
-    /* 両サイドの縦ライン（幅6px） */
+    /* 両サイドの縦ライン */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
       width:var(--rail-w);
@@ -42,14 +46,20 @@
     }
     body::before{ left:0 } body::after{ right:0 }
 
-    /* ★ ページ中央に上限幅を設定 */
+    /* ページ中央の箱 */
     .wrap{
-      position:relative; z-index:1;
+      position:relative; 
+      z-index:1;
+      flex:1; /* 高さを確保して上下分散 */
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between; /* 上(ロゴ&画像)と下(アイコン)に分散 */
+      align-items:center;
       width: min(92vw, var(--page-max));
       margin: 0 auto;
     }
 
-    /* ★ ロゴ：両ページ完全一致 */
+    /* ロゴ */
     .main-logo{
       display:block;
       width: var(--logo-w);
@@ -57,19 +67,20 @@
       margin: var(--logo-mt) auto 0;
     }
 
-    /* 真ん中の四角画像 */
+    /* 真ん中の画像 */
     .hero{
       display:block; 
-      margin:40px auto 32px;
+      margin:40px auto; /* モバイル用の基本余白 */
       width:min(90vw, 720px); 
       height:auto;
-      border:none; /* デフォルトは枠なし */
     }
 
-    /* SNS（PCで1列固定） */
+    /* SNSアイコン */
     .sns{
-      margin: 28px auto 80px;
-      display:flex; justify-content:center; align-items:center;
+      margin: 40px auto 60px;
+      display:flex; 
+      justify-content:center; 
+      align-items:center;
       gap: var(--sns-gap);
       flex-wrap: nowrap;
       max-width: min(92vw, 960px);
@@ -77,32 +88,33 @@
     .sns a{ display:inline-flex; align-items:center; justify-content:center; }
     .sns img{
       height: var(--icon-h);
-      width:auto; display:block;
+      width:auto; 
+      display:block;
       transition: transform .2s ease;
       image-rendering: pixelated;
     }
     .sns img:hover{ transform: scale(1.08); }
     .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
 
-    /* 画面が狭い時の微調整 */
+    /* スマホ向け微調整 */
     @media (max-width: 420px){
       :root{ --sns-gap: 22px; --icon-h: 50px; }
       .hero{ width:92vw; }
     }
 
-    /* ★ デスクトップ版だけの調整 */
+    /* PC版調整 */
     @media (min-width: 1200px){
       :root{
-        --logo-w: 520px;          /* ロゴ幅を抑える */
-        --page-max: 980px;        /* ページ最大幅 */
+        --logo-w: 520px;
+        --page-max: 980px;
       }
       .hero{
-        width: 500px;                              /* PC版では500px固定 */
-        border: 1px solid rgba(255,255,255,0.5);   /* うっすら白い枠線 */
+        width: 500px; 
+        margin-top: 80px; /* ロゴとの余白を広める */
+        margin-bottom: 80px; /* アイコンとの余白も広める */
       }
     }
 
-    /* 超ワイド画面の2段化防止の保険 */
     @media (min-width: 1400px){
       :root{ --icon-h: 68px; --sns-gap: 44px; }
     }
@@ -110,13 +122,13 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- UDRロゴ -->
+    <!-- ロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-    <!-- 真ん中のロゴ画像 -->
+    <!-- 中央画像 -->
     <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="hero">
 
-    <!-- SNS -->
+    <!-- SNSアイコン群 -->
     <div class="sns">
       <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
         <img src="youtube_logo.gif" class="youtube" alt="YouTube">
