@@ -32,6 +32,7 @@
       font-family:'Orbitron', Arial, sans-serif;
       position:relative; overflow-x:hidden;
     }
+
     /* 両サイドの縦ライン（幅6px） */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
@@ -58,8 +59,11 @@
 
     /* 真ん中の四角画像 */
     .hero{
-      display:block; margin:40px auto 32px;
-      width:min(90vw, 720px); height:auto;
+      display:block; 
+      margin:40px auto 32px;
+      width:min(90vw, 720px); 
+      height:auto;
+      border:none; /* デフォルトは枠なし */
     }
 
     /* SNS（PCで1列固定） */
@@ -86,13 +90,16 @@
       .hero{ width:92vw; }
     }
 
-    /* ★ デスクトップで“アップ”を抑える（ロゴ/画像を少し小さめに固定） */
+    /* ★ デスクトップ版だけの調整 */
     @media (min-width: 1200px){
       :root{
         --logo-w: 520px;          /* ロゴ幅を抑える */
         --page-max: 980px;        /* ページ最大幅 */
       }
-      .hero{ width: 580px; }       /* 真ん中の画像を580pxに変更 */
+      .hero{
+        width: 500px;             /* PC版では500px固定 */
+        border: 1px solid #fff;   /* 白い細い枠線 */
+      }
     }
 
     /* 超ワイド画面の2段化防止の保険 */
@@ -103,7 +110,7 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- UDRロゴ（members と完全一致のサイズ＆位置） -->
+    <!-- UDRロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
     <!-- 真ん中のロゴ画像 -->
