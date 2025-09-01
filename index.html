@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
@@ -71,7 +71,7 @@
       position:relative; width:18px; height:26px; display:inline-block;
       opacity:0; transform: translateY(4px) scale(.96);
       transition: opacity .15s ease, transform .2s ease;
-      --t:3px; --pad:3px; /* セグ太さ＆余白 */
+      --t:3px; --pad:3px;
     }
     .digit.show{ opacity:1; transform: translateY(0) scale(1); }
     .seg{ position:absolute; background: var(--seg-off); border-radius:1px; }
@@ -84,7 +84,7 @@
     .f{ left: var(--pad);  clip-path: inset(0 0 50% 0); }
     .e{ left: var(--pad);  clip-path: inset(50% 0 0 0); }
 
-    /* ▼ 浮かび上がり（初期は隠す） */
+    /* ▼ 浮かび上がり */
     .reveal-target{
       opacity: 0; transform: translateY(16px) scale(.98); filter: blur(4px);
       transition:
@@ -107,12 +107,12 @@
     .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
     .sns img.instagram { height: calc(var(--icon-h) * 1.2); }
 
-    /* ===== スマホ版：1画面収まり＆カウンターを文章サイズに合わせる ===== */
+    /* ===== スマホ版 ===== */
     @media (max-width: 480px){
       :root{
         --sns-gap: 18px;
         --icon-h: 42px;
-        --counter-gap-top: 8svh;   /* ← ここを8に変更 */
+        --counter-gap-top: 8svh;
         --counter-gap-bottom: 2.5svh;
       }
       .wrap{
@@ -121,7 +121,7 @@
         justify-content: flex-start;
         padding-bottom: 2svh;
       }
-      .counter{ font-size: 12px; } /* 文章側のサイズ */
+      .counter{ font-size: 12px; }
       .sevenseg{ gap: 2px; margin: 0 4px; }
       .digit{
         width: 10px; height: 14px;
@@ -136,7 +136,7 @@
       .sns{ margin: 0 0 3svh; }
     }
 
-    /* ===== PC版：美術館レイアウト＋1画面収まり ===== */
+    /* ===== PC版 ===== */
     @media (min-width:1200px){
       :root{
         --logo-w:520px; --page-max:980px;
@@ -146,6 +146,13 @@
         min-height: 100vh;
         display:flex; flex-direction:column; align-items:center;
         justify-content:flex-start; padding-bottom: 2vh;
+      }
+      .counter{ font-size: 14px; } /* PCでもテキスト小さめ */
+      .sevenseg{ gap: 2px; margin: 0 4px; }
+      .digit{
+        width: 10px; height: 14px;   /* ← スマホと同じに統一 */
+        --t: 2px; --pad: 2px;
+        transform: translateY(2px) scale(.98);
       }
       .hero{
         width: 420px;
