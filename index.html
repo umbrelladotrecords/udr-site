@@ -33,7 +33,7 @@
       --digit-pop: 200ms;    /* 桁を出す間隔 */
       --cursor-color: #dfe;
 
-      /* 浮かび上がり（4秒に変更） */
+      /* 浮かび上がり（4秒） */
       --reveal-duration: 4s;
       --reveal-ease: cubic-bezier(.17,.84,.44,1);
     }
@@ -46,6 +46,7 @@
       overflow-x:hidden;
     }
 
+    /* サイド縦レール */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
       width:var(--rail-w);
@@ -58,6 +59,7 @@
 
     .main-logo{ display:block; width:var(--logo-w); height:auto; margin:var(--logo-mt) auto 0; }
 
+    /* ───────── カウンター（ガラケーフォント＋タイプ演出） ───────── */
     .counter{
       margin: var(--counter-gap-top) auto var(--counter-gap-bottom);
       font-family: 'DotGothic16', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN','Yu Gothic','Meiryo',sans-serif;
@@ -97,7 +99,7 @@
     .f{ left: var(--pad);  clip-path: inset(0 0 50% 0); }
     .e{ left: var(--pad);  clip-path: inset(50% 0 0 0); }
 
-    /* ▼ 浮かび上がり */
+    /* ▼ 浮かび上がり（初期は隠す） */
     .reveal-target{
       opacity: 0;
       transform: translateY(16px) scale(.98);
@@ -126,6 +128,7 @@
     .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
     .sns img.instagram { height: calc(var(--icon-h) * 1.2); }
 
+    /* スマホ微調整 */
     @media (max-width:420px){
       :root{ --sns-gap:22px; --icon-h:50px; }
       .hero{ width:92vw; }
@@ -133,9 +136,14 @@
       .counter{ font-size:12px; }
     }
 
+    /* PC版（画像を上に詰める） */
     @media (min-width:1200px){
       :root{ --logo-w:520px; --page-max:980px; --counter-gap-top:72px; --counter-gap-bottom:72px; }
-      .hero{ width:500px; margin-top:80px; margin-bottom:40px; }
+      .hero{
+        width:500px;
+        margin-top:20px;   /* ← ここを 80px → 20px にして上に寄せた */
+        margin-bottom:40px;
+      }
     }
     @media (min-width:1400px){
       :root{ --icon-h:68px; --sns-gap:44px; }
@@ -144,8 +152,10 @@
 </head>
 <body>
   <div class="wrap">
+    <!-- ロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
+    <!-- カウンター（ロゴ直下） -->
     <div class="counter" id="counterBox" role="status" aria-live="polite">
       <span class="type" id="prefix"></span>
       <span class="sevenseg" id="sevenseg" aria-label="訪問者カウンター"></span>
@@ -153,8 +163,10 @@
       <span class="cursor" id="cursor" aria-hidden="true"></span>
     </div>
 
+    <!-- メイン画像：カウンター完了後に4秒で出現 -->
     <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="hero reveal-target" id="heroImg">
 
+    <!-- SNS：カウンター完了後に4秒で出現 -->
     <div class="sns reveal-target" id="snsBlock">
       <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
         <img src="youtube_logo.gif" class="youtube" alt="YouTube">
@@ -226,8 +238,10 @@
       const s = String(count).padStart(DIGITS,'0');
 
       (async ()=>{
+        // 前半タイプ
         await typeText(prefix, prefixText);
 
+        // 数字を1桁ずつ
         sevenseg.textContent = '';
         for(let i=0;i<s.length;i++){
           const d = makeDigit(Number(s[i]));
@@ -236,13 +250,15 @@
           await new Promise(r=> setTimeout(r, DIGIT_MS));
         }
 
+        // 後半タイプ
         await typeText(suffix, suffixText);
 
+        // カーソル消す＆読み上げ用テキスト
         cursor.style.display = 'none';
         document.getElementById('counterBox')
           .setAttribute('aria-label', `あなたは ${count} 番目のお客様です。`);
 
-        // 完了後 → 4秒かけて浮かび上がる
+        // 完了後 → 4秒でふわっと出現
         requestAnimationFrame(()=>{
           hero.classList.add('reveal');
           sns.classList.add('reveal');
