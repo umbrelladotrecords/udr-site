@@ -82,7 +82,7 @@
     .designer-name{ margin:10px 0 14px; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif; font-weight:700; font-size:18px; letter-spacing:.06em; color:#dfe; }
     .section-gap{ height:64px }
 
-    /* 戻るボタン */
+    /* 区切り線＋戻るボタン */
     .footer-line {
       width: 80%;
       max-width: 640px;
@@ -98,15 +98,17 @@
       height:auto;
       transition: transform .2s ease;
     }
-    .back-home:hover {
-      transform: scale(1.08);
-    }
+    .back-home:hover { transform: scale(1.08); }
 
-    /* PC用アップ抑制 */
+    /* PC版調整 */
     @media (min-width:1200px){
       :root{
         --logo-w: 520px;
         --page-max: 980px;
+      }
+      /* ★ PCのみメンバー写真を小さめに */
+      .band-image, .designer-image {
+        max-width: 60%;
       }
     }
   </style>
@@ -119,7 +121,7 @@
     <!-- ===== Band ===== -->
     <div class="hdr"><span class="txt" data-text="BAND">BAND</span></div>
     <div class="brand-3d"><img src="arsvna_logo.jpg" alt="arsvna logo" class="brand-logo"></div>
-    <img src="arsvna2.JPG" alt="arsvna" class="band-image">
+    <img src="arsvna1.JPG" alt="arsvna" class="band-image">
     <a class="insta-link" href="https://www.instagram.com/arsvna_udr?igsh=MWU4d2l6aGk5MmswNw==" target="_blank" rel="noopener">
       <img src="instagram_logo.gif" alt="Instagram"><span>@arsvna_udr</span>
     </a>
