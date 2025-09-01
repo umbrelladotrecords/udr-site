@@ -20,7 +20,6 @@
       --icon-h: clamp(52px, 6vw, 82px);
       --page-max: 980px;
 
-      /* カウンターの位置（ロゴと画像の中間っぽく） */
       --counter-gap-top: 60px;
       --counter-gap-bottom: 60px;
 
@@ -64,11 +63,10 @@
     /* ───────── カウンター ───────── */
     .counter{
       margin: var(--counter-gap-top) auto var(--counter-gap-bottom);
-      /* ガラケー風のドットフォント */
       font-family: 'DotGothic16', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN','Yu Gothic','Meiryo',sans-serif;
-      font-size: 18px;
+      font-size: 14px;   /* 小さめに設定 */
       color: #dfe;
-      line-height: 1.6;
+      line-height: 1.4;
       letter-spacing: .02em;
     }
 
@@ -79,11 +77,11 @@
       margin: 0 6px;
     }
 
-    /* 数字：本文より “少しだけ” 大きい（約+18%） */
+    /* 数字（テキストより少し大きい） */
     .digit{
       position:relative;
-      width: 18px;   /* ← 14px から少しUP */
-      height: 26px;  /* ← 22px から少しUP */
+      width: 18px;
+      height: 26px;
       display:inline-block;
     }
 
@@ -99,14 +97,12 @@
         0 0 6px var(--seg-glow);
     }
 
-    /* 7セグ配置（a,b,c,d,e,f,g） */
+    /* 7セグ配置 */
     .digit{ --t:3px; --pad:3px; }
-    /* 横セグ */
     .a,.d,.g{ height: var(--t); left: var(--pad); right: var(--pad); }
     .a{ top: var(--pad); }
     .g{ top: calc(50% - var(--t)/2); }
     .d{ bottom: var(--pad); }
-    /* 縦セグ（上下半分に分割） */
     .b,.c,.e,.f{ width: var(--t); top: calc(var(--pad) + var(--t)); bottom: calc(var(--pad) + var(--t)); }
     .b{ right: var(--pad); clip-path: inset(0 0 50% 0); }
     .c{ right: var(--pad); clip-path: inset(50% 0 0 0); }
@@ -144,6 +140,7 @@
       :root{ --sns-gap: 22px; --icon-h: 50px; }
       .hero{ width:92vw; }
       .digit{ width:16px; height:24px; }
+      .counter{ font-size: 12px; } /* スマホではさらに小さめ */
     }
 
     /* PC版の引き調整 */
