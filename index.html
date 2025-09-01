@@ -25,10 +25,10 @@
       /* 7セグ（赤LED・控えめ発光） */
       --seg-on: #ff3b3b; --seg-off:#0b1412; --seg-glow: rgba(255,59,59,.35);
 
-      /* タイプ演出 */
+      /* タイプ演出（遅め） */
       --type-speed: 120ms; --digit-pop: 200ms; --cursor-color: #dfe;
 
-      /* 浮かび上がり：5秒（前回指定） */
+      /* 浮かび上がり（5秒・ゆっくり） */
       --reveal-duration: 5s;
       --reveal-ease: cubic-bezier(.17,.84,.44,1);
     }
@@ -67,11 +67,15 @@
     @keyframes blink{ 50%{ opacity: .15 } }
 
     .sevenseg{ display:inline-flex; gap:4px; vertical-align:middle; margin:0 6px; }
-    .digit{ position:relative; width:18px; height:26px; display:inline-block; opacity:0; transform: translateY(4px) scale(.96); transition: opacity .15s ease, transform .2s ease; }
+    .digit{
+      position:relative; width:18px; height:26px; display:inline-block;
+      opacity:0; transform: translateY(4px) scale(.96);
+      transition: opacity .15s ease, transform .2s ease;
+      --t:3px; --pad:3px; /* セグ太さ＆余白 */
+    }
     .digit.show{ opacity:1; transform: translateY(0) scale(1); }
     .seg{ position:absolute; background: var(--seg-off); border-radius:1px; }
     .on{ background:var(--seg-on); box-shadow:0 0 2px var(--seg-glow), 0 0 6px var(--seg-glow); }
-    .digit{ --t:3px; --pad:3px; }
     .a,.d,.g{ height: var(--t); left: var(--pad); right: var(--pad); }
     .a{ top: var(--pad); } .g{ top: calc(50% - var(--t)/2); } .d{ bottom: var(--pad); }
     .b,.c,.e,.f{ width: var(--t); top: calc(var(--pad) + var(--t)); bottom: calc(var(--pad) + var(--t)); }
@@ -103,27 +107,34 @@
     .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
     .sns img.instagram { height: calc(var(--icon-h) * 1.2); }
 
-    /* ===== スマホ版：1画面に必ず収める（svh使用） ===== */
+    /* ===== スマホ版：1画面収まり＆カウンターを文章サイズに合わせる ===== */
     @media (max-width: 480px){
       :root{
         --sns-gap: 18px;
-        --icon-h: 42px;             /* アイコン少しだけ小さく */
-        --counter-gap-top: 2.5vh;   /* ロゴ下〜カウンター */
-        --counter-gap-bottom: 2.5vh;/* カウンター〜画像上 */
+        --icon-h: 42px;
+        --counter-gap-top: 2.5svh;
+        --counter-gap-bottom: 2.5svh;
       }
       .wrap{
-        min-height: 100svh;         /* スマホ実測のvhで1画面に収める */
+        min-height: 100svh;
         display: flex; flex-direction: column; align-items: center;
         justify-content: flex-start;
-        padding-bottom: 2vh;
+        padding-bottom: 2svh;
       }
-      .counter{ font-size: 12px; }  /* テキストも少し小さく */
+      .counter{ font-size: 12px; } /* 文章側のサイズ */
+      /* ← 数字を文章と同じくらいに小さくする */
+      .sevenseg{ gap: 2px; margin: 0 4px; }
+      .digit{
+        width: 10px; height: 14px;   /* 数字自体の大きさ */
+        --t: 2px; --pad: 2px;        /* セグの太さ＆余白を縮小 */
+        transform: translateY(2px) scale(.98); /* ベースライン微調整 */
+      }
       .hero{
-        width: 82vw;                /* 画像は画面幅の約8割 */
-        margin-top: 3vh;            /* カウンターとの間 */
-        margin-bottom: 4vh;         /* 画像下の余白（やや広め） */
+        width: 82vw;
+        margin-top: 3svh;
+        margin-bottom: 4svh;
       }
-      .sns{ margin: 0 0 3vh; }      /* 画面下ギリ手前に配置 */
+      .sns{ margin: 0 0 3svh; }
     }
 
     /* ===== PC版：美術館レイアウト＋1画面収まり ===== */
@@ -183,8 +194,8 @@
   <script>
     (()=>{
       const DIGITS = 6;
-      const TYPE_MS = 120;   // 文字間隔
-      const DIGIT_MS = 200;  // 数字1桁の間隔
+      const TYPE_MS = 120;     // 文字間隔
+      const DIGIT_MS = 200;    // 数字1桁の間隔
       const AFTER_TYPE_DELAY = 1000; // タイプ完了から1秒待って開始
       const key = "udr_demo_counter";
 
