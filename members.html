@@ -17,7 +17,7 @@
       --rail-grad1:#223;
       --rail-grad2:#7fb59c;
 
-      /* 既存の見出しなど */
+      /* 見出しなど */
       --hdr-width: min(60vw, 520px);
       --hdr-bar-h: 4px;
       --hdr-gap: 18px;
@@ -38,7 +38,7 @@
       position:relative; overflow-x:hidden;
     }
 
-    /* 両サイドの縦ライン（indexと同仕様：body疑似要素） */
+    /* 両サイドの縦ライン */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
       width:var(--rail-w);
@@ -47,23 +47,22 @@
     }
     body::before{ left:0 } body::after{ right:0 }
 
-    /* ★ 中央の箱：indexと同じ“引き”にする */
+    /* 中央の箱 */
     .wrap{
       position:relative; z-index:1;
       width: min(92vw, var(--page-max));
       margin: 0 auto;
     }
 
-    /* ★ ロゴ：トップと完全一致 */
+    /* ロゴ */
     .main-logo{
       display:block;
       width: var(--logo-w);
       height:auto;
       margin: var(--logo-mt) auto 0;
-      transform:none;
     }
 
-    /* ─ members のスタイル ─ */
+    /* 見出し */
     .hdr{ position:relative; width:var(--hdr-width); margin:48px auto 26px; padding:var(--hdr-gap) 0; isolation:isolate; }
     .hdr::before,.hdr::after{ content:""; position:absolute; left:50%; width:100%; height:var(--hdr-bar-h); transform:translateX(-50%); background:linear-gradient(90deg,var(--hdr-grad1) 0%, var(--hdr-grad2) 50%, var(--hdr-grad1) 100%); box-shadow:0 1px 0 rgba(0,0,0,.45), 0 0 8px rgba(0,0,0,.35); z-index:0; }
     .hdr::before{ top:0 } .hdr::after{ bottom:0 }
@@ -83,10 +82,18 @@
     .designer-name{ margin:10px 0 14px; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif; font-weight:700; font-size:18px; letter-spacing:.06em; color:#dfe; }
     .section-gap{ height:64px }
 
-    /* ★ 戻るボタン */
+    /* 戻るボタン */
+    .footer-line {
+      width: 80%;
+      max-width: 640px;
+      height: 2px;
+      margin: 60px auto 40px;
+      background: linear-gradient(90deg, var(--rail-grad1) 0%, var(--rail-grad2) 50%, var(--rail-grad1) 100%);
+      opacity: .85;
+    }
     .back-home {
       display:block;
-      margin:40px auto 60px;
+      margin:0 auto 60px;
       width:120px;
       height:auto;
       transition: transform .2s ease;
@@ -95,7 +102,7 @@
       transform: scale(1.08);
     }
 
-    /* ★ PCでアップを抑える：ロゴ520px固定（indexと同じ） */
+    /* PC用アップ抑制 */
     @media (min-width:1200px){
       :root{
         --logo-w: 520px;
@@ -106,7 +113,7 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- ★ ロゴ -->
+    <!-- ロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
     <!-- ===== Band ===== -->
@@ -127,7 +134,8 @@
       <img src="instagram_logo.gif" alt="Instagram"><span>@ARYM_WORKS</span>
     </a>
 
-    <!-- ★ トップページに戻るボタン -->
+    <!-- 区切り線＋トップページに戻るボタン -->
+    <div class="footer-line"></div>
     <a href="index.html">
       <img src="home2.PNG" alt="Back to Home" class="back-home">
     </a>
