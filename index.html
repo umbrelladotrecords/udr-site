@@ -19,16 +19,16 @@
       --icon-h: clamp(52px, 6vw, 82px);
       --page-max: 980px;
 
-      --counter-gap-top: 60px;   /* モバイル〜タブレット用 */
+      --counter-gap-top: 60px;
       --counter-gap-bottom: 60px;
 
       /* 7セグ（赤LED・控えめ発光） */
       --seg-on: #ff3b3b; --seg-off:#0b1412; --seg-glow: rgba(255,59,59,.35);
 
-      /* タイプ演出（ゆっくり） */
+      /* タイプ演出 */
       --type-speed: 120ms; --digit-pop: 200ms; --cursor-color: #dfe;
 
-      /* 浮かび上がり：5秒に延長 */
+      /* 浮かび上がり：5秒（前回指定） */
       --reveal-duration: 5s;
       --reveal-ease: cubic-bezier(.17,.84,.44,1);
     }
@@ -103,26 +103,39 @@
     .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
     .sns img.instagram { height: calc(var(--icon-h) * 1.2); }
 
-    /* スマホ微調整 */
-    @media (max-width:420px){
-      :root{ --sns-gap:22px; --icon-h:50px; }
-      .hero{ width:92vw; }
-      .digit{ width:16px; height:24px; }
-      .counter{ font-size:12px; }
-    }
-
-    /* ── PC版：1画面に収まる“美術館レイアウト” ── */
-    @media (min-width:1200px){
+    /* ===== スマホ版：1画面に必ず収める（svh使用） ===== */
+    @media (max-width: 480px){
       :root{
-        --logo-w:520px; --page-max:980px;
-        --counter-gap-top: 4vh;     /* ロゴ下〜カウンター */
-        --counter-gap-bottom: 4vh;  /* カウンター〜画像上 */
+        --sns-gap: 18px;
+        --icon-h: 42px;             /* アイコン少しだけ小さく */
+        --counter-gap-top: 2.5vh;   /* ロゴ下〜カウンター */
+        --counter-gap-bottom: 2.5vh;/* カウンター〜画像上 */
       }
       .wrap{
-        min-height: 100vh;
+        min-height: 100svh;         /* スマホ実測のvhで1画面に収める */
         display: flex; flex-direction: column; align-items: center;
         justify-content: flex-start;
         padding-bottom: 2vh;
+      }
+      .counter{ font-size: 12px; }  /* テキストも少し小さく */
+      .hero{
+        width: 82vw;                /* 画像は画面幅の約8割 */
+        margin-top: 3vh;            /* カウンターとの間 */
+        margin-bottom: 4vh;         /* 画像下の余白（やや広め） */
+      }
+      .sns{ margin: 0 0 3vh; }      /* 画面下ギリ手前に配置 */
+    }
+
+    /* ===== PC版：美術館レイアウト＋1画面収まり ===== */
+    @media (min-width:1200px){
+      :root{
+        --logo-w:520px; --page-max:980px;
+        --counter-gap-top: 4vh; --counter-gap-bottom: 4vh;
+      }
+      .wrap{
+        min-height: 100vh;
+        display:flex; flex-direction:column; align-items:center;
+        justify-content:flex-start; padding-bottom: 2vh;
       }
       .hero{
         width: 420px;
@@ -170,9 +183,9 @@
   <script>
     (()=>{
       const DIGITS = 6;
-      const TYPE_MS = 120;   // 文字の間隔
+      const TYPE_MS = 120;   // 文字間隔
       const DIGIT_MS = 200;  // 数字1桁の間隔
-      const AFTER_TYPE_DELAY = 1000; // ← タイプ完了から1秒待って開始
+      const AFTER_TYPE_DELAY = 1000; // タイプ完了から1秒待って開始
       const key = "udr_demo_counter";
 
       let count = parseInt(localStorage.getItem(key) || "0", 10) + 1;
@@ -222,10 +235,8 @@
       const s = String(count).padStart(DIGITS,'0');
 
       (async ()=>{
-        // 前半タイプ
         await typeText(prefix, prefixText);
 
-        // 数字を1桁ずつ
         sevenseg.textContent = '';
         for(let i=0;i<s.length;i++){
           const d = makeDigit(Number(s[i]));
@@ -234,15 +245,13 @@
           await new Promise(r=> setTimeout(r, DIGIT_MS));
         }
 
-        // 後半タイプ
         await typeText(suffix, suffixText);
 
-        // カーソル消す＆読み上げ用テキスト
         cursor.style.display = 'none';
         document.getElementById('counterBox')
           .setAttribute('aria-label', `あなたは ${count} 番目のお客様です。`);
 
-        // ★ タイプ完了から1秒待って → 5秒アニメでふわっと出現
+        // タイプ完了から1秒後に、5秒アニメでふわっと出現
         setTimeout(()=>{
           hero.classList.add('reveal');
           sns.classList.add('reveal');
