@@ -4,88 +4,115 @@
   <meta charset="UTF-8" />
   <title>Umbrella Dot Records</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      margin: 0;
-      background: #000;
-      color: #fff;
-      text-align: center;
-      font-family: Arial, sans-serif;
+    :root{
+      /* members.html に合わせたロゴ位置/サイズ */
+      --main-logo-maxw: 60%;
+      --main-logo-mt: 60px;
+
+      /* サイドの縦ライン（members と同じ・幅6px） */
+      --rail-w: 6px;
+      --rail-grad1:#223;
+      --rail-grad2:#7fb59c;
+
+      /* アイコンの間隔と高さ（PCで一列固定） */
+      --sns-gap: clamp(28px, 3vw, 48px);
+      --icon-h: clamp(52px, 6vw, 82px);
     }
 
-    /* 背景両サイドの縦線 */
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      width: 6px; /* ← 修正後 */
-      background: linear-gradient(180deg, #222 0%, #7fb59c 50%, #222 100%);
-      z-index: 1;
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0;
+      background:#000; color:#fff; text-align:center;
+      font-family:'Orbitron', Arial, sans-serif;
+      /* 左右の縦ライン */
+      position:relative; overflow-x:hidden;
     }
-    body::before { left: 0; }
-    body::after  { right: 0; }
-
-    /* UDRロゴ */
-    .main-logo {
-      margin-top: 60px;
-      margin-bottom: 40px;
-      width: clamp(200px, 40%, 480px); /* ← PCでアップにならないよう調整 */
-      height: auto;
-      z-index: 2;
-      position: relative;
+    body::before, body::after{
+      content:""; position:fixed; top:0; bottom:0; z-index:0;
+      width:var(--rail-w);
+      background:linear-gradient(180deg, var(--rail-grad1) 0%, var(--rail-grad2) 50%, var(--rail-grad1) 100%);
+      opacity:.85;
+      pointer-events:none;
     }
+    body::before{ left:0 }
+    body::after { right:0 }
 
-    /* サブロゴ */
-    .sub-logo {
-      margin: 40px auto;
-      max-width: 320px;
-      width: 80%;
-      height: auto;
-      z-index: 2;
-      position: relative;
+    .wrap{ position:relative; z-index:1; }
+
+    /* UDRロゴ（members.html と同じに合わせる） */
+    .main-logo{
+      display:block;
+      margin: var(--main-logo-mt) auto 0;
+      max-width: var(--main-logo-maxw);
+      height:auto;
     }
 
-    /* SNSリンク（横並び） */
-    .sns-links {
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-      margin: 60px 0;
-      z-index: 2;
-      position: relative;
+    /* ロゴ下の大きい四角画像（現状のレイアウトを維持） */
+    .hero{
+      display:block; margin:40px auto 32px;
+      width:min(90vw, 720px); height:auto;
     }
-    .sns-links img {
-      height: 100px;
-      width: auto;
-      transition: transform 0.3s;
-      cursor: pointer;
+
+    /* SNS一列。PCで折り返さない／スマホで自動縮小 */
+    .sns{
+      margin: 28px auto 80px;
+      display:flex; justify-content:center; align-items:center;
+      gap: var(--sns-gap);
+      flex-wrap: nowrap;                /* ←PCは絶対に1列 */
+      max-width: min(92vw, 960px);
+    }
+    .sns a{ display:inline-flex; align-items:center; justify-content:center; }
+    .sns img{
+      height: var(--icon-h);
+      width:auto; display:block;
+      transition: transform .2s ease;
       image-rendering: pixelated;
     }
-    .sns-links img:hover {
-      transform: scale(1.15);
+    .sns img:hover{ transform: scale(1.08); }
+
+    /* YouTubeだけ20%大きく（以前の指定を踏襲） */
+    .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
+
+    /* 画面がすごく狭い時だけ少し詰める */
+    @media (max-width: 420px){
+      :root{ --sns-gap: 22px; --icon-h: 50px; }
+      .hero{ width:92vw; }
+    }
+
+    /* とても広いデスクトップで“2段化”を防ぐための保険
+       → アイコンサイズを少しだけ下げて常に一列に収める */
+    @media (min-width: 1400px){
+      :root{ --icon-h: 68px; --sns-gap: 44px; }
     }
   </style>
 </head>
 <body>
-  <!-- UDRロゴ -->
-  <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
+  <div class="wrap">
+    <!-- UDRロゴ（members.html と完全一致の位置/サイズ） -->
+    <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-  <!-- サブロゴ -->
-  <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="sub-logo">
+    <!-- 中央のロゴ画像（そのまま使っている場合） -->
+    <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="hero">
 
-  <!-- SNSリンク -->
-  <div class="sns-links">
-    <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
-      <img src="youtube_logo.gif" alt="YouTube">
-    </a>
-    <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
-      <img src="music_logo.gif" alt="Music">
-    </a>
-    <a href="members.html" target="_self">
-      <img src="Instagram_logo.PNG" alt="Instagram">
-    </a>
+    <!-- SNS：常に一列 / 画像名はリポジトリのファイル名と完全一致に -->
+    <div class="sns">
+      <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
+        <img src="youtube_logo.gif" class="youtube" alt="YouTube">
+      </a>
+
+      <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
+        <img src="music_logo.gif" alt="Music">
+      </a>
+
+      <!-- Instagram → クッションページ（members.html）へ -->
+      <a href="members.html">
+        <img src="instagram_logo.gif" alt="Instagram">
+      </a>
+    </div>
   </div>
 </body>
 </html>
