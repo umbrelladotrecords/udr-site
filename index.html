@@ -17,9 +17,14 @@
       --icon-h: clamp(52px, 6vw, 82px);
       --page-max: 980px;
 
-      /* カウンターの余白 */
-      --counter-gap-top: 60px;
-      --counter-gap-bottom: 60px;
+      /* カウンターの上下バランス（PCでロゴと画像の“中間”に来るよう調整） */
+      --counter-gap-top: 72px;
+      --counter-gap-bottom: 72px;
+
+      /* 7セグの色味（淡いシアン&控えめ発光） */
+      --seg-on: #9ff7ea;
+      --seg-off:#0b1412;
+      --seg-glow: rgba(159,247,234,.35);
     }
 
     *{ box-sizing:border-box }
@@ -30,6 +35,7 @@
       overflow-x:hidden;
     }
 
+    /* サイドの縦レール */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
       width:var(--rail-w);
@@ -44,6 +50,7 @@
       margin: 0 auto;
     }
 
+    /* ロゴ */
     .main-logo{
       display:block;
       width: var(--logo-w);
@@ -51,24 +58,59 @@
       margin: var(--logo-mt) auto 0;
     }
 
-    /* カウンター */
-    .counter-box{
+    /* ───────── カウンター ───────── */
+    .counter{
       margin: var(--counter-gap-top) auto var(--counter-gap-bottom);
+      color:#dfe;
       font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif;
       font-size: 16px;
-      color: #dfe; /* 説明テキスト */
+      line-height:1.4;
     }
-    .counter-num{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Courier New", monospace;
-      font-weight: 700;
-      font-size: 28px;
-      letter-spacing: .18em;
-      color: #ff3b3b;
-      text-shadow:
-        0 0 4px rgba(255,59,59,.9),
-        0 0 10px rgba(255,59,59,.6),
-        0 0 18px rgba(255,59,59,.35);
+
+    /* “あなたは … 番目のお客様です。” の数字部が7セグ */
+    .sevenseg{
+      display:inline-flex;
+      gap:10px;
+      vertical-align:middle;
+      margin: 0 8px;
     }
+    .digit{
+      position:relative;
+      width: 38px;          /* 桁の横幅（四角い印象に） */
+      height: 64px;         /* 桁の高さ */
+      display:inline-block;
+    }
+    /* セグ共通（角の丸みほぼ無し＝四角い見た目） */
+    .seg{
+      position:absolute;
+      background: var(--seg-off);
+      border-radius: 2px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+    /* 点灯時（控えめ発光） */
+    .on{
+      background: var(--seg-on);
+      box-shadow:
+        0 0 6px var(--seg-glow),
+        0 0 14px var(--seg-glow);
+    }
+
+    /* 7 セグ配置（a,b,c,d,e,f,g） */
+    /* セグの太さ */
+    .digit{ --t: 6px; --pad: 6px; }
+    /* 横セグ */
+    .a,.d,.g{ height: var(--t); left: var(--pad); right: var(--pad); }
+    .a{ top: var(--pad); }
+    .g{ top: calc(50% - var(--t)/2); }
+    .d{ bottom: var(--pad); }
+    /* 縦セグ */
+    .b,.c,.e,.f{ width: var(--t); top: calc(var(--pad) + var(--t)); bottom: calc(var(--pad) + var(--t)); }
+    .b{ right: var(--pad); clip-path: inset(0 0 50% 0); }         /* 上半分 */
+    .c{ right: var(--pad); clip-path: inset(50% 0 0 0); }         /* 下半分 */
+    .f{ left: var(--pad);  clip-path: inset(0 0 50% 0); }
+    .e{ left: var(--pad);  clip-path: inset(50% 0 0 0); }
+
+    /* ───────── ここまでカウンター ───────── */
 
     .hero{
       display:block; margin:40px auto;
@@ -96,6 +138,7 @@
     @media (max-width: 420px){
       :root{ --sns-gap: 22px; --icon-h: 50px; }
       .hero{ width:92vw; }
+      .digit{ width:32px; height:56px; }
     }
     @media (min-width: 1200px){
       :root{
@@ -116,9 +159,11 @@
     <!-- ロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-    <!-- カウンター -->
-    <div class="counter-box">
-      あなたは <span class="counter-num" id="counter">000000</span> 番目のお客様です。
+    <!-- カウンター（ロゴ直下） -->
+    <div class="counter">
+      あなたは
+      <span class="sevenseg" id="sevenseg" aria-label="訪問者カウンター"></span>
+      番目のお客様です。
     </div>
 
     <!-- 中央画像 -->
@@ -138,15 +183,38 @@
     </div>
   </div>
 
-  <!-- カウンタースクリプト -->
+  <!-- 7セグカウンタースクリプト -->
   <script>
     (()=>{
-      const DIGITS = 6;
-      const key = "udr_demo_counter";
-      let c = parseInt(localStorage.getItem(key) || "0", 10);
-      c += 1;
-      localStorage.setItem(key, String(c));
-      document.getElementById("counter").textContent = String(c).padStart(DIGITS,"0");
+      const DIGITS = 6;                       // 桁数（5にしたければ 5）
+      const key = "udr_demo_counter";         // ローカルデモ用
+      let count = parseInt(localStorage.getItem(key) || "0", 10) + 1;
+      localStorage.setItem(key, String(count));
+
+      const sevenseg = document.getElementById('sevenseg');
+      const onMap = {
+        0: "abcfed", 1: "bc", 2: "abged", 3: "abgcd",
+        4: "fgbc",   5: "afgcd", 6: "afgecd", 7: "abc",
+        8: "abcdefg",9: "abfgcd"
+      };
+      const makeDigit = (n)=>{
+        const d = document.createElement('span');
+        d.className = 'digit';
+        // 7セグを追加
+        for(const id of ['a','b','c','d','e','f','g']){
+          const seg = document.createElement('span');
+          seg.className = 'seg '+id + (onMap[n].includes(id) ? ' on' : '');
+          d.appendChild(seg);
+        }
+        return d;
+      };
+      const s = String(count).padStart(DIGITS,'0');
+      sevenseg.textContent = ''; // clear
+      for(const ch of s){
+        sevenseg.appendChild(makeDigit(Number(ch)));
+      }
+      // aria 用テキスト
+      sevenseg.setAttribute('aria-label', `${count} 人目`);
     })();
   </script>
 </body>
