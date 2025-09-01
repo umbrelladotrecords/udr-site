@@ -16,6 +16,10 @@
       --sns-gap: clamp(28px, 3vw, 48px);
       --icon-h: clamp(52px, 6vw, 82px);
       --page-max: 980px;
+
+      /* カウンターの余白 */
+      --counter-gap-top: 60px;
+      --counter-gap-bottom: 60px;
     }
 
     *{ box-sizing:border-box }
@@ -47,25 +51,23 @@
       margin: var(--logo-mt) auto 0;
     }
 
-    /* カウンター表示 */
+    /* カウンター */
     .counter-box{
-      margin: 20px auto 40px;
-      font-family: ui-monospace, monospace;
+      margin: var(--counter-gap-top) auto var(--counter-gap-bottom);
+      font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif;
       font-size: 16px;
-      color: #dff2e9;
-      background: #0b0e12;
-      display:inline-block;
-      padding: 8px 14px;
-      border: 1px solid #2a3530;
-      border-radius: 6px;
-      box-shadow: inset 0 1px 0 #20302a, 0 2px 8px rgba(0,0,0,.35);
+      color: #dfe; /* 説明テキスト */
     }
     .counter-num{
-      font-weight:700;
-      letter-spacing:0.15em;
-      padding: 0 4px;
-      color:#fff;
-      text-shadow: 0 1px 0 #000;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Courier New", monospace;
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: .18em;
+      color: #ff3b3b;
+      text-shadow:
+        0 0 4px rgba(255,59,59,.9),
+        0 0 10px rgba(255,59,59,.6),
+        0 0 18px rgba(255,59,59,.35);
     }
 
     .hero{
@@ -96,7 +98,12 @@
       .hero{ width:92vw; }
     }
     @media (min-width: 1200px){
-      :root{ --logo-w: 520px; --page-max: 980px; }
+      :root{
+        --logo-w: 520px;
+        --page-max: 980px;
+        --counter-gap-top: 72px;
+        --counter-gap-bottom: 72px;
+      }
       .hero{ width: 500px; margin-top: 80px; margin-bottom: 40px; }
     }
     @media (min-width: 1400px){
@@ -106,10 +113,10 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- UDRロゴ -->
+    <!-- ロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-    <!-- ▼ カウンター ▼ -->
+    <!-- カウンター -->
     <div class="counter-box">
       あなたは <span class="counter-num" id="counter">000000</span> 番目のお客様です。
     </div>
