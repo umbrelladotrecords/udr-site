@@ -8,16 +8,16 @@
 
   <style>
     :root{
-      /* members.html に合わせたロゴ位置/サイズ */
-      --main-logo-maxw: 60%;
-      --main-logo-mt: 60px;
+      /* ★ ロゴ共通サイズ（両ページ同一にする） */
+      --logo-w: clamp(260px, 60vw, 640px);   /* 横幅を固定式で */
+      --logo-mt: clamp(40px, 6vh, 60px);     /* 上マージンも固定式で */
 
-      /* サイドの縦ライン（members と同じ・幅6px） */
+      /* サイド縦ライン（members と同じ・幅6px） */
       --rail-w: 6px;
       --rail-grad1:#223;
       --rail-grad2:#7fb59c;
 
-      /* アイコンの間隔と高さ（PCで一列固定） */
+      /* アイコン一列レイアウト */
       --sns-gap: clamp(28px, 3vw, 48px);
       --icon-h: clamp(52px, 6vw, 82px);
     }
@@ -25,44 +25,41 @@
     *{ box-sizing:border-box }
     html,body{ height:100% }
     body{
-      margin:0;
-      background:#000; color:#fff; text-align:center;
+      margin:0; background:#000; color:#fff; text-align:center;
       font-family:'Orbitron', Arial, sans-serif;
-      /* 左右の縦ライン */
       position:relative; overflow-x:hidden;
     }
+    /* 両サイドの縦ライン（幅は 6px） */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
       width:var(--rail-w);
       background:linear-gradient(180deg, var(--rail-grad1) 0%, var(--rail-grad2) 50%, var(--rail-grad1) 100%);
-      opacity:.85;
-      pointer-events:none;
+      opacity:.85; pointer-events:none;
     }
-    body::before{ left:0 }
-    body::after { right:0 }
+    body::before{ left:0 } body::after{ right:0 }
 
     .wrap{ position:relative; z-index:1; }
 
-    /* UDRロゴ（members.html と同じに合わせる） */
+    /* ★ ロゴ：両ページ完全一致 */
     .main-logo{
       display:block;
-      margin: var(--main-logo-mt) auto 0;
-      max-width: var(--main-logo-maxw);
+      width: var(--logo-w);      /* ←幅を直接指定 */
       height:auto;
+      margin: var(--logo-mt) auto 0;
     }
 
-    /* ロゴ下の大きい四角画像（現状のレイアウトを維持） */
+    /* 真ん中の四角画像 */
     .hero{
       display:block; margin:40px auto 32px;
       width:min(90vw, 720px); height:auto;
     }
 
-    /* SNS一列。PCで折り返さない／スマホで自動縮小 */
+    /* SNS（PCで必ず1列） */
     .sns{
       margin: 28px auto 80px;
       display:flex; justify-content:center; align-items:center;
       gap: var(--sns-gap);
-      flex-wrap: nowrap;                /* ←PCは絶対に1列 */
+      flex-wrap: nowrap;
       max-width: min(92vw, 960px);
     }
     .sns a{ display:inline-flex; align-items:center; justify-content:center; }
@@ -73,18 +70,13 @@
       image-rendering: pixelated;
     }
     .sns img:hover{ transform: scale(1.08); }
-
-    /* YouTubeだけ20%大きく（以前の指定を踏襲） */
     .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
 
-    /* 画面がすごく狭い時だけ少し詰める */
     @media (max-width: 420px){
       :root{ --sns-gap: 22px; --icon-h: 50px; }
       .hero{ width:92vw; }
     }
-
-    /* とても広いデスクトップで“2段化”を防ぐための保険
-       → アイコンサイズを少しだけ下げて常に一列に収める */
+    /* 超ワイド画面でも2段化防止 */
     @media (min-width: 1400px){
       :root{ --icon-h: 68px; --sns-gap: 44px; }
     }
@@ -92,23 +84,20 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- UDRロゴ（members.html と完全一致の位置/サイズ） -->
+    <!-- ★ UDRロゴ（members と完全一致のサイズ＆位置） -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-    <!-- 中央のロゴ画像（そのまま使っている場合） -->
+    <!-- 真ん中のロゴ画像 -->
     <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="hero">
 
-    <!-- SNS：常に一列 / 画像名はリポジトリのファイル名と完全一致に -->
+    <!-- SNS -->
     <div class="sns">
       <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
         <img src="youtube_logo.gif" class="youtube" alt="YouTube">
       </a>
-
       <a href="https://linkco.re/R9DNs8c9?lang=ja" target="_blank" rel="noopener">
         <img src="music_logo.gif" alt="Music">
       </a>
-
-      <!-- Instagram → クッションページ（members.html）へ -->
       <a href="members.html">
         <img src="instagram_logo.gif" alt="Instagram">
       </a>
