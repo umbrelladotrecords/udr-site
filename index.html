@@ -28,14 +28,14 @@
       --seg-off:#0b1412;
       --seg-glow: rgba(255,59,59,.35);
 
-      /* タイプ速度（ゆっくり版） */
+      /* タイプ速度（ゆっくり） */
       --type-speed: 120ms;   /* 文章1文字あたり */
       --digit-pop: 200ms;    /* 桁を出す間隔 */
       --cursor-color: #dfe;
 
-      /* 浮かび上がり（2秒） */
-      --reveal-duration: 2s;
-      --reveal-ease: cubic-bezier(.17,.84,.44,1); /* ふわっと */
+      /* 浮かび上がり（4秒に変更） */
+      --reveal-duration: 4s;
+      --reveal-ease: cubic-bezier(.17,.84,.44,1);
     }
 
     *{ box-sizing:border-box }
@@ -46,7 +46,6 @@
       overflow-x:hidden;
     }
 
-    /* サイド縦レール */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
       width:var(--rail-w);
@@ -59,7 +58,6 @@
 
     .main-logo{ display:block; width:var(--logo-w); height:auto; margin:var(--logo-mt) auto 0; }
 
-    /* ───────── カウンター（ガラケーフォント＋タイプ演出） ───────── */
     .counter{
       margin: var(--counter-gap-top) auto var(--counter-gap-bottom);
       font-family: 'DotGothic16', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN','Yu Gothic','Meiryo',sans-serif;
@@ -98,9 +96,8 @@
     .c{ right: var(--pad); clip-path: inset(50% 0 0 0); }
     .f{ left: var(--pad);  clip-path: inset(0 0 50% 0); }
     .e{ left: var(--pad);  clip-path: inset(50% 0 0 0); }
-    /* ───────── ここまで ───────── */
 
-    /* ▼ 浮かび上がり（初期は隠しておく） */
+    /* ▼ 浮かび上がり */
     .reveal-target{
       opacity: 0;
       transform: translateY(16px) scale(.98);
@@ -147,10 +144,8 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- ロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
-    <!-- カウンター（ロゴ直下） -->
     <div class="counter" id="counterBox" role="status" aria-live="polite">
       <span class="type" id="prefix"></span>
       <span class="sevenseg" id="sevenseg" aria-label="訪問者カウンター"></span>
@@ -158,10 +153,8 @@
       <span class="cursor" id="cursor" aria-hidden="true"></span>
     </div>
 
-    <!-- メイン画像：最初は非表示 → カウンター完了後に2秒で出現 -->
     <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="hero reveal-target" id="heroImg">
 
-    <!-- SNS（最初は非表示 → カウンター完了後に2秒で出現） -->
     <div class="sns reveal-target" id="snsBlock">
       <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
         <img src="youtube_logo.gif" class="youtube" alt="YouTube">
@@ -175,12 +168,11 @@
     </div>
   </div>
 
-  <!-- タイプ演出＋7セグ生成＋完了後リビール -->
   <script>
     (()=>{
       const DIGITS = 6;
-      const TYPE_MS = 120;  // 文字の間隔（ゆっくり）
-      const DIGIT_MS = 200; // 数字1桁の間隔（ゆっくり）
+      const TYPE_MS = 120;
+      const DIGIT_MS = 200;
       const key = "udr_demo_counter";
 
       let count = parseInt(localStorage.getItem(key) || "0", 10) + 1;
@@ -234,10 +226,8 @@
       const s = String(count).padStart(DIGITS,'0');
 
       (async ()=>{
-        // 前半タイプ
         await typeText(prefix, prefixText);
 
-        // 数字を1桁ずつ
         sevenseg.textContent = '';
         for(let i=0;i<s.length;i++){
           const d = makeDigit(Number(s[i]));
@@ -246,16 +236,13 @@
           await new Promise(r=> setTimeout(r, DIGIT_MS));
         }
 
-        // 後半タイプ
         await typeText(suffix, suffixText);
 
-        // カーソル消す＆読み上げ用テキスト
         cursor.style.display = 'none';
         document.getElementById('counterBox')
           .setAttribute('aria-label', `あなたは ${count} 番目のお客様です。`);
 
-        // すべて表示完了 → ヒーロー画像とSNSを2秒でふわっと出現
-        // （同時に出す。もし少しズラしたければ setTimeout でディレイ追加）
+        // 完了後 → 4秒かけて浮かび上がる
         requestAnimationFrame(()=>{
           hero.classList.add('reveal');
           sns.classList.add('reveal');
