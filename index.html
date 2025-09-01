@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Umbrella Dot Records</title>
-  <!-- Google Search Console 用の確認タグ -->
+  <!-- Google Search Console 用の確認タグ（そのまま維持） -->
   <meta name="google-site-verification" content="Kr1DL_EINWwMVYx3xK-ofVnbCKlrAgXOAHkhLl3NfX8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- ロゴ用 -->
@@ -24,9 +24,13 @@
       --counter-gap-top: 60px;
       --counter-gap-bottom: 60px;
 
+      /* 7セグ（赤LED・控えめ発光） */
       --seg-on: #ff3b3b; --seg-off:#0b1412; --seg-glow: rgba(255,59,59,.35);
+
+      /* タイプ演出 */
       --type-speed: 120ms; --digit-pop: 200ms; --cursor-color: #dfe;
 
+      /* 浮かび上がり */
       --reveal-duration: 5s;
       --reveal-ease: cubic-bezier(.17,.84,.44,1);
     }
@@ -39,6 +43,7 @@
       overflow-x:hidden;
     }
 
+    /* サイド縦レール */
     body::before, body::after{
       content:""; position:fixed; top:0; bottom:0; z-index:0;
       width:var(--rail-w);
@@ -51,6 +56,7 @@
 
     .main-logo{ display:block; width:var(--logo-w); height:auto; margin:var(--logo-mt) auto 0; }
 
+    /* ───────── カウンター ───────── */
     .counter{
       margin: var(--counter-gap-top) auto var(--counter-gap-bottom);
       font-family: 'DotGothic16', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN','Yu Gothic','Meiryo',sans-serif;
@@ -67,7 +73,7 @@
       position:relative; width:18px; height:26px; display:inline-block;
       opacity:0; transform: translateY(4px) scale(.96);
       transition: opacity .15s ease, transform .2s ease;
-      --t:3px; --pad:3px;
+      --t:3px; --pad:3px; /* セグ太さ＆余白 */
     }
     .digit.show{ opacity:1; transform: translateY(0) scale(1); }
     .seg{ position:absolute; background: var(--seg-off); border-radius:1px; }
@@ -80,6 +86,7 @@
     .f{ left: var(--pad);  clip-path: inset(0 0 50% 0); }
     .e{ left: var(--pad);  clip-path: inset(50% 0 0 0); }
 
+    /* ▼ 浮かび上がり */
     .reveal-target{
       opacity: 0; transform: translateY(16px) scale(.98); filter: blur(4px);
       transition:
@@ -102,11 +109,12 @@
     .sns img.youtube { height: calc(var(--icon-h) * 1.2); }
     .sns img.instagram { height: calc(var(--icon-h) * 1.2); }
 
+    /* ===== スマホ版 ===== */
     @media (max-width: 480px){
       :root{
         --sns-gap: 18px;
         --icon-h: 42px;
-        --counter-gap-top: 8svh;
+        --counter-gap-top: 8svh;   /* ロゴとカウンターの間を広く */
         --counter-gap-bottom: 2.5svh;
       }
       .wrap{
@@ -115,12 +123,12 @@
         justify-content: flex-start;
         padding-bottom: 2svh;
       }
-      .counter{ font-size: 12px; }
+      .counter{ font-size: 12px; } /* テキスト側のサイズ */
       .sevenseg{ gap: 2px; margin: 0 4px; }
       .digit{
-        width: 10px; height: 14px;
+        width: 10px; height: 14px;   /* 数字自体の大きさ（スマホ） */
         --t: 2px; --pad: 2px;
-        transform: translateY(2px) scale(.98);
+        transform: translateY(2px) scale(.98); /* ベースライン微調整 */
       }
       .hero{
         width: 82vw;
@@ -130,6 +138,7 @@
       .sns{ margin: 0 0 3svh; }
     }
 
+    /* ===== PC版 ===== */
     @media (min-width:1200px){
       :root{
         --logo-w:520px; --page-max:980px;
@@ -140,10 +149,10 @@
         display:flex; flex-direction:column; align-items:center;
         justify-content:flex-start; padding-bottom: 2vh;
       }
-      .counter{ font-size: 14px; }
+      .counter{ font-size: 14px; } /* テキストは14px */
       .sevenseg{ gap: 3px; margin: 0 5px; }
       .digit{
-        width: 14px; height: 20px;
+        width: 14px; height: 20px;  /* PCは“ちょい強調”サイズ */
         --t: 2.5px; --pad: 2px;
         transform: translateY(2px) scale(.98);
       }
@@ -162,8 +171,10 @@
 </head>
 <body>
   <div class="wrap">
+    <!-- ロゴ -->
     <img src="UDR_HP_logo_main.PNG" alt="Umbrella Dot Records" class="main-logo">
 
+    <!-- カウンター -->
     <div class="counter" id="counterBox" role="status" aria-live="polite">
       <span class="type" id="prefix"></span>
       <span class="sevenseg" id="sevenseg" aria-label="訪問者カウンター"></span>
@@ -171,8 +182,10 @@
       <span class="cursor" id="cursor" aria-hidden="true"></span>
     </div>
 
+    <!-- メイン画像（後から出現） -->
     <img src="IMG_1705.jpeg" alt="Umbrella Logo" class="hero reveal-target" id="heroImg">
 
+    <!-- SNS（後から出現） -->
     <div class="sns reveal-target" id="snsBlock">
       <a href="https://www.youtube.com/@umbrelladotrecords694" target="_blank" rel="noopener">
         <img src="youtube_logo.gif" class="youtube" alt="YouTube">
@@ -193,10 +206,10 @@
       const DIGIT_MS = 200;
       const AFTER_TYPE_DELAY = 1000;
 
-      // ▼ CountAPI の設定
+      // ▼ CountAPI の設定（世界でほぼユニークな組み合わせにしてある）
       const NAMESPACE = 'umbrelladotrecords';
       const KEY       = 'udr-site-home';
-      const API = `https://api.countapi.xyz/hit/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`;
+      const BASE = 'https://api.countapi.xyz';
 
       function typeText(node, text){
         return new Promise(resolve=>{
@@ -245,12 +258,21 @@
 
         let count = 0;
         try{
-          const res = await fetch(API, { cache: 'no-store' });
-          const data = await res.json();
-          count = Number(data.value) || 0;
+          // 1) まず update で +1
+          let res = await fetch(`${BASE}/update/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}/?amount=1`, { cache: 'no-store' });
+          let data = await res.json();
+          if (data && typeof data.value === 'number') {
+            count = data.value;
+          } else {
+            // 2) キーが無い等で失敗したら create→get で初期化
+            await fetch(`${BASE}/create?namespace=${encodeURIComponent(NAMESPACE)}&key=${encodeURIComponent(KEY)}&value=1`, { cache: 'no-store' });
+            res = await fetch(`${BASE}/get/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`, { cache: 'no-store' });
+            data = await res.json();
+            count = Number(data.value) || 1;
+          }
         }catch(e){
           console.warn('CountAPI error', e);
-          count = 0;
+          count = 1; // 最低限1からスタート
         }
 
         const s = String(count).padStart(DIGITS,'0');
@@ -269,6 +291,7 @@
         document.getElementById('counterBox')
           .setAttribute('aria-label', `あなたは ${count} 番目のお客様です。`);
 
+        // タイプ完了から1秒後に、5秒アニメでふわっと出現
         setTimeout(()=>{
           hero.classList.add('reveal');
           sns.classList.add('reveal');
