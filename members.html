@@ -79,7 +79,14 @@
     .insta-link img{ height:48px; width:auto; margin-bottom:8px }
     .insta-link span{ color:#fff; text-decoration:underline }
 
-    .designer-name{ margin:10px 0 14px; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif; font-weight:700; font-size:18px; letter-spacing:.06em; color:#dfe; }
+    /* 新しい名前ロゴ用 */
+    .designer-logo{
+      display:block;
+      margin:10px auto 14px;
+      max-width:260px;
+      height:auto;
+    }
+
     .section-gap{ height:64px }
 
     /* 区切り線＋戻るボタン */
@@ -130,7 +137,8 @@
 
     <!-- ===== ART WORK ===== -->
     <div class="hdr"><span class="txt" data-text="ART WORK">ART WORK</span></div>
-    <div class="designer-name">荒山悠太</div>
+    <!-- 名前テキストをロゴ画像に差し替え -->
+    <img src="arayama_logo.PNG" alt="荒山悠太" class="designer-logo">
     <img src="arayama1.JPG" alt="荒山悠太" class="designer-image">
     <a class="insta-link" href="https://www.instagram.com/arym_works?igsh=dzJnZjUyZjRjYjh6" target="_blank" rel="noopener">
       <img src="instagram_logo.gif" alt="Instagram"><span>@ARYM_WORKS</span>
